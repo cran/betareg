@@ -1,0 +1,7 @@
+betareg                 Fitting beta regression models
+br.fit                  Function to estimate the coefficients of the
+                        Beta Regression.
+plot.betareg            Plot Diagnostics for an betareg Object
+predict.betareg         Predicted values from beta regression model.
+residuals.betareg       Residuals function for beta regression models.
+summary.betareg         Summary method for Beta Regression
