@@ -1,6 +1,6 @@
 "plot.betareg" <-
 function (x, which = 1:4, caption = c("Deviance residuals vs indices of obs.", 
-    "Standardized residuas vs indices of obs.", "Generalized leverage vs. Predicted values", "Cook's distance plot"), 
+    "Standardized residuals vs indices of obs.", "Generalized leverage vs. Predicted values", "Cook's distance plot"), 
     panel = points, sub.caption = deparse(x$call), main = "", 
     ask = prod(par("mfcol")) < length(which) && dev.interactive(), 
     ..., id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75) 

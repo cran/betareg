@@ -5,8 +5,8 @@
 \description{
   This function returns four plots: a plot of residuals against fitted values, a plot of standardized residuals against fitted values, a generalized leverage plot against fitted values and a plot of Cook's distances versus row labels.}
 \usage{
-plot.betareg(x, which = 1:4, caption = c("Deviance Residuals vs indices of obs.", 
-    "Standardized Residuas vs indices of obs.", "Generalized Leverage vs. Predicted Values", "Cook's distance plot"), 
+plot.betareg(x, which = 1:4, caption = c("Deviance residuals vs indices of obs.", 
+    "Standardized residuals vs indices of obs.", "Generalized leverage vs. Predicted values", "Cook's distance plot"), 
     panel = points, sub.caption = deparse(x$call), main = "", 
     ask = prod(par("mfcol")) < length(which) && dev.interactive(), 
     ..., id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75)
