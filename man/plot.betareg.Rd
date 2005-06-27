@@ -24,9 +24,9 @@ plot.betareg(x, which = 1:4, caption = c("Deviance residuals vs indices of obs."
   \item{labels.id}{vector of labels, from which the labels for extreme points will be chosen.  'NULL' uses observation numbers.}
   \item{cex.id}{magnification of point labels.}
 }
-\author{ Alexandre de Bustamante Simas, Department of Statistics, Federal University of Pernambuco (alexandredbs@cox.de.ufpe.br). }
+\author{ Alexandre de Bustamante Simas, Department of Statistics, Federal University of Pernambuco (alexandre@cox.de.ufpe.br). }
 \references{
-FERRARI, S.L.P., CRIBARI-NETO, F. (2004). Beta regression for modeling rates and proportions. Journal of Applied Statistics, forthcoming.
+FERRARI, S.L.P., CRIBARI-NETO, F. (2004). Beta regression for modeling rates and proportions. Journal of Applied Statistics, v. 31, n. 7, p. 799-815.
 }
 \seealso{\code{\link{betareg}}, \code{\link{br.fit}}, \code{\link{predict.betareg}}, \code{\link{residuals.betareg}} }
 \examples{

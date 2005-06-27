@@ -15,9 +15,13 @@ betareg(formula, link = "logit", data)
 \value{
 The function returns an object of class 'betareg' or 'lm'. The function 'summary' is used to obtain an estimate of the precision parameter (phi), and the pseudo R2 value.
 }
-\author{ Alexandre de Bustamante Simas, Department of Statistics, Federal University of Pernambuco (alexandredbs@cox.de.ufpe.br). }
+\author{ Alexandre de Bustamante Simas, Department of Statistics, Federal University of Pernambuco (alexandre@cox.de.ufpe.br). 
+
+This work was suppervised by Francisco Cribari-Neto. We would like to acknowledge the help of Patricia 
+Espinheira for the latter version, and the help of Fernando Herrique Ferraz in the previous version.
+}
 \references{
-FERRARI, S.L.P., CRIBARI-NETO, F. (2004). Beta regression for modeling rates and proportions. Journal of Applied Statistics, forthcoming.
+FERRARI, S.L.P., CRIBARI-NETO, F. (2004). Beta regression for modeling rates and proportions. Journal of Applied Statistics, v. 31, n. 7, p. 799-815.
 }
 \seealso{\code{\link{br.fit}}, \code{\link{summary.betareg}}, \code{\link{predict.betareg}}, \code{\link{residuals.betareg}} }
 \examples{
