@@ -37,19 +37,24 @@
   fit$zstats <- fit1$zstats
   fit$pvalues <- fit1$pvalues
   fit$fitted.values <- fit1$fitted
+  fit$linear.predictor <- fit1$linpred
   fit$residuals <- fit1$res
   fit$k <- fit1$k
+  fit$nulldev <- fit1$nulldev
+  fit$value <- fit1$value
   fit$h <- fit1$h
   fit$GL <- fit1$GL
   fit$terms <- Terms
   fit$x <- X
   fit$y <- Y
   fit$resd <- fit1$resd
+  fit$df.residual <- fit1$df.residual
   fit$resstd <- fit1$resstd
   fit$Pseudo.R2 <- cbind(fit1$pseudor2)
      fit$etahat <- fit1$etahat
      fit$sigma2 <- fit1$sigma2
      fit$phi <- fit1$phi
+  fit$formula <- formula
   colnames(fit$Pseudo.R2) <- c("")
   rownames(fit$Pseudo.R2) <- c("")
   attr(fit, "na.message") <- attr(m, "na.message")

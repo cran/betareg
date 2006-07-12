@@ -48,7 +48,7 @@
             z2) + mu * log(y) + (1 - mu) * log(1 - y)))
     }
     opt <- optim(reg, loglik, escore, method = "BFGS", control = list(fnscale = -1,
-        maxit = 2000))
+        maxit = 2000, reltol = 1e-12))
     if (opt$conv != 0)
         warning("FUNCTION DID NOT CONVERGE!")
     z <- c()
@@ -64,6 +64,39 @@
     psi1 = trigamma(muhat * phihat)
     psi2 = trigamma((1 - muhat) * phihat)
     T1 = T(etahat)
+
+
+    x1 <- rep(1,length(ynew))
+    x1 <- as.matrix(x1)
+    loglik2 <- function(z) {
+        mu = linkinv(x1 %*% z)
+        sum(lgamma(phihat) - lgamma(mu * phihat) - lgamma((1 - mu) *
+            phihat) + (mu * phihat - 1) * log(y) + ((1 - mu) * phihat - 1) *
+            log(1 - y))
+    }    
+    escore2 <- function(z) {
+        mu = linkinv(x1 %*% z)
+        munew = digamma(mu * phihat) - digamma((1 - mu) * phihat)
+        T = diag(c(mu.eta(x1 %*% z) ) )
+        phihat * t(x1) %*% T %*% (ystar - munew)
+    }
+    ajuste2 = lm.fit(x1, ynew)
+    beta1 <- ajuste2$coef
+    opt2 <- optim(beta1, loglik2, escore2, method = "BFGS", control = list(fnscale = -1,
+        maxit = 2000, reltol = 1e-12))
+    if (opt$conv != 0)
+        warning("FUNCTION DID NOT CONVERGE!")    
+    coef0 <- opt2$par
+    etahat0 <- x1%*%coef0
+    mu0 <- linkinv(etahat0)
+    val2 <- 2 * (loglikt(c(y, phihat)) - loglikt(c(mu0, phihat)))
+val2[val2<0] <- 0
+    resd2 <- sign(y - mu0) * sqrt(val2)
+    nulldev <- sum(resd2^2)
+    z$nulldev <- nulldev
+
+
+
     W = diag(c(phihat * (psi1 + psi2))) %*% T1^2
     vc = phihat * (psi1 * muhat - psi2 * (1 - muhat))
     D = diag(c(psi1 * (muhat^2) + psi2 * (1 - muhat)^2 - trigamma(phihat)))
@@ -111,13 +144,20 @@ resstd <- sqrt(1.0+phihat)*(y-muhat)/sqrt((1.0-h)*muhat*(1-muhat));
 z$resstd <- resstd
     z$resd <- resd
     z$phistd <- phier
+    z$value <- opt$value
+
     z$zstats <- coef/stderrors
+    z$linpred <- etahat
     res <- y - muhat
     res <- as.vector(res)
     z$res <- res
+    z$df.residual <- n-k
     z$pvalues <- 2 * (1 - pnorm(abs(coef/stderrors)))
-    pseudor2 <- cor(etahat, ynew)^2
-    z$pseudor2 <- pseudor2
+    if(!(var(etahat)*var(ynew) == 0)){
+       pseudor2 <- cor(etahat, ynew)^2       
+    }
+    else {pseudor2 <- NA}
+       z$pseudor2 <- pseudor2
        z$etahat <- etahat
        sigma2 = sum(res^2)/((n - k) * (diflink(muhat)^2))
        z$sigma2 <- sigma2

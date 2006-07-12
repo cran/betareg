@@ -1,5 +1,5 @@
 "residuals.betareg" <-
-function(object, type = c("standardized","usual","deviance"),...)
+function(object, type = c("standardized","raw","deviance"),...)
 {
     type <- match.arg(type)
     muhat <- object$fitted

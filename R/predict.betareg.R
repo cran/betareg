@@ -1,15 +1,20 @@
 "predict.betareg" <-
-function(object, terms = object$x[,-1],... ) 
+function(object, newdata = NULL, type = c("link", "response"), ... ) 
 {
-   coef <- (object$coeff)[1:object$k]
-   x <- terms 
-   x <- matrix(x,length(x)/(ncol(object$x)-1),ncol(object$x)-1)
-   x <- cbind(1,x)
-   if(ncol(x) != ncol(object$x))
-       stop("The number of columns must be equal to the number of coefficients.")
-   pred = x%*%coef
-   pred = object$linkinv(pred)
-   pred = as.vector(pred)
-   pred
+   type <- match.arg(type)
+         if (missing(newdata)) {
+             pred <- switch(type, link = object$linear.predictor, response = object$fitted.values)
+                             }
+         else {
+            dados <- model.frame(newdata)
+            dados <- as.matrix(dados)
+            coef <- (object$coeff)[1:object$k]
+            x <- cbind(1,dados)
+            pred = x%*%coef
+            switch(type, response = {
+                pred <- object$linkinv(pred)
+            }, link = , terms = )
+              }
+pred <- as.vector(pred)
+pred
 }
-
