@@ -1,0 +1,30 @@
+import("graphics", "stats")
+
+importFrom("sandwich", "estfun")
+importFrom("sandwich", "bread")
+importFrom("lmtest", "coeftest")
+
+export(
+  "betareg",
+  "betareg.control",
+  "betareg.fit",
+  "gleverage"
+)
+
+S3method("bread", "betareg")
+S3method("coef", "betareg")
+S3method("coeftest", "betareg")
+S3method("cooks.distance", "betareg")
+S3method("estfun", "betareg")
+S3method("gleverage", "betareg")
+S3method("hatvalues", "betareg")
+S3method("logLik", "betareg")
+S3method("model.frame", "betareg")
+S3method("model.matrix", "betareg")
+S3method("plot", "betareg")
+S3method("predict", "betareg")
+S3method("print", "betareg")
+S3method("residuals", "betareg")
+S3method("summary", "betareg")
+S3method("print", "summary.betareg")
+S3method("vcov", "betareg")

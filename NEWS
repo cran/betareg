@@ -1,0 +1,39 @@
+Changes in Version 2.0-0
+
+  o Package "betareg" was orphaned on CRAN, Z took over
+    as maintainer, ended up re-writing the whole package.
+    The package still provides all functionality as before
+    but the interface is not fully backward-compatible.
+    
+  o betareg(): more standard formula-interface arguments
+    "betareg" objects do _not_ inherit from "lm" anymore.
+  
+  o betareg.fit(): renamed from br.fit(), enhanced interface
+    with more arguments and returned information. Untested
+    support of weighted regressions is enabled.
+    
+  o betareg.control(): new function encapsulating control
+    of optim(), slightly modified default values.
+
+  o anova() method was removed, use lrtest() from "lmtest"
+    package instead.
+    
+  o gen.lev.betareg() was changed to gleverage() method
+    (with new generic) and a bug in the method was fixed.
+    
+  o envelope.beta() was removed and is now included in
+    plot() method for "betareg" objects.
+    
+  o Datasets "prater" and "pratergrouped" were incorporated
+    into a single "GasolineYield" dataset.
+
+  o New data set "FoodExpenditure" from Griffiths et al. (1993),
+    replicating second application from Ferrari and Cribari-Neto
+    (2004).
+  
+  o Added NAMESPACE.
+
+  o The residuals() method now has three further types of
+    residuals suggested by Espinheira et al. (2008) who recommend
+    to use "standardized weighted residuals 2" (type = "sweighted2").
+    The default are Pearson (aka standardized) residuals.

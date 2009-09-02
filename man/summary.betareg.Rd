@@ -1,36 +1,80 @@
 \name{summary.betareg}
+
+\alias{print.betareg}
 \alias{summary.betareg}
-\title{Summary method for Beta Regression}
+\alias{print.summary.betareg}
+
+\alias{coef.betareg}
+\alias{vcov.betareg}
+\alias{bread.betareg}
+\alias{estfun.betareg}
+
+\alias{coeftest.betareg}
+\alias{logLik.betareg}
+\alias{terms.betareg}
+\alias{model.frame.betareg}
+\alias{model.matrix.betareg}
+
+\alias{cooks.distance.betareg}
+\alias{hatvalues.betareg}
+
+\title{Methods for betareg Objects}
+
 \description{
-  'summary' method for class 'betareg'.}
+  Methods for extracting information from fitted beta
+  regression model objects of class \code{"betareg"}.
+}
+
 \usage{
-summary.betareg(object,...)
+\method{summary}{betareg}(object, phi = NULL, \dots)
+
+\method{coef}{betareg}(object, phi = NULL, \dots)
+\method{vcov}{betareg}(object, phi = NULL, \dots)
+\method{bread}{betareg}(x, phi = NULL, \dots)
+\method{estfun}{betareg}(x, phi = NULL, \dots)
 }
+
 \arguments{
-  \item{object}{ Fitted model using betareg }
-  \item{...}{Optional arguments}
+  \item{object, x}{fitted model object of class \code{"betareg"}.}
+  \item{phi}{logical indicating whether the precision/dispersion parameter
+    phi should be reported as a full model parameter (\code{TRUE}) or
+    a nuisance parameter (\code{FALSE}). The default is taken from
+    \code{object$phi}.}
+  \item{\dots}{currently not used.}
 }
-\value{
-  \item{call}{the component from object}
-  \item{deviance residuals}{a summary of the deviance residuals, see residuals.betareg}
-  \item{coefficients}{a p by 4 matrix with the columns for the estimated coefficients, the std. errors, the critical values of a normal distribution and the corresponded p-values.}
-  \item{estimated phi}{the estimated value of the precision parameter together with its standard error.}
-  \item{null deviance}{the deviance from the model only containing the intercept (but, assuming the estimated phi from the current model)}
-  \item{residual deviance}{the deviance from the current model}
-  \item{log-likelihood ratio statistic}{the log-likelihood ratio statistic from the full model against the model containing only the intercept}
-  \item{Pseudo R2}{the value of the pseudo R2 which is described by Ferrari and Cribari-Neto(2004).}
-  \item{AIC}{the corresponding AIC} 
+
+\details{
+  A set of standard extractor functions for fitted model objects is available for
+  objects of class \code{"betareg"}, including methods to the generic functions
+  \code{\link[base]{print}} and \code{\link[base]{summary}} which print the estimated
+  coefficients along with some further information. The \code{summary} in particular
+  supplies partial Wald tests based on the coefficients and the covariance matrix.
+  As usual, the \code{summary} method returns an object of class \code{"summary.betareg"}
+  containing the relevant summary statistics which can subsequently be printed
+  using the associated \code{print} method.
+
+  A \code{\link[stats]{logLik}} method is provided, hence \code{\link[stats]{AIC}}
+  can be called to compute information criteria.
 }
-\author{ Alexandre de Bustamante Simas, Instituto de Matemática Pura e Aplicada (alesimas@impa.br). 
-This version was modified to fit the standards of the 'lm' and 'glm' models. Andréa Vanessa Rocha (andrea@cox.de.ufpe.br) helped in the development of this new function.}
+
 \references{
-FERRARI, S.L.P., CRIBARI-NETO, F. (2004). Beta regression for modeling rates and proportions. Journal of Applied Statistics, v. 31, n. 7, p. 799-815.}
-\seealso{\code{\link{betareg}}, \code{\link{br.fit}}, \code{\link{predict.betareg}}, \code{\link{residuals.betareg}} }
-\examples{
-data(pratergrouped)
-fit <- betareg(oil ~ batch1 + batch2 + batch3 + batch4 + batch5 + 
-batch6 + batch7 + batch8 + batch9 + temp, data=pratergrouped)
-summary(fit)
-  }
+Ferrari, S.L.P., and Cribari-Neto, F. (2004).
+  Beta Regression for Modeling Rates and Proportions.
+  \emph{Journal of Applied Statistics}, \bold{31}(7), 799--815.
 }
+
+\seealso{\code{\link{betareg}}}
+
+\examples{
+data("GasolineYield", package = "betareg")
+
+gy <- betareg(yield ~ gravity + pressure + temp10 + temp, data = GasolineYield)
+
+summary(gy)
+coef(gy)
+vcov(gy)
+logLik(gy)
+AIC(gy)
+}
+
 \keyword{regression}
