@@ -26,20 +26,24 @@
 }
 
 \usage{
-\method{summary}{betareg}(object, phi = NULL, \dots)
+\method{summary}{betareg}(object, phi = NULL, type = "sweighted2", \dots)
 
-\method{coef}{betareg}(object, phi = NULL, \dots)
-\method{vcov}{betareg}(object, phi = NULL, \dots)
+\method{coef}{betareg}(object, model = c("full", "mean", "precision"), phi = NULL, \dots)
+\method{vcov}{betareg}(object, model = c("full", "mean", "precision"), phi = NULL, \dots)
 \method{bread}{betareg}(x, phi = NULL, \dots)
 \method{estfun}{betareg}(x, phi = NULL, \dots)
 }
 
 \arguments{
   \item{object, x}{fitted model object of class \code{"betareg"}.}
-  \item{phi}{logical indicating whether the precision/dispersion parameter
-    phi should be reported as a full model parameter (\code{TRUE}) or
-    a nuisance parameter (\code{FALSE}). The default is taken from
+  \item{phi}{logical indicating whether the parameters in the precision model
+    (for phi) should be reported as full model parameters (\code{TRUE}) or
+    nuisance parameters (\code{FALSE}). The default is taken from
     \code{object$phi}.}
+  \item{type}{character specifying type of residuals to be included in the
+    summary output, see \code{\link{residuals.betareg}}.}
+  \item{model}{character specifying for which component of the model coefficients/covariance
+    should be extracted. (Only used if \code{phi} is \code{NULL}.)}
   \item{\dots}{currently not used.}
 }
 
@@ -61,6 +65,10 @@
 Ferrari, S.L.P., and Cribari-Neto, F. (2004).
   Beta Regression for Modeling Rates and Proportions.
   \emph{Journal of Applied Statistics}, \bold{31}(7), 799--815.
+
+Simas, A.B., and, Barreto-Souza, W., and Rocha, A.V. (2010).
+  Improved Estimators for a General Class of Beta Regression Models.
+  \emph{Computational Statistics \& Data Analysis}, \bold{54}(2), 348--366.
 }
 
 \seealso{\code{\link{betareg}}}
@@ -68,13 +76,17 @@ Ferrari, S.L.P., and Cribari-Neto, F. (2004).
 \examples{
 data("GasolineYield", package = "betareg")
 
-gy <- betareg(yield ~ gravity + pressure + temp10 + temp, data = GasolineYield)
+gy2 <- betareg(yield ~ batch + temp | temp, data = GasolineYield)
 
-summary(gy)
-coef(gy)
-vcov(gy)
-logLik(gy)
-AIC(gy)
+summary(gy2)
+coef(gy2)
+vcov(gy2)
+logLik(gy2)
+AIC(gy2)
+
+coef(gy2, model = "mean")
+coef(gy2, model = "precision")
+summary(gy2, phi = FALSE)
 }
 
 \keyword{regression}

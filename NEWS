@@ -1,3 +1,35 @@
+Changes in Version 2.1-2
+
+  o New vignette (written by Francisco Cribari-Neto and Z)  
+    introducing the package and replicating a range of
+    publications related to beta regression:
+      vignette("betareg", package = "betareg")
+    provides some theoretical background, a discussion of the
+    implementation and several hands-on examples.
+
+  o Implemented an optional precision model, yielding
+    variable dispersion. The precision parameter phi may
+    depend on a linear predictor, as suggested by
+    Simas, Barreto-Souza, and Rocha (2010). In single part
+    formulas of type y ~ x1 + x2, phi is by default assumed to
+    be constant, i.e., an intercept plus identity link. But
+    it can be extended to y ~ x1 + x2 | z1 + z2 where phi
+    depends on z1 + z2, by default through a log link.    
+
+  o Allowed all link functions (in mean model) that are
+    available in make.link() for binary responses, and added
+    log-log link.
+
+  o Added data and replication code for Smithson & Verkuilen
+    (2006, Psychological Methods). See ?ReadingSkills,
+    ?MockJurors, ?StressAnxiety as well as the complete
+    replication code in demo("SmithsonVerkuilen2006").
+
+  o Default in residuals() (as well as in the related plot()
+    and summary() components) is now to use standardized
+    weighted residuals 2 (type = "sweighted2").
+
+
 Changes in Version 2.0-0
 
   o Package "betareg" was orphaned on CRAN, Z took over
@@ -5,7 +37,7 @@ Changes in Version 2.0-0
     The package still provides all functionality as before
     but the interface is not fully backward-compatible.
     
-  o betareg(): more standard formula-interface arguments
+  o betareg(): more standard formula-interface arguments;
     "betareg" objects do _not_ inherit from "lm" anymore.
   
   o betareg.fit(): renamed from br.fit(), enhanced interface

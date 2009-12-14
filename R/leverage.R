@@ -11,26 +11,30 @@ gleverage.betareg <- function(model, ...)
 {
   ## extract response y and regressors X
   y <- if(is.null(model$y)) model.response(model.frame(model)) else model$y
-  x <- if(is.null(model$x)) model.matrix(model) else model$x
+  x <- if(is.null(model$x)) model.matrix(model, model = "mean") else model$x$mean
+  z <- if(is.null(model$x)) model.matrix(model, model = "precision") else model$x$precision
   offset <- if(is.null(model$offset)) rep(0, NROW(x)) else model$offset
   wts <- weights(model)
   if(is.null(wts)) wts <- 1
-  ystar <- model$link$linkfun(y)
+  ystar <- qlogis(y)
   
   ## extract coefficients
-  beta <- model$coefficients
-  phi <- beta[length(beta)]
-  beta <- beta[-length(beta)]
+  beta <- model$coefficients$mean
+  gamma <- model$coefficients$precision
 
   ## compute different types of "fitted" values
   eta <- as.vector(x %*% beta + offset)
-  mu <- model$link$linkinv(eta)
-  mustar <- digamma(mu * phi) - digamma((1 - mu) * phi)
+  phi_eta <- as.vector(z %*% gamma)
+  mu <- model$link$mean$linkinv(eta)
+  phi <- model$link$precision$linkinv(phi_eta)
   psi1 <- trigamma(mu * phi)
   psi2 <- trigamma((1 - mu) * phi)
+  mustar <- digamma(mu * phi) - digamma((1 - mu) * phi)
+
+  #FIXME# Correct generalization??
 
   ## compute diagonal of T
-  Tdiag <- as.vector(model$link$mu.eta(eta))
+  Tdiag <- as.vector(model$link$mean$mu.eta(eta))
 
   ## compute w
   w <- wts * phi * (psi1 + psi2) * Tdiag^2
@@ -47,7 +51,7 @@ gleverage.betareg <- function(model, ...)
   gamma <- sum(d) - sum(xtc * xwtc)/phi  
 
   ## compute q, f, m, b
-  q <- w + wts * (ystar - mustar) * eta/model$link$mu.eta(eta) * Tdiag^2
+  q <- w + wts * (ystar - mustar) * eta/model$link$mean$mu.eta(eta) * Tdiag^2
   ##     -   (in previous version)
   f <- vc - (ystar - mustar)
   m <- 1 / (y * (1 - y))
@@ -64,26 +68,28 @@ gleverage.betareg <- function(model, ...)
 
 hatvalues.betareg <- function(model, ...)
 {
-  ## extract response y and regressors X
+  ## extract response y and regressors X and Z
   y <- if(is.null(model$y)) model.response(model.frame(model)) else model$y
-  x <- if(is.null(model$x)) model.matrix(model) else model$x
+  x <- if(is.null(model$x)) model.matrix(model, model = "mean") else model$x$mean
+  z <- if(is.null(model$x)) model.matrix(model, model = "precision") else model$x$precision
   offset <- if(is.null(model$offset)) rep(0, NROW(x)) else model$offset
   wts <- weights(model)
   if(is.null(wts)) wts <- 1
   
   ## extract coefficients
-  beta <- model$coefficients
-  phi <- beta[length(beta)]
-  beta <- beta[-length(beta)]
+  beta <- model$coefficients$mean
+  gamma <- model$coefficients$precision
 
   ## compute different types of "fitted" values
   eta <- as.vector(x %*% beta + offset)
-  mu <- model$link$linkinv(eta)
+  phi_eta <- as.vector(z %*% gamma)
+  mu <- model$link$mean$linkinv(eta)
+  phi <- model$link$precision$linkinv(phi_eta)
   psi1 <- trigamma(mu * phi)
   psi2 <- trigamma((1 - mu) * phi)
 
   ## compute w
-  w <- wts * phi * (psi1 + psi2) * as.vector(model$link$mu.eta(eta))^2
+  w <- wts * phi * (psi1 + psi2) * as.vector(model$link$mean$mu.eta(eta))^2
 
   ## compute (X'W X)^(-1)
   xwx1 <- chol2inv(qr.R(qr(sqrt(w) * x)))

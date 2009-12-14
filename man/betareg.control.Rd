@@ -13,7 +13,7 @@ betareg.control(phi = TRUE, method = "BFGS", maxit = 5000,
 }
 
 \arguments{
-  \item{phi}{logical indicating whether the precision/dispersion parameter
+  \item{phi}{logical indicating whether the precision parameter
     phi should be treated as a full model parameter (\code{TRUE}, default)
     or as a nuisance parameter.}
   \item{method}{characters string specifying the \code{method} argument
@@ -41,7 +41,7 @@ betareg.control(phi = TRUE, method = "BFGS", maxit = 5000,
   numerically using the Hessian matrix returned by \code{\link[stats]{optim}}.
   
   The main parameters of interest are the coefficients in the linear predictor of the
-  model and the additional precision/dispersion parameter phi which can either
+  model and the additional precision parameter phi which can either
   be treated as a full model parameter (default) or as a nuisance parameter. In the latter case
   the estimation does not change, only the reported information in output from \code{print},
   \code{summary}, or \code{coef} (among others) will be different. See also examples.

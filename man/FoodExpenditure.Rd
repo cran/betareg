@@ -27,7 +27,7 @@ Ferrari, S.L.P., and Cribari-Neto, F. (2004).
   Beta Regression for Modeling Rates and Proportions.
   \emph{Journal of Applied Statistics}, \bold{31}(7), 799--815.
 
-Griffiths, W.E., Hill, R.C., and Judge, G.G. (199).
+Griffiths, W.E., Hill, R.C., and Judge, G.G. (1993).
   \emph{Learning and Practicing Econometrics}
   New York: John Wiley and Sons.
 }

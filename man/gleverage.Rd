@@ -5,7 +5,7 @@
 \title{Generalized Leverage Values}
 
 \description{
-   Compute the generalized leverages values for fitted models.
+  Compute the generalized leverages values for fitted models.
 }
 
 \usage{
@@ -20,7 +20,11 @@ gleverage(model, \dots)
 \value{
 \code{gleverage} is a new generic for computing generalized leverage values as suggested by
 Wei, Hu, and Fung (1998). Currently, there is only a method for \code{betareg} models, implementing
-the formulas from Ferrari and Cribari-Neto (2004). Currently, this requires computations and
+the formulas from Ferrari and Cribari-Neto (2004). These formulas are also applied for models
+with an additional set of regressors for the precision parameter phi although they
+were derived for constant phi only. 
+
+Currently, the vector of generalized leverages requires computations and
 storage of order \eqn{n \times n}{n x n}.
 }
 

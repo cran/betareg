@@ -12,7 +12,7 @@
 
 \usage{
 \method{residuals}{betareg}(object,
-  type = c("deviance", "pearson", "response", "weighted", "sweighted", "sweighted2"),
+  type = c("sweighted2", "deviance", "pearson", "response", "weighted", "sweighted"),
   \dots)
 }
 
@@ -28,7 +28,8 @@
   Equation 6 for \code{"weighted"}, Equation 7 for \code{"sweighted"}, and
   Equation 8 for \code{"sweighted2"}.
   
-  Espinheira et al. (2008) recommend to use \code{"sweighted2"}.
+  Espinheira et al. (2008) recommend to use \code{"sweighted2"}, hence this is 
+  the default in the \code{residuals()} method.
 }
 
 \references{

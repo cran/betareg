@@ -1,21 +1,22 @@
 citHeader("To cite betareg in publications use")
 
 ## R >= 2.8.0 passes package metadata to citation().
-if(!exists("meta") || is.null(meta)) meta <- packageDescription("colorspace")
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("betareg")
 year <- sub("-.*", "", meta$Date)
-note <- sprintf("R package version %s", meta$Version)
+note <- sprintf("R package vignette, version %s", meta$Version)
 
 citEntry(entry = "Manual",
-         title = "{betareg}: Beta Regression",
-         author = personList(as.person("Achim Zeileis")),
+         title = "Beta Regression in {R}",
+         author = personList(as.person("Francisco Cribari-Neto"),
+	                     as.person("Achim Zeileis")),
          year = year,
          note = note,
          url = "http://CRAN.R-project.org/package=betareg",
 
          textVersion =
-         paste("Achim Zeileis",
+         paste("Francisco Cribari-Neto, Achim Zeileis",
    	       sprintf("(%s).", year),	 
-               "betareg: Beta Regression.",
+               "Beta Regression in R.",
 	       paste(note, ".", sep = ""),
                "URL http://CRAN.R-project.org/package=betareg")
 )
