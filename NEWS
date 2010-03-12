@@ -1,3 +1,21 @@
+Changes in Version 2.2-0
+
+  o dbeta(..., log = TRUE) is now used for computing the
+    log-likelihood which is numerically more stable
+    than the previous hand-crafted version.
+    
+  o The starting values in the dispersion regression are
+    now chosen differently, resulting in a somewhat more
+    robust specification of starting values. The intercept
+    is computed as described in Ferrari & Cribari-Neto
+    (2004), plus a link transformation (if any). All further
+    parameters (if any) are initially set to zero. See also
+    the vignette for details.
+    
+  o Various documentation improvements, especially in the
+    vignette.
+
+
 Changes in Version 2.1-2
 
   o New vignette (written by Francisco Cribari-Neto and Z)  

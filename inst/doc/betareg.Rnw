@@ -11,7 +11,7 @@
 \newcommand{\readme}[1]{\emph{\marginpar{README} (#1)}}
 
 \author{Francisco Cribari-Neto\\Universidade Federal de Pernambuco \And
-        Achim Zeileis\\WU Wirtschaftsuniversit\"at Wien}
+        Achim Zeileis\\Universit\"at Innsbruck}
 \Plainauthor{Francisco Cribari-Neto, Achim Zeileis}
 
 \title{Beta Regression in \proglang{R}}
@@ -48,19 +48,19 @@
   URL: \url{http://www.de.ufpe.br/~cribari/}\\
   
   Achim Zeileis\\
-  Department of Statistics and Mathematics\\
-  WU Wirtschaftsuniversit\"at Wien\\
-  Augasse 2--6\\
-  1090 Wien, Austria\\
+  Institute for Statistics\\
+  Universit\"at Innsbruck\\
+  Universit\"atsstr.~15\\
+  6020 Innsbruck, Austria\\
   E-mail: \email{Achim.Zeileis@R-project.org}\\
-  URL: \url{http://statmath.wu-wien.ac.at/~zeileis/}
+  URL: \url{http://statmath.wu.ac.at/~zeileis/}
 }
 
 %% Sweave/vignette information and metadata
 %% need no \usepackage{Sweave}
 \SweaveOpts{engine = R, eps = FALSE, keep.source = TRUE}
 %\VignetteIndexEntry{Beta Regression in R}
-%\VignetteDepends{stats,betareg,car,lmtest,sandwich}
+%\VignetteDepends{stats,betareg,car,lmtest,sandwich,strucchange}
 %\VignetteKeywords{beta regression, rates, proportions, R}
 %\VignettePackage{betareg}
 
@@ -78,7 +78,7 @@ library("betareg")
 How should one perform a regression analysis in which the dependent variable
 (or response variable), $y$, assumes values in the standard unit interval $(0,1)$? The usual
 practice used to be to transform the data so that the transformed response, say
-$\tilde y$, assumes values in the real line and then use it in a standard linear
+$\tilde y$, assumes values in the real line and then apply a standard linear
 regression analysis. A commonly used transformation is the logit $\tilde y = 
 \log(y/(1-y))$. This approach, nonetheless, has shortcomings. First, the
 regression parameters are interpretable in terms of the mean of $\tilde y$, and
@@ -91,7 +91,7 @@ proportions are typically asymmetric, and thus Gaussian-based approximations for
 interval estimation and hypothesis testing can be quite inaccurate in small
 samples. \cite{betareg:Ferrari+Cribari-Neto:2004} proposed a regression model
 for continuous variates that assume values in the standard unit interval, e.g.,
-rates, proportions, or income concentration indices. Since the model is
+rates, proportions, or concentration indices. Since the model is
 based on the assumption that the response is beta-distributed, they called their
 model \emph{the beta regression model}. In their model, the regression
 parameters are interpretable in terms of the mean of $y$ (the variable of
@@ -99,9 +99,77 @@ interest) and the model is naturally heteroskedastic and easily
 accomodates asymmetries. A variant of the beta regression model that allows for
 nonlinearities and variable dispersion was proposed by
 \cite{betareg:Simas+Barreto-Souza+Rocha:2010}. In particular, in this more
-general model, the parameter that accounts for the precision of the data is not
-assumed to be constant across observations but it is allowed to vary, which leads to the
+general model, the parameter accounting for the precision of the data is not
+assumed to be constant across observations but it is allowed to vary, leading to the
 \emph{variable dispersion beta regression model}. 
+
+The chief motivation for the beta regression model lies in the flexibility
+delivered by the assumed beta law. The beta density can assume a number of
+different shapes depending on the combination of parameter values, including
+left- and right-skewed or the flat shape of the uniform density (which is a
+special case of the more general beta density). This is illustrated in
+Figure~\ref{fig:beta-distributions} which depicts several different beta densities.
+Following \cite{betareg:Ferrari+Cribari-Neto:2004}, the densities are
+parameterized in terms of the mean $\mu$ and the precision parameter $\phi$;
+all details are explained in the next section. The evident flexiblity makes
+the beta distribution an attractive candidate for data-driven statistical modeling.
+
+\begin{figure}[t!]
+\begin{center}
+\setkeys{Gin}{width=\textwidth}
+<<beta-distributions, echo=FALSE, fig=TRUE, width=8.5, height=4.5>>=
+par(mfrow = c(1, 2), mar = c(4.1, 4.1, 4.1, 0.1))
+dbeta2 <- function(x, mu, phi = 1) dbeta(x, mu * phi, (1 - mu) * phi)
+x <- seq(from = 0.01, to = 0.99, length = 200)
+xx <- cbind(x, x, x, x, x)
+
+yy <- cbind(
+  dbeta2(x, 0.10, 5),
+  dbeta2(x, 0.25, 5),
+  dbeta2(x, 0.50, 5),
+  dbeta2(x, 0.75, 5),
+  dbeta2(x, 0.90, 5)
+)
+matplot(xx, yy, type = "l", xlab = "y", ylab = "Density", main = expression(phi == 5),
+  lty = 1, col = "black", ylim = c(0, 15))
+text(0.05, 12  , "0.10")
+text(0.95, 12  , "0.90")
+text(0.22,  2.8, "0.25")
+text(0.78,  2.8, "0.75")
+text(0.50,  2.3, "0.50")
+
+yy <- cbind(
+  dbeta2(x, 0.10, 100),
+  dbeta2(x, 0.25, 100),
+  dbeta2(x, 0.50, 100),
+  dbeta2(x, 0.75, 100),
+  dbeta2(x, 0.90, 100)
+)
+matplot(xx, yy, type = "l", xlab = "y", ylab = "", main = expression(phi == 100),
+  lty = 1, col = "black", ylim = c(0, 15))
+text(0.10, 14.5, "0.10")
+text(0.90, 14.5, "0.90")
+text(0.25,  9.8, "0.25")
+text(0.75,  9.8, "0.75")
+text(0.50,  8.6, "0.50")
+@
+\caption{\label{fig:beta-distributions} Probability density functions for
+  beta distributions with varying parameters $\mu = 0.10, 0.25, 0.50, 0.75, 0.90$ and
+  $\phi = 5$ (left) and $\phi = 100$ (right).}
+\end{center}
+\end{figure}
+
+The idea underlying beta regression models dates back to earlier approaches such as
+\cite{betareg:Williams:1982} or \cite{betareg:Prentice:1986}. The initial
+motivation was to model binomial random variables with extra variation. The
+model postulated for the (discrete) variate of interest included a more flexible
+variation structure determined by independent beta-distributed variables which
+are related to a set of independent variables through a regression structure.
+However, unlike the more recent literature, the main focus
+was to model binomial random variables. Our interest in what follows will be 
+more closely related to the recent literature, i.e., modeling continous random variables that
+assume values in $(0,1)$, such as rates, proportions, and concentration or
+inequality indices (e.g., Gini).
 
 In this paper, we describe the \pkg{betareg} package which can
 be used to perform inference in both fixed and variable dispersion beta
@@ -127,7 +195,7 @@ implementation.
 
 \section{Beta regression}\label{sec:model} 
 
-The class of beta regregression models, as introduced by
+The class of beta regression models, as introduced by
 \cite{betareg:Ferrari+Cribari-Neto:2004}, is useful for modeling continuous
 variables $y$ that assume  values in the open standard unit interval $(0,1)$.
 Note that if the variable takes on values in $(a, b)$ (with $a < b$ known) one
@@ -141,7 +209,11 @@ usually expressed as
 \begin{equation*} %\label{eqn:density0}
 f(y;p,q) = \frac{\Gamma(p+q)}{\Gamma(p)\Gamma(q)}y^{p-1}(1-y)^{q-1}, \quad 0<y<1, 
 \end{equation*}
-where $p,q >0$ and $\Gamma(\cdot)$ is the gamma function. \cite{betareg:Ferrari+Cribari-Neto:2004} proposed a different parameterization by setting $\mu = p/(p+q)$ and $\phi = p+q$:
+where $p,q >0$ and $\Gamma(\cdot)$ is the gamma function.\footnote{A beta regression model
+based on this parameterization was proposed by \cite{betareg:Vasconcellos+Cribari-Neto:2005}.
+We shall, however, focus on the parameterization that indexed by the mean and a precision
+parameter.} \cite{betareg:Ferrari+Cribari-Neto:2004} proposed a different parameterization
+by setting $\mu = p/(p+q)$ and $\phi = p+q$:
 \begin{equation*} %\label{eqn:density}
 f(y;\mu,\phi) = \frac{\Gamma(\phi)}{\Gamma(\mu\phi)\Gamma((1-\mu)\phi)}y^{\mu\phi-1}(1-y)^{(1-\mu)\phi-1}, \quad 0<y<1,
 \end{equation*}
@@ -153,14 +225,19 @@ Let $y_1,\ldots,y_n$ be a random sample such that $y_i \sim
 {\mathcal{B}}(\mu_i,\phi)$, $i=1,\ldots,n$. The beta regression model is 
 defined as 
 \begin{equation*}
-g(\mu_i)=x_{i}^\top \beta_i=\eta_i,
+g(\mu_i) = x_{i}^\top \beta = \eta_i,
 \end{equation*}
 where $\beta=(\beta_1,\ldots,\beta_k)^\top$ is a $k \times 1$ vector of unknown 
-regression parameters ($k<n$), $\eta_i$ is a linear 
-predictor and $x_i = (x_{i1},\ldots,x_{ik})^\top$ is the vector of $k$ regressors
-(or independent variables or covariates). Here, $g(\cdot): (0,1) \mapsto
+regression parameters ($k<n$), $x_i = (x_{i1},\ldots,x_{ik})^\top$ is the vector 
+of $k$ regressors (or independent variables or covariates) and $\eta_i$ is a linear 
+predictor (i.e., $\eta_i = \beta_1 x_{i1} + \cdots + \beta_k x_{ik}$; usually 
+$x_{i1}=1$ for all $i$ so that the model has an intercept).  
+Here, $g(\cdot): (0,1) \mapsto
 \mathrm{I\! R}$ is a link function, which is strictly increasing and twice
-differentiable. Some useful link functions are: logit $g(\mu) = \log(\mu/(1-\mu))$;
+differentiable. The main motivation for using a link function in the regression structure is twofold. First,
+both sides of the regression equation assume values in the real line when a link function is applied to
+$\mu_i$. Second, there is an added flexibility since the practitioner can choose the function that yields the best fit. 
+Some useful link functions are: logit $g(\mu) = \log(\mu/(1-\mu))$;
 probit $g(\mu) = \Phi^{-1}(\mu)$, where $\Phi(\cdot)$ is the standard normal
 distribution function; complementary log-log $g(\mu) = \log\{-\log(1-\mu)\}$;
 log-log $g(\mu) = -\log\{-\log(\mu)\}$; and Cauchy $g(\mu) = \tan\{\pi(\mu - 0.5)\}$.
@@ -174,7 +251,7 @@ model based on this parameterization naturally heteroskedastic. In particular,
 The log-likelihood function is $\ell(\beta,\phi)=\sum_{i=1}^n\ell_i(\mu_i,\phi)$, where 
 \begin{eqnarray} \label{eqn:loglik}
   \ell_i(\mu_i,\phi) & = & \log \Gamma(\phi)-\log\Gamma(\mu_i\phi) - 
-                           \log \Gamma((1-\mu_i)\phi) +(\mu_i\phi-1)\log y_i \\
+                           \log \Gamma((1-\mu_i)\phi) +(\mu_i\phi-1)\log y_i \\ \nonumber
                      &   & + \{(1-\mu_i)\phi-1\}\log(1-y_i).
 \end{eqnarray}
 Notice that $\mu_i=g^{-1}(x_i^{\top}\beta)$ is a function of $\beta$, the vector
@@ -185,7 +262,7 @@ An extension of the beta regression model above which was employed by
 with further extensions) by \cite{betareg:Simas+Barreto-Souza+Rocha:2010}
 is the variable dispersion beta regression model. In this model the
 precision parameter is not constant for all observations but instead
-modelled in a similar fashion as the mean parameter. More specifically,
+modeled in a similar fashion as the mean parameter. More specifically,
 $y_i \, \sim \, {\mathcal B}(\mu_i, \phi_i)$ independently, $i=1,\ldots,n$, and 
 \begin{eqnarray}
   g_1(\mu_i) & = & \eta_{1i} = x_i^\top \beta, \label{eqn:meanmodel} \\
@@ -204,20 +281,20 @@ and \ref{eqn:precisionmodel}. Also, they have obtained analytical bias
 corrections for the ML estimators of the parameters, thus generalizing the results of
 \cite{betareg:Ospina+Cribari-Neto+Vasconcellos:2006}, who derived bias
 corrections for fixed dispersion beta regressions. However, as these extensions
-are not (yet) part of the \pkg{betareg} package, we confine ourselve to these
+are not (yet) part of the \pkg{betareg} package, we confine ourselves to these
 short references and do not provide detailed formulas.
 
 Various types of residuals are available for beta regression models. The raw
 response residuals $y_i - \hat \mu_i$ are typically not used due to the heteroskedasticity
 inherent in the model (see Equation~\ref{eqn:variance}). Hence, a natural
 alternative are \emph{Pearson residuals} which \cite{betareg:Ferrari+Cribari-Neto:2004}
-call \emph{standardized ordinary residual} and define as
+call \emph{standardized ordinary residuals} and define as
 \begin{equation} \label{eqn:pearson}
   r_{\mathrm{P}, i} = \frac{y_i - \hat{\mu}_i}{\sqrt{\widehat{\VAR}(y_i)}},
 \end{equation}
 where $\widehat{\VAR}(y_i) = \hat{\mu}_i(1-\hat{\mu}_i)/
-(1+\widehat{\phi_i})$, $\hat{\mu}_i = g_1^{-1}(x_i^\top\,\hat{\beta})$,
-and $\hat{\phi}_i = g_2^{-1}(z_i^\top\,\hat{\beta})$. Similarly, deviance residuals
+(1+\hat{\phi_i})$, $\hat{\mu}_i = g_1^{-1}(x_i^\top\,\hat{\beta})$,
+and $\hat{\phi}_i = g_2^{-1}(z_i^\top\,\hat{\gamma})$. Similarly, deviance residuals
 can be defined in the standard way via signed contributions to the excess likelihood.
 Further residuals were proposed by \cite{betareg:Espinheira+Ferrari+Cribari-Neto:2008a},
 in particular one residual with better properties that they named
@@ -230,7 +307,7 @@ $\psi(\cdot)$ denoting the digamma function. Standardization is then by
 $v_i = \left\{ \psi'(\mu_i\phi) + \psi'((1-\mu_i)\phi)\right\}$
 and $h_{ii}$, the $i$th diagonal element of the hat matrix
 \citep[for details see][]{betareg:Ferrari+Cribari-Neto:2004,betareg:Espinheira+Ferrari+Cribari-Neto:2008a}.
-As before, hats denote evaluation at the ML estimates.
+Hats denote evaluation at the ML estimates.
 %% $H ={\hat{W}}^{1/2}X(X^\top\hat{W}X)^{-1}X^\top {\hat{W}}^{1/2}$.
 %% Here, $W$ is $n\times n$ diagonal matrix with typical element given by
 %% $w_i = \phi v_i [1 / \{g'(\mu_i)\}^2]$, with  
@@ -247,6 +324,19 @@ As before, hats denote evaluation at the ML estimates.
 %% specifying the link function, from neglecting nonlinearities or from omitting
 %% important regressors. 
 
+It is noteworthy that the beta regression model described above was developed to 
+allow practitioners to model continuous variates that assume values in the 
+unit interval such as rates, proportions, and concentration or inequality
+indices (e.g., Gini). However, the data types that can be modeled using beta regressions
+also encompass proportions of ``successes'' from a number of trials, if the
+that number of trials is large enough to justify a continuous model. In this
+case, beta regression is similar to a binomial generalized linear model (GLM)
+but provides some more flexibility -- in particular when the trials are not
+independent and the standard binomial model might be too strict. 
+In such a situation, the fixed dispersion beta regression is similar to
+the quasi-binomial model \citep{betareg:McCullagh+Nelder:1989} but fully
+parametric. Furthermore, it can be naturally extended to variable dispersions.
+
 
 \section[Implementation in R]{Implementation in \proglang{R}} \label{sec:implementation}
 
@@ -255,15 +345,16 @@ in \proglang{R}, it helps to emphasize some properties of the model: It is a sta
 maximum likelihood (ML) task for which there is no closed-form solution but numerical
 optimization is required. Furthermore, the model shares some properties (such as
 linear predictor, link function, dispersion parameter) with
-generalized linear models \citep[GLMs][]{betareg:McCullagh+Nelder:1989}, but it
-is not a special case of this framework (not even for fixed dispersion). There are various
+generalized linear models \citep[GLMs;][]{betareg:McCullagh+Nelder:1989}, but it
+is not a special case of this framework (not even for fixed dispersion). 
+There are various
 models with implementations in \proglang{R} that have similar features -- here, we
 specifically reuse some of the ideas employed for generalized count data regression
 by \cite{betareg:Zeileis+Kleiber+Jackman:2008}.
 
 The main model-fitting function in \pkg{betareg} is \fct{betareg} which takes
 a fairly standard approach for implementing ML regression models in \proglang{R}:
-\code{formula} plus \code{data} is used for data
+\code{formula} plus \code{data} is used for model and data
 specification, then the likelihood and corresponding gradient (or estimating
 function) is set up, \fct{optim} is called for maximizing the likelihood, and finally
 an object of \proglang{S}3 class \class{betareg} is returned for which a large set of methods to standard
@@ -290,26 +381,6 @@ where the first line contains the standard model-frame specifications
 \citep[see][]{betareg:Chambers+Hastie:1992},
 the second line has the arguments specific to beta regression models and
 the arguments in the last line control some components of the return value.
-
-If a \code{formula} of type \code{y ~ x1 + x2} is supplied, it describes $y_i$ and $x_i$ 
-for the mean equation of the beta regression (\ref{eqn:meanmodel}). In this case a constant
-$\phi_i$ is assumed, i.e., $z_i = 1$ and $g_2$ is the identity link, corresponding
-to the basic beta regression model as introduced in \cite{betareg:Ferrari+Cribari-Neto:2004}.
-However, a second set of regressors can be specified by a two-part formula of type
-\code{y ~ x1 + x2 | z1 + z2 + z3} as provided in the \pkg{Formula} package
-\citep{betareg:Zeileis+Croissant:2009}. This model has the same mean equation as above but
-the regressors $z_i$ in the precision equation (\ref{eqn:precisionmodel}) are taken from
-the \code{~ z1 + z2 + z3} part.
-The default link function in this case is the log link $g_2(\cdot) = \log(\cdot)$.
-Consequently, \code{y ~ x1 + x2} and \code{y ~ x1 + x2 | 1} correspond to equivalent
-beta likelihoods but use different parametrizations for $\phi_i$: simply $\phi_i = \gamma_1$
-in the former case and $\log(\phi_i) = \gamma_1$ in the latter case. The link for the
-$\phi_i$ precision equation can be changed by \code{link.phi} in both cases where
-\code{"identity"}, \code{"log"}, and \code{"sqrt"} are allowed as admissible values.
-The default for the $\mu_i$ mean equation is always the logit link but all link
-functions for the \code{binomial} family in \fct{glm} are allowed as well as the log-log
-link: \code{"logit"}, \code{"probit"}, \code{"cloglog"}, \code{"cauchit"},
-\code{"log"}, and \code{"loglog"}.
 
 \begin{table}[t!]
 \begin{center}
@@ -353,20 +424,44 @@ Function & Description \\ \hline
 \end{center}
 \end{table}
 
+If a \code{formula} of type \code{y ~ x1 + x2} is supplied, it describes $y_i$ and $x_i$ 
+for the mean equation of the beta regression (\ref{eqn:meanmodel}). In this case a constant
+$\phi_i$ is assumed, i.e., $z_i = 1$ and $g_2$ is the identity link, corresponding
+to the basic beta regression model as introduced in \cite{betareg:Ferrari+Cribari-Neto:2004}.
+However, a second set of regressors can be specified by a two-part formula of type
+\code{y ~ x1 + x2 | z1 + z2 + z3} as provided in the \pkg{Formula} package
+\citep{betareg:Zeileis+Croissant:2009}. This model has the same mean equation as above but
+the regressors $z_i$ in the precision equation (\ref{eqn:precisionmodel}) are taken from
+the \code{~ z1 + z2 + z3} part.
+The default link function in this case is the log link $g_2(\cdot) = \log(\cdot)$.
+Consequently, \code{y ~ x1 + x2} and \code{y ~ x1 + x2 | 1} correspond to equivalent
+beta likelihoods but use different parametrizations for $\phi_i$: simply $\phi_i = \gamma_1$
+in the former case and $\log(\phi_i) = \gamma_1$ in the latter case. The link for the
+$\phi_i$ precision equation can be changed by \code{link.phi} in both cases where
+\code{"identity"}, \code{"log"}, and \code{"sqrt"} are allowed as admissible values.
+The default for the $\mu_i$ mean equation is always the logit link but all link
+functions for the \code{binomial} family in \fct{glm} are allowed as well as the log-log
+link: \code{"logit"}, \code{"probit"}, \code{"cloglog"}, \code{"cauchit"},
+\code{"log"}, and \code{"loglog"}.
+
 ML estimation of all parameters employing analytical gradients is carried out
 using \proglang{R}'s \fct{optim} with control options set in \fct{betareg.control}.
+All of \fct{optim}'s methods are available but the default is  
+\code{"BFGS"}, which is typically regarded to be the best-performing method
+\cite[][Section~8.13]{betareg:Mittelhammer+Judge+Miller:2000} with the most
+effective updating formula of all quasi-Newton methods \cite[][p.~197]{betareg:Nocedal+Wright:1999}.
 Starting values can be user-supplied, otherwise the $\beta$ starting values are estimated by 
-a regression of $g_1(y_i)$ on $x_i$ and similarly
-the $\gamma$ starting values are obtained from a regression of a transformed
-$y_i$ on the $z_i$. The transformed $y_i$ are derived in \citet[][p.~805]{betareg:Ferrari+Cribari-Neto:2004}
-where only their mean is used as the starting values (corresponding to constant $\phi_i$
-with identity link). The covariance matrix estimate is derived analytically as in
+a regression of $g_1(y_i)$ on $x_i$. The starting values for the $\gamma$ intercept
+are chosen as described in \cite[][p.~805]{betareg:Ferrari+Cribari-Neto:2004}, corresponding
+to a constant $\phi_i$ (plus a link transformation, if any). All further
+$\gamma$ coefficients (if any) are initially set to zero.
+The covariance matrix estimate is derived analytically as in
 \cite{betareg:Simas+Barreto-Souza+Rocha:2010}. However, by setting \code{hessian = TRUE}
 the numerical Hessian matrix returned by \fct{optim} can also be obtained.
 
 The returned fitted-model object of class \class{betareg} is a list similar
-to \class{glm} objects. Some of its elements---such as \code{coefficients} or
-\code{terms}---are lists with a mean and precision component,
+to \class{glm} objects. Some of its elements -- such as \code{coefficients} or
+\code{terms} -- are lists with a mean and precision component,
 respectively.
 %
 A set of standard extractor functions for fitted model objects is available for
@@ -488,7 +583,7 @@ coef(gy_logit, model = "precision")
 coef(gy_logit4, model = "precision")
 @
 
-\begin{figure}[t!]
+\begin{figure}[p!] % \fixme{change to t! in final version?}
 \begin{center}
 \setkeys{Gin}{width=\textwidth}
 <<GasolineYield-plot1, echo=FALSE, fig=TRUE, width=8.5, height=10>>=
@@ -566,7 +661,7 @@ legend("topright", c("logit, var. disp.", "logit, fix. disp.", "lm"),
 \end{figure}
 
 To start their analysis, \cite{betareg:Ferrari+Cribari-Neto:2004} consider
-a simple linear regression model fitted by ordinary least squares (OLS)
+a simple linear regression model fitted by ordinary least squares (OLS):
 %
 <<FoodExpenditure-lm1>>=
 <<FoodExpenditure-lm>>
@@ -656,7 +751,8 @@ regressor in the precision equation.
 @
 %
 This leads to significant improvements in terms of the likelihood and
-the associated BIC.
+the associated BIC.\footnote{In \proglang{R}, the BIC can be computed by means of
+\fct{AIC} when $\log(n)$ is supplied as the penalty term \code{k}}
 %
 <<FoodExpenditure-comparison>>=
 lrtest(fe_beta, fe_beta2)
@@ -685,7 +781,7 @@ link instead of the previously used (default) logit link
 <<GasolineYield-loglog>>
 @
 %
-which clearly improves pseudo $R^2$ of the model:
+which clearly improves the pseudo $R^2$ of the model:
 %
 <<GasolineYield-Rsquared>>=
 summary(gy_logit)$pseudo.r.squared
@@ -704,7 +800,7 @@ AIC(gy_logit, gy_logit2, gy_loglog)
 Moreover, if \code{temp} were included as a regressor in the precision
 equation of \code{gy_loglog}, it would no longer yield significant improvements.
 Thus, improvement of the model fit in the mean equation by adoption of the log-log
-link have waived the need for a variable precision equation.
+link has waived the need for a variable precision equation.
 
 To underline the appropriateness of the log-log specification, 
 \cite{betareg:Cribari-Neto+Lima:2007} consider a sequence of diagnostic
@@ -723,30 +819,36 @@ lrtest(gy_logit, . ~ . + I(predict(gy_logit, type = "link")^2))
 lrtest(gy_loglog, . ~ . + I(predict(gy_loglog, type = "link")^2))
 @
 %
-The improvement of the model fit can also be brought out graphically in a
-display of predicted vs.\ observed values (see Figure~\ref{fig:GasolineYield-diagnostics}).
+The improvement of the model fit can also be brought out graphically by comparing
+absolute raw residuals (i.e., $y_i - \hat \mu_i$) from both models as in
+Figure~\ref{fig:GasolineYield-diagnostics}.
 %
 <<GasolineYield-diagnostics, eval=FALSE>>=
-plot(gy_logit, which = 6)
-plot(gy_loglog, which = 6)
+plot(abs(residuals(gy_loglog, type = "response")),
+  abs(residuals(gy_logit, type = "response")))
+abline(0, 1, lty = 2)
 @
 %
-This shows that especially for the extreme observations, the log-log link
-leads to better predictions.
-
 \begin{figure}[t!]
 \begin{center}
-\setkeys{Gin}{width=\textwidth}
-<<GasolineYield-diagnostics1, echo=FALSE, fig=TRUE, width=8.5, height=4>>=
-par(mfrow = c(1, 2))
+\setkeys{Gin}{width=0.75\textwidth}
+<<GasolineYield-diagnostics1, echo=FALSE, fig=TRUE, width=6, height=5.5>>=
 <<GasolineYield-diagnostics>>
 @
-\caption{\label{fig:GasolineYield-diagnostics} Diagnostic plots:
-  Predicted vs.\ observed values for beta regression model
-  \code{gy\_logit} with logit link (left) and \code{gy\_loglog}
-  with log-log link (right).}
+\caption{\label{fig:GasolineYield-diagnostics} Scatterplot comparing
+  the absolute raw residuals from beta regression modes with log-log
+  link (x-axis) and logit link (y-axis).}
 \end{center}
 \end{figure}
+%
+This shows that there are a few observations clearly above the diagonal
+(where the log-log-link fits better than the logit link) whereas
+there are fewer such observations below the diagonal. A different
+diagnostic display that is useful in this situation 
+\citep[and is employed by][]{betareg:Cribari-Neto+Lima:2007} is a 
+plot of predicted values ($\hat \mu_i$) vs.\ observed values ($y_i$)
+for each model. This can be created by \code{plot(gy_logit, which = 6)} and
+\code{plot(gy_loglog, which = 6)}, respectively.
 
 In principle, the link function $g_2$ in the precision equation could
 also influence the model fit. However, as the best-fitting model 
@@ -777,15 +879,18 @@ One could conduct a similar analysis as above for the household
 food expenditure data. However, as the response takes less extreme observations
 than for the gasoline yield data, the choice of link function is less important.
 In fact, refitting the model with various link functions shows no large
-differences in the resulting log-likelihoods.
+differences in the resulting log-likelihoods. These can be easily
+extracted from fitted models using the \fct{logLik} function, e.g.,
+\code{logLik(fe_beta2)}. Below we use a compact \fct{sapply} call to
+obtain this for updated versions of \code{fe_beta2} with all available link
+functions.
 %
 <<FoodExpenditure-links>>=
-sapply(c("logit", "probit", "cloglog", "cauchit", "loglog"), function(x)
-  logLik(betareg(I(food/income) ~ income + persons | persons,
-  link = x, data = FoodExpenditure)))
+sapply(c("logit", "probit", "cloglog", "cauchit", "loglog"),
+  function(x) logLik(update(fe_beta2, link = x)))
 @
 %
-Only the Cauchy link performs slightly better than the logit link and might
+Only the Cauchy link performs somewhat better than the logit link and might
 hence deserve further investigation.
 
 
@@ -915,14 +1020,28 @@ and \fct{linear.hypothesis} from \pkg{car} \citep{betareg:Fox:2002} can be
 employed for carrying out different flavors of Wald tests.
 
 In this section, we illustrate yet another generic inference approach implemented
-in the \pkg{strucchange} package for structural change testing. While originally
+in the \pkg{strucchange} package for structural change testing. This is concerned
+with a different testing problem compared to the functions above: It assesses
+whether the model parameters are stable throughout the entire the sample or
+whether they change over the observations $i = 1, \dots, n$. This is of particular
+interest in time series applications where the regression coefficients $\beta$ and
+$\gamma$ change at some unknown time in the sample period
+\citep[see][for more details and references to the literature]{betareg:Zeileis:2006}.
+
+While originally
 written for linear regression models \citep{betareg:Zeileis+Leisch+Hornik:2002},
 \pkg{strucchange} was extended by \cite{betareg:Zeileis:2006} to compute generalized
 fluctuation tests for structural change in models that are based on suitable
-estimating functions. If these estimating functions can be extracted by an
-\fct{estfun} method, models can simply be plugged into the \fct{gefp} function
-for computing generalized empirical fluctuation processes. To illustrate
-this, we replicate the example from Section~5.3 in \cite{betareg:Zeileis:2006}.
+estimating functions. The idea is to capture systematic deviations from parameter
+stability by cumulative sums of the empirical estimating functions: If the
+parameters are stable, the cumulative sum process should fluctuate randomly around
+zero. However, if there is an abrupt shift in the parameters, the cumulative sums
+will deviate clearly from zero and have a peak at around the time of the shift.
+If the estimating functions can be extracted by an \fct{estfun} method (as for
+\class{betareg} objects), models can simply be plugged into the \fct{gefp} function
+for computing these cumulative sums (also known as generalized empirical
+fluctuation processes). To illustrate this, we replicate the example from
+Section~5.3 in \cite{betareg:Zeileis:2006}.
 
 Two artificial data sets are considered: a series \code{y1} with a change in
 the mean $\mu$, and a series \code{y2} with a change in the precision $\phi$.
@@ -963,10 +1082,10 @@ plot(y2_gefp, aggregate = FALSE)
 The resulting Figure~\ref{fig:strucchange} \citep[replicating Figure~4 from][]{betareg:Zeileis:2006}
 shows two 2-dimensional fluctuation processes: one for \code{y1} (left) and one for \code{y2} (right).
 Both fluctuation processes behave as expected: There is no excessive fluctuation of the 
-process pertaining to the parameter that remained constant while there is a significant instability
-in the parameter that changed signalled by a boundary crossing and a peak at about the time
-of the change in the corresponding parameter.
-
+process pertaining to the parameter that remained constant while there is a clear peak
+at about the time of the change in the parameter with the shift. In both series
+the structural change is significant due to the crossing of the red boundary that
+corresponds to the 5\% critical value. For further details see \cite{betareg:Zeileis:2006}.
 
 \begin{figure}[t!]
 \begin{center}
@@ -1006,9 +1125,7 @@ research and implementation shall focus on the situation where the data contain 
 \citep[see e.g.,][]{betareg:Kieschnick+McCullough:2003}. An additional line of research and
 implementation is that of dynamic beta regression models, such as the class of 
 $\beta$ARMA models
-proposed by \cite{betareg:Rocha+Cribari-Neto:2010}.  
-
-
+proposed by \cite{betareg:Rocha+Cribari-Neto:2009}.  
 
 
 \section*{Acknowledgments}
@@ -1016,8 +1133,9 @@ proposed by \cite{betareg:Rocha+Cribari-Neto:2010}.
 FCN gratefully acknowledges financial support from CNPq/Brazil. 
 Both authors are grateful to A.B.~Simas and A.V.~Rocha for their
 work on the previous versions of the \pkg{betareg} package (up to
-version~1.2).
-
+version~1.2). Furthermore, detailed and constructive feedback from
+two anonymous reviewers, the associated editor, as well as from
+B.~Gr{\"u}n was very helpful for enhancing both software and manuscript.
 
 \bibliography{betareg}
 

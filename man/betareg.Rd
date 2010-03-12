@@ -30,12 +30,14 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
     included in the linear predictor.}
   \item{link}{character specification of the link function in
     the mean model (mu). Currently, \code{"logit"}, \code{"probit"},
-    \code{"cloglog"}, \code{"cauchit"}, \code{"log"}, \code{"loglog"} are supported.}
+    \code{"cloglog"}, \code{"cauchit"}, \code{"log"}, \code{"loglog"} are supported.
+    Alternatively, an object of class \code{"link-glm"} can be supplied.}
   \item{link.phi}{character specification of the link function in
     the precision model (phi). Currently, \code{"identity"},
     \code{"log"}, \code{"sqrt"} are supported. The default is \code{"log"}
     unless \code{formula} is of type \code{y ~ x} where the default is
-    \code{"identity"} (for backward compatibility).}
+    \code{"identity"} (for backward compatibility).
+    Alternatively, an object of class \code{"link-glm"} can be supplied.}
   \item{control}{a list of control arguments specified via
     \code{\link{betareg.control}}.}
   \item{model, y, x}{logicals. If \code{TRUE} the corresponding components

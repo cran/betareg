@@ -41,15 +41,15 @@ betareg <- function(formula, data, subset, na.action, weights, offset,
 
   ## sanity checks
   if(length(Y) < 1) stop("empty model")
-  if(!(min(Y) >= 0 & max(Y) <= 1)) stop("invalid dependent variable, must be in [0, 1]")
+  if(!(min(Y) > 0 & max(Y) < 1)) stop("invalid dependent variable, all observations must be in (0, 1)")
 
   ## convenience variables
   n <- length(Y)
 
   ## links
-  link <- match.arg(link)
+  if(is.character(link)) link <- match.arg(link)
   if(is.null(link.phi)) link.phi <- if(simple_formula) "identity" else "log"
-  link.phi <- match.arg(link.phi, c("identity", "log", "sqrt"))
+  if(is.character(link.phi)) link.phi <- match.arg(link.phi, c("identity", "log", "sqrt"))
 
   ## weights
   weights <- model.weights(mf)
@@ -112,18 +112,23 @@ betareg.fit <- function(x, y, z = NULL, weights = NULL, offset = NULL,
   }
 
   ## link processing
-  linkstr <- link
-  linkobj <- if(linkstr != "loglog") make.link(linkstr) else {
-    structure(list(
-      linkfun = function(mu) -log(-log(mu)),
-      linkinv = function(eta) pmax(pmin(exp(-exp(-eta)), 1 - .Machine$double.eps), .Machine$double.eps),
-      mu.eta = function(eta) {
-        eta <- pmin(eta, 700)
-        pmax(exp(-eta - exp(-eta)), .Machine$double.eps)
-      },
-      valideta = function(eta) TRUE,
-      name = "loglog"
-    ), class = "link-glm")
+  if(is.character(link)) {
+    linkstr <- link
+    linkobj <- if(linkstr != "loglog") make.link(linkstr) else {
+      structure(list(
+        linkfun = function(mu) -log(-log(mu)),
+        linkinv = function(eta) pmax(pmin(exp(-exp(-eta)), 1 - .Machine$double.eps), .Machine$double.eps),
+        mu.eta = function(eta) {
+          eta <- pmin(eta, 700)
+          pmax(exp(-eta - exp(-eta)), .Machine$double.eps)
+        },
+        valideta = function(eta) TRUE,
+        name = "loglog"
+      ), class = "link-glm")
+    }
+  } else {
+    linkobj <- link
+    linkstr <- link$name
   }
   linkfun <- linkobj$linkfun
   linkinv <- linkobj$linkinv
@@ -154,9 +159,14 @@ betareg.fit <- function(x, y, z = NULL, weights = NULL, offset = NULL,
     res <- auxreg$residuals
     sigma2 <- sum((weights * res)^2)/((n - k) * (dlink)^2)
     phi_y <- yhat * (1 - yhat)/sigma2 - 1
-    phi <- lm.wfit(z, phi_linkfun(phi_y), weights)$coefficients
-    #FIXME# The line above generalizes Ferrari & Cribari-Neto (2004), appropriate?
-    #FIXME# Different choice from Simas et al. (2009)
+    phi <- rep(0, ncol(z))
+    phi[1] <- phi_linkfun(mean(phi_y))
+    ## i.e., start out from the fixed dispersion model as described
+    ## in Ferrari & Cribari-Neto (2004) (and differing from Simas et al. 2009)
+    ## An alternative would be
+    ##   phi <- lm.wfit(z, phi_linkfun(phi_y), weights)$coefficients
+    ## but that only works in general if all(phi_y > 0) which is not necessarily
+    ## the case.
     start <- list(mean = beta, precision = phi)
   }
   if(is.list(start)) start <- do.call("c", start)
@@ -168,9 +178,11 @@ betareg.fit <- function(x, y, z = NULL, weights = NULL, offset = NULL,
     mu <- linkinv(x %*% beta + offset)
     phi <- phi_linkinv(z %*% gamma)
     if(any(!is.finite(phi))) NaN else { ## catch extreme cases without warning
-      ll <- lgamma(phi) - lgamma(mu * phi) - lgamma((1 - mu) * phi) + 
-        (mu * phi - 1) * log(y) + ((1 - mu) * phi - 1) * log(1 - y)
-      sum(weights * ll)
+      ## Use dbeta() instead of 'textbook' formula:
+      ## ll <- lgamma(phi) - lgamma(mu * phi) - lgamma((1 - mu) * phi) +
+      ##   (mu * phi - 1) * log(y) + ((1 - mu) * phi - 1) * log(1 - y)
+      ll <- suppressWarnings(dbeta(y, mu * phi, (1 - mu) * phi, log = TRUE))      
+      if(any(!is.finite(ll))) NaN else sum(weights * ll) ## again: catch extreme cases without warning
     }
   }
   gradfun <- function(par) {
