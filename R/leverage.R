@@ -31,39 +31,48 @@ gleverage.betareg <- function(model, ...)
   psi2 <- trigamma((1 - mu) * phi)
   mustar <- digamma(mu * phi) - digamma((1 - mu) * phi)
 
-  #FIXME# Correct generalization??
+  ## compute first and second derivatives
+  dmu <- as.vector(model$link$mean$mu.eta(eta))
+  dphi <- as.vector(model$link$precision$mu.eta(phi_eta))
 
-  ## compute diagonal of T
-  Tdiag <- as.vector(model$link$mean$mu.eta(eta))
-
-  ## compute w
-  w <- wts * phi * (psi1 + psi2) * Tdiag^2
-  ## compute vector c
-  vc <- phi * (psi1 * mu - psi2 * (1 - mu))  
-  ## compute d
-  d <- psi1 * mu^2 + psi2 * (1-mu)^2 - trigamma(phi)
-  ## compute (X'W X)^(-1)
-  xwx1 <- chol2inv(qr.R(qr(sqrt(w) * x)))
-  ## compute X'Tc
-  xtc <- as.vector(t(x) %*% (Tdiag * vc))  
-  ## compute gamma
-  xwtc <- as.vector(xwx1 %*% xtc)
-  gamma <- sum(d) - sum(xtc * xwtc)/phi  
-
-  ## compute q, f, m, b
-  q <- w + wts * (ystar - mustar) * eta/model$link$mean$mu.eta(eta) * Tdiag^2
-  ##     -   (in previous version)
-  f <- vc - (ystar - mustar)
-  m <- 1 / (y * (1 - y))
-  b <- -(y - mu) * m
-
-  ## compute T X (X'Q X)^(-1) X' T
-  tx_xwx1_xt <- t(t(Tdiag * (x %*% chol2inv(qr.R(qr(sqrt(q) * x))) %*% t(x))) * Tdiag)
+  d2mu <- switch(model$link$mean$name,
+    "logit" = { dlogis(eta) * (1 - 2 * exp(eta)/(1 + exp(eta))) },
+    "probit" = { -dnorm(eta) * eta },
+    "cloglog" = { exp(-exp(eta)) * exp(eta) * (1 - exp(eta)) },
+    "cauchit" = { -2 * eta/(1 + eta^2) * dcauchy(eta) },
+    "log" = { mu },
+    "loglog" = { exp(-exp(-eta)) * exp(-eta) * (exp(-eta) - 1) }
+  )
+  d2phi <- switch(model$link$precision$name,
+    "identity" = 0,
+    "log" = phi,
+    "sqrt" = 2
+  )
   
-  ## GL
-  gl <- diag(tx_xwx1_xt) * m
-  gl <- gl + diag(tx_xwx1_xt %*% f %*% (t(f) %*% tx_xwx1_xt %*% diag(m) - t(b)))/(gamma * phi)
-  gl
+  ## compute L (below equation 5)
+  a <- psi1 + psi2
+  b <- psi1 * mu^2 + psi2 * (1-mu)^2 - trigamma(phi)
+  v <- mu * (ystar - mustar) + digamma(phi) - digamma(phi * (1 - mu)) + log(1 - y)  
+  Qbb <- phi * (phi * a * dmu^2 - (ystar - mustar) * d2mu)
+  Qbg <- (phi * (mu * a - psi2) + mustar - ystar) * dmu * dphi
+  Qgg <- b * dphi^2 - v * d2phi
+  L <- crossprod(x,  Qbg * wts * z)
+  L <- rbind(
+    cbind(crossprod(x, Qbb * wts * x), L),
+    cbind(t(L), crossprod(z, Qgg * wts * z))
+  )
+
+  ## compute D (below equation 11)
+  D <- cbind(dmu * x, matrix(0, ncol = ncol(z), nrow = nrow(z)))
+
+  ## compute Lty (below equation 11)
+  Mb <- 1/(y * (1 - y))
+  Mg <- (mu - y)/(y * (1 - y))
+  Lty <- wts * t(cbind(phi * dmu * Mb * x, dphi * Mg * z))
+  
+  ## equation 11
+  GL <- D %*% solve(L) %*% Lty
+  return(wts * diag(GL))
 }
 
 hatvalues.betareg <- function(model, ...)

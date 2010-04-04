@@ -1,3 +1,14 @@
+Changes in Version 2.2-1
+
+  o Package now published in Journal of Statistical Software,
+    see http://www.jstatsoft.org/v34/i02/
+    and citation("betareg") within R.
+
+  o Bug fix and improvements in gleverage() method for "betareg"
+    objects: Analytic second derivatives are now used and
+    variable dispersion models are handled correctly.
+
+
 Changes in Version 2.2-0
 
   o dbeta(..., log = TRUE) is now used for computing the

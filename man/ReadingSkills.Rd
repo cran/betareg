@@ -38,6 +38,10 @@ Example 3 from
 }
 
 \references{
+Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
+  \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
+  \url{http://www.jstatsoft.org/v34/i02/}.
+
 Pammer, K., and Kevan, A. (2004).
   The Contribution of Visual Sensitivity, Phonological Processing
   and Non-Verbal IQ to Children's Reading.

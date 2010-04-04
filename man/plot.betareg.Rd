@@ -48,6 +48,10 @@
 }
 
 \references{
+Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
+  \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
+  \url{http://www.jstatsoft.org/v34/i02/}.
+
 Ferrari, S.L.P., and Cribari-Neto, F. (2004).
   Beta Regression for Modeling Rates and Proportions.
   \emph{Journal of Applied Statistics}, \bold{31}(7), 799--815.

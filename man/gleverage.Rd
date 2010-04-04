@@ -33,7 +33,7 @@ Ferrari, S.L.P., and Cribari-Neto, F. (2004).
   Beta Regression for Modeling Rates and Proportions.
   \emph{Journal of Applied Statistics}, \bold{31}(7), 799--815.
 
-Wei, B.-C., Hu, Y.-Q., and Fung, W.-K. (1998).
+Wei, B.-C., and Hu, Y.-Q., and Fung, W.-K. (1998).
   Generalized Leverage and Its Applications.
   \emph{Scandinavian Journal of Statistics}, \bold{25}, 25--37.
 }
