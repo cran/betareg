@@ -71,7 +71,7 @@ betareg <- function(formula, data, subset, na.action, weights, offset,
   rval$call <- cl
   rval$formula <- oformula
   rval$terms <- list(mean = mtX, precision = mtZ, full = mt)
-  rval$levels <- .getXlevels(mt, mf)
+  rval$levels <- list(mean = .getXlevels(mtX, mf), precision = .getXlevels(mtZ, mf), full = .getXlevels(mt, mf))
   rval$contrasts <- list(mean = attr(X, "contrasts"), precision = attr(Z, "contrasts"))
   if(model) rval$model <- mf
   if(y) rval$y <- Y
@@ -424,13 +424,23 @@ predict.betareg <- function(object, newdata = NULL,
 
   } else {
 
-    mf <- model.frame(delete.response(object$terms$mean), newdata, na.action = na.action, xlev = object$levels)
-    X <- model.matrix(delete.response(object$terms$mean), mf, contrasts = object$contrasts$mean)
-    Z <- model.matrix(object$terms$precision, mf, contrasts = object$contrasts$precision)
-    offset <- if(!is.null(off.num <- attr(object$terms$full, "offset")))
-  	eval(attr(object$terms$full, "variables")[[off.num + 1]], newdata)
-      else if(!is.null(object$offset)) eval(object$call$offset, newdata)
-    if(is.null(offset)) offset <- rep(0, NROW(X))
+    tnam <- switch(type, 
+      "response" = "mean",
+      "link" = "mean",
+      "precision" = "precision",
+      "variance" = "full")
+      
+    mf <- model.frame(delete.response(object$terms[[tnam]]), newdata, na.action = na.action, xlev = object$levels[[tnam]])
+    if(type %in% c("response", "link", "variance")) {
+      X <- model.matrix(delete.response(object$terms$mean), mf, contrasts = object$contrasts$mean)
+      offset <- if(!is.null(off.num <- attr(object$terms$full, "offset")))
+    	eval(attr(object$terms$full, "variables")[[off.num + 1]], newdata)
+        else if(!is.null(object$offset)) eval(object$call$offset, newdata)
+      if(is.null(offset)) offset <- rep(0, NROW(X))
+    }
+    if(type %in% c("precision", "variance")) {
+      Z <- model.matrix(object$terms$precision, mf, contrasts = object$contrasts$precision)
+    }
 
     rval <- switch(type,    
       "response" = {

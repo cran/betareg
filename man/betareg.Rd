@@ -134,7 +134,8 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
   \item{formula}{the original formula,}  
   \item{terms}{a list with elements \code{"mean"}, \code{"precision"} and
     \code{"full"} containing the terms objects for the respective models,}
-  \item{levels}{levels of the categorical regressors,}
+  \item{levels}{a list with elements \code{"mean"}, \code{"precision"} and
+    \code{"full"} containing the levels of the categorical regressors,}
   \item{contrasts}{a list with elements \code{"mean"} and \code{"precision"}
     containing the contrasts corresponding to \code{levels} from the
     respective models,}

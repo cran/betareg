@@ -1,6 +1,15 @@
+Changes in Version 2.2-3
+
+  o The "levels" element of a "betareg" object is now a list
+    with components "mean", "precision", and "full" to match
+    the "terms" of the object.
+    
+  o Improved data handling bug in predict() method.
+
+
 Changes in Version 2.2-2
 
-  o documentation updates for ?gleverage.
+  o Documentation updates for ?gleverage.
   
 
 Changes in Version 2.2-1
