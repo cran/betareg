@@ -29,7 +29,9 @@
   Equation 8 for \code{"sweighted2"}.
   
   Espinheira et al. (2008) recommend to use \code{"sweighted2"}, hence this is 
-  the default in the \code{residuals()} method.
+  the default in the \code{residuals()} method. Note, however, that these are
+  rather burdensome to compute because they require operations of \eqn{O(n^2)}
+  and hence might be prohibitively costly in large sample.
 }
 
 \references{

@@ -4,13 +4,47 @@ importFrom("sandwich", "estfun")
 importFrom("sandwich", "bread")
 importFrom("lmtest", "coeftest")
 
+importClassFrom("flexmix", "FLXM")
+importClassFrom("flexmix", "FLXMR")
+importClassFrom("flexmix", "FLXMRfix")
+
+importFrom("flexmix", "existGradient")
+importFrom("flexmix", "FLXdeterminePostunscaled")
+importFrom("flexmix", "FLXgetModelmatrix")
+importFrom("flexmix", "FLXgetDesign")
+importFrom("flexmix", "FLXgradlogLikfun")
+importFrom("flexmix", "FLXmstep")
+importFrom("flexmix", "FLXremoveComponent")
+importFrom("flexmix", "FLXreplaceParameters")
+importFrom("flexmix", "FLXgetParameters")
+importFrom("flexmix", "refit_optim")
+importFrom("flexmix", "logLik")
+importFrom("flexmix", "summary")
+importFrom("flexmix", "predict")
+importFrom("flexmix", "fitted")
+
+importFrom("modeltools", "posterior")
+importFrom("modeltools", "clusters")
+
 export(
+  ## beta regression
   "betareg",
   "betareg.control",
   "betareg.fit",
-  "gleverage"
+  "gleverage",
+  
+  ## beta regression trees
+  "betatree",
+  "betaReg",
+  "reweight.betaReg",
+  "sctest.betatree",
+
+  ## beta mixture models
+  "betamix",
+  "extraComponent"
 )
 
+## methods for class betareg
 S3method("bread", "betareg")
 S3method("coef", "betareg")
 S3method("coeftest", "betareg")
@@ -30,3 +64,26 @@ S3method("terms", "betareg")
 S3method("print", "summary.betareg")
 S3method("update", "betareg")
 S3method("vcov", "betareg")
+
+## methods for class betaReg
+S3method("estfun", "betaReg")
+S3method("print", "betaReg")
+S3method("summary", "betaReg")
+
+## methods for class betatree
+S3method("coef", "betatree")
+S3method("logLik", "betatree")
+S3method("plot", "betatree")
+S3method("print", "betatree")
+S3method("summary", "betatree")
+S3method("weights", "betatree")
+
+## methods for class betamix
+S3method("coef", "betamix")
+S3method("logLik", "betamix")
+S3method("print", "betamix")
+S3method("summary", "betamix")
+exportMethods("fitted")
+exportMethods("posterior")
+exportMethods("clusters")
+exportMethods("predict")

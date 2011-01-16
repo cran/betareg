@@ -25,7 +25,7 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
     or \code{y ~ x | z}; for details see below).}
   \item{data, subset, na.action}{arguments controlling formula processing
     via \code{\link[stats]{model.frame}}.}
-  \item{weights}{optional numeric vector of weights.}
+  \item{weights}{optional numeric vector of case weights.}
   \item{offset}{optional numeric vector with an a priori known component to be
     included in the linear predictor.}
   \item{link}{character specification of the link function in

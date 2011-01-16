@@ -55,7 +55,9 @@
   supplies partial Wald tests based on the coefficients and the covariance matrix.
   As usual, the \code{summary} method returns an object of class \code{"summary.betareg"}
   containing the relevant summary statistics which can subsequently be printed
-  using the associated \code{print} method.
+  using the associated \code{print} method. Note that the default residuals
+  \code{"sweighted2"} might be burdensome to compute in large samples and hence might
+  need modification in such applications.
 
   A \code{\link[stats]{logLik}} method is provided, hence \code{\link[stats]{AIC}}
   can be called to compute information criteria.

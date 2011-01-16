@@ -1,3 +1,20 @@
+Changes in Version 2.3-0
+
+  o New betatree() function for beta regression trees based
+    on model-based recursive partitioning. betatree() leverages
+    the mob() function from the "party" package. For enabling this
+    plug-in, a "StatModel" constructor betaReg() is provided
+    based on the "modeltools" package.
+
+  o New betamix() function for latent class beta regression, or
+    finite mixture beta regression models. betamix() leverages the
+    flexmix() function from the "flexmix" package. For enabling this
+    plug-in, the driver FLXMRbeta() is provided.
+
+  o Added some tests/vignette-betareg.R based on the models fitted
+    in vignette("betareg", package = "betareg").
+
+
 Changes in Version 2.2-3
 
   o The "levels" element of a "betareg" object is now a list
