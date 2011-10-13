@@ -62,7 +62,7 @@ library("lmtest")
 
 ## Smithson & Verkuilen (2006, Table 1)
 ## variable dispersion model
-## (NOTE: numerical rather than numerical Hessian are always used for replication,
+## (NOTE: numerical rather than analytical Hessian is used for replication,
 ##  Smithson & Verkuilen erroneously compute one-sided p-values)
 mj_vd <- betareg(confidence ~ verdict * conflict | verdict * conflict,
   data = MockJurors, hessian = TRUE)

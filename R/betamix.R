@@ -1,10 +1,10 @@
-betamix <- function(formula, data, k, fixed, subset, na.action, 
+betamix <- function(formula, data, k, subset, na.action, 
                     link = c("logit", "probit", "cloglog", "cauchit", "log", "loglog"),
                     link.phi = "log", 
                     control = betareg.control(...),
-                    FLXconcomitant = NULL,
-                    extra_components, verbose = FALSE, 
-                    ID, nstart = 1, FLXcontrol = list(), cluster = NULL, which = "BIC", ...)
+                    cluster = NULL, FLXconcomitant = NULL, FLXcontrol = list(), 
+                    verbose = FALSE, nstart = if (missing(cluster)) 3 else 1, which = "BIC", 
+                    ID, fixed, extra_components, ...)
 {
   ## beta regression mixtures rely on flexmix package
   stopifnot(require("flexmix"))

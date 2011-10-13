@@ -58,14 +58,14 @@ setMethod("FLXmstep", signature(model = "FLXMRbeta_extra"),
   defineComponent <-
     list(uniform = expression({
       predict <- function(x, z, ...) 
-        x %*% coef
+        list(mean = x %*% coef, delta = delta)
       logLik <- function(x, y, z, ...) {
         pars <- predict(x, z, ...)
-        lower <- pars - delta
-        upper <- pars + delta
-        - log(2 * delta) + log(as.integer(lower < y & upper > y))
+        lower <- with(pars, mean - delta)
+        upper <- with(pars, mean + delta)
+        - log(2 * pars$delta) + log(as.integer(lower < y & upper > y))
       }
-      new("FLXcomponent", parameters = list(coef = coef, delta = delta), logLik = logLik, predict = predict, 
+      new("FLXcomponent", parameters = list(mean = coef, delta = delta), logLik = logLik, predict = predict, 
           df = df)
     }),
          betareg = FLXMRbeta()@defineComponent)
@@ -80,31 +80,32 @@ setMethod("FLXmstep", signature(model = "FLXMRbeta_extra"),
                                                  precision = c(coef$precision, rep(0, length.out = ncol(model@z) - length(coef$precision)))),
                                                df = 0, offset = NULL, linkobjs = link),
                                           eval(defineComponent[["betareg"]]))))
-  c(extra_components,
-    FLXmstep(as(model, "FLXMRbeta"), weights[, -seq_along(model@extra_components), drop=FALSE]))
+  c(FLXmstep(as(model, "FLXMRbeta"), weights[, seq_len(ncol(weights) - length(model@extra_components)), drop=FALSE]),
+    extra_components)
 })
 
 setMethod("FLXgetParameters", signature(object = "FLXMRbeta_extra"),
 function(object, components) 
-  callNextMethod(object, components[-seq_along(object@extra_components)]))
+  callNextMethod(object, components[seq_len(length(components) - length(object@extra_components))]))
 
 setMethod("FLXgetDesign", signature(object = "FLXMRbeta_extra"),
 function(object, components) 
-  FLXgetDesign(as(object, "FLXMRbeta"), components[-seq_along(object@extra_components)]))
+  FLXgetDesign(as(object, "FLXMRbeta"), components[seq_len(length(components) - length(object@extra_components))]))
 
 setMethod("FLXreplaceParameters", signature(object="FLXMRbeta_extra"),
 function(object, components, parms)
-          c(components[seq_along(object@extra_components)], FLXreplaceParameters(as(object,
-            "FLXMRbeta"), components[-seq_along(object@extra_components)], parms)))
+          c(FLXreplaceParameters(as(object, "FLXMRbeta"), components[seq_len(length(components) - length(object@extra_components))], parms),
+            components[length(components) + seq(1 - length(object@extra_components), 0)]))
 
 setMethod("FLXgradlogLikfun", signature(object="FLXMRbeta_extra"),
 function(object, components, weights, ...)
           FLXgradlogLikfun(as(object, "FLXMRbeta"),
-                           components[-seq_along(object@extra_components)], weights[,-seq_along(object@extra_components),drop=FALSE]))
+                           components[seq_len(length(components) - length(object@extra_components))],
+                           weights[,seq_len(length(components) - length(object@extra_components)),drop=FALSE]))
 
 setMethod("refit_optim", signature(object = "FLXMRbeta_extra"),
 function(object, components, ...) {
-  x <- refit_optim(as(object, "FLXMRbeta"), components[-seq_along(object@extra_components)], ...)
-  names(x) <- paste("Comp", length(object@extra_components) + seq_along(x), sep = ".")
+  x <- refit_optim(as(object, "FLXMRbeta"), components[seq_len(length(components) - length(object@extra_components))], ...)
+  names(x) <- paste("Comp", seq_along(x), sep = ".")
   x
 })

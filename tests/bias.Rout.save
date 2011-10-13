@@ -1,0 +1,133 @@
+
+R version 2.13.2 (2011-09-30)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## Package and data
+> library("betareg")
+Loading required package: Formula
+> data("GasolineYield", package = "betareg")
+> 
+> ## Same results as in Table 1 in Kosmidis and Firth (2010, EJS,
+> ## http://dx.doi.org/10.1214/10-EJS579)
+> gyML <- betareg(yield ~ batch + temp, data = GasolineYield, link.phi = "identity")
+> gyBC <- betareg(yield ~ batch + temp, data = GasolineYield, link.phi = "identity", type = "BC")
+> gyBR <- betareg(yield ~ batch + temp, data = GasolineYield, link.phi = "identity", type = "BR")
+> 
+> ## Coefficients and standard errors
+> se <- function(obj, ...) sqrt(diag(vcov(obj, ...)))
+> sapply(list(gyML, gyBC, gyBR), coef)
+                    [,1]        [,2]         [,3]
+(Intercept)  -6.15957105  -6.1483682  -6.14171016
+batch1        1.72772888   1.7248359   1.72325026
+batch2        1.32259692   1.3200920   1.31860358
+batch3        1.57230989   1.5692826   1.56733756
+batch4        1.05971411   1.0578783   1.05676966
+batch5        1.13375178   1.1316487   1.13024068
+batch6        1.04016181   1.0382932   1.03713633
+batch7        0.54369223   0.5430897   0.54241923
+batch8        0.49590066   0.4951800   0.49445610
+batch9        0.38579296   0.3850195   0.38459245
+temp          0.01096687   0.0109447   0.01093203
+(phi)       440.27838856 261.2061042 261.03776775
+> sapply(list(gyML, gyBC, gyBR), se)
+                    [,1]         [,2]         [,3]
+(Intercept) 1.823247e-01 2.359503e-01  0.235882697
+batch1      1.012294e-01 1.310740e-01  0.131056768
+batch2      1.179020e-01 1.526021e-01  0.152573189
+batch3      1.161045e-01 1.503029e-01  0.150281191
+batch4      1.023598e-01 1.325097e-01  0.132488979
+batch5      1.035232e-01 1.340435e-01  0.134029112
+batch6      1.060365e-01 1.372861e-01  0.137268461
+batch7      1.091275e-01 1.411931e-01  0.141162942
+batch8      1.089257e-01 1.409854e-01  0.140964758
+batch9      1.185933e-01 1.535291e-01  0.153505478
+temp        4.126475e-04 5.339453e-04  0.000533804
+(phi)       1.100256e+02 6.525866e+01 65.216400384
+> 
+> ## Same results as in Table 3 in Kosmidis and Firth (2010, EJS,
+> ## http://dx.doi.org/10.1214/10-EJS579). BR and BC estimates in the
+> ## latter study were calculated in a different way than betareg
+> ## computes them which provides some indication on the correctness of
+> ## implementation
+> gyMLlog <- betareg(yield ~ batch + temp, data = GasolineYield, link.phi = "log")
+> gyBClog <- betareg(yield ~ batch + temp, data = GasolineYield, link.phi = "log", type = "BC")
+> gyBRlog <- betareg(yield ~ batch + temp, data = GasolineYield, link.phi = "log", type = "BR")
+> sapply(list(gyMLlog, gyBClog, gyBRlog), coef)
+                         [,1]       [,2]        [,3]
+(Intercept)       -6.15957105 -6.1483682 -6.14259306
+batch1             1.72772887  1.7248359  1.72347139
+batch2             1.32259692  1.3200920  1.31880092
+batch3             1.57230989  1.5692826  1.56758307
+batch4             1.05971411  1.0578783  1.05691471
+batch5             1.13375178  1.1316487  1.13041379
+batch6             1.04016181  1.0382932  1.03728558
+batch7             0.54369223  0.5430897  0.54248209
+batch8             0.49590066  0.4951800  0.49452747
+batch9             0.38579296  0.3850195  0.38465224
+temp               0.01096687  0.0109447  0.01093375
+(phi)_(Intercept)  6.08740723  5.7119071  5.61608450
+> sapply(list(gyMLlog, gyBClog, gyBRlog), se)
+                          [,1]         [,2]         [,3]
+(Intercept)       0.1823246757 0.2194387130 0.2299768847
+batch1            0.1012293904 0.1218919170 0.1277688842
+batch2            0.1179020419 0.1419259895 0.1487520759
+batch3            0.1161045006 0.1397813380 0.1465143900
+batch4            0.1023598261 0.1232342704 0.1291683492
+batch5            0.1035232385 0.1246546463 0.1306668145
+batch6            0.1060364742 0.1276728605 0.1338262364
+batch7            0.1091274667 0.1313271890 0.1376330271
+batch8            0.1089256693 0.1311226212 0.1374341470
+batch9            0.1185932678 0.1427821646 0.1496578075
+temp              0.0004126475 0.0004966055 0.0005204478
+(phi)_(Intercept) 0.2499001264 0.2498567363 0.2498428417
+> 
+> ## Fit with temp as a dispersion covariate
+> gy2ML <- betareg(yield ~ batch + temp | temp, data = GasolineYield)
+> gy2BC <- betareg(yield ~ batch + temp | temp, data = GasolineYield, type = "BC")
+> gy2BR <- betareg(yield ~ batch + temp | temp, data = GasolineYield, type = "BR")
+> sapply(list(gy2ML, gy2BC, gy2BR), coef)
+                         [,1]        [,2]         [,3]
+(Intercept)       -5.92323614 -5.91681503 -6.085353789
+batch1             1.60198775  1.60062703  1.680351831
+batch2             1.29726625  1.29591054  1.312044159
+batch3             1.56533827  1.56362040  1.570254283
+batch4             1.03007197  1.02918612  1.048684007
+batch5             1.15416304  1.15317551  1.137409904
+batch6             1.01944465  1.01856516  1.031738518
+batch7             0.62225905  0.62171239  0.571072576
+batch8             0.56458300  0.56416204  0.518957003
+batch9             0.35943898  0.35906747  0.375556347
+temp               0.01035948  0.01034665  0.010782050
+(phi)_(Intercept)  1.36408882  1.98198429  4.366840407
+(phi)_temp         0.01457032  0.01148434  0.003763385
+> sapply(list(gy2ML, gy2BC, gy2BR), se)
+                          [,1]         [,2]         [,3]
+(Intercept)       0.1835262493 0.2216755772 0.2340856034
+batch1            0.0638561305 0.0860388669 0.1165475343
+batch2            0.0991000720 0.1239755076 0.1439964623
+batch3            0.0997392109 0.1238178321 0.1420904055
+batch4            0.0632882263 0.0855578875 0.1171486235
+batch5            0.0656427345 0.0877327924 0.1185383574
+batch6            0.0663510103 0.0892694288 0.1214628872
+batch7            0.0656324987 0.0892209203 0.1242404263
+batch8            0.0601846339 0.0832203491 0.1211888774
+batch9            0.0671405804 0.0924408762 0.1324987937
+temp              0.0004361696 0.0005247197 0.0005414828
+(phi)_(Intercept) 1.2257812373 1.2266705145 1.2323158682
+(phi)_temp        0.0036182845 0.0036199699 0.0036336075
+> 
+> 

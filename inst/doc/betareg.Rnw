@@ -23,7 +23,10 @@
 \Abstract{
   This introduction to the \proglang{R} package \pkg{betareg} is a (slightly)
   modified version of \cite{betareg:Cribari-Neto+Zeileis:2010}, published in the
-  \emph{Journal of Statistical Software}.
+  \emph{Journal of Statistical Software}. A follow-up paper with various
+  extensions is \cite{betareg:Gruen+Kosmidis+Zeileis:2011} -- a slightly modified
+  version of which is also provided within the package as
+  \code{vignette("betareg-ext", package = "betareg")}
 
   The class of beta regression models is commonly used by 
   practitioners to model variables that assume values in the standard 
@@ -364,6 +367,9 @@ function) is set up, \fct{optim} is called for maximizing the likelihood, and fi
 an object of \proglang{S}3 class \class{betareg} is returned for which a large set of methods to standard
 generics is available. The workhorse function is \fct{betareg.fit} which provides
 the core computations without \code{formula}-related data pre- and post-processing.
+\textbf{Update:} Recently, \fct{betareg} has been extended to optionally include an
+additional Fisher scoring iteration after the \fct{optim} optimization in order to
+improve the ML result (or apply a bias correction or reduction).
 
 The model-fitting function \fct{betareg} and its associated class are designed to
 be as similar as possible to the standard \fct{glm} function \citep{betareg:R:2009}
@@ -461,6 +467,9 @@ $\gamma$ coefficients (if any) are initially set to zero.
 The covariance matrix estimate is derived analytically as in
 \cite{betareg:Simas+Barreto-Souza+Rocha:2010}. However, by setting \code{hessian = TRUE}
 the numerical Hessian matrix returned by \fct{optim} can also be obtained.
+\textbf{Update:} In recent versions of \pkg{betareg}, the \fct{optim} is
+still performed but optionally it may be complemented by a subsequent
+additional Fisher scoring iteration to improve the result.
 
 The returned fitted-model object of class \class{betareg} is a list similar
 to \class{glm} objects. Some of its elements -- such as \code{coefficients} or
@@ -626,7 +635,7 @@ The dependent variable is \code{food/income}, the proportion of household
 the previously mentioned household \code{income} and the number of \code{persons}
 living in the household. All three variables are visualized in Figure~\ref{fig:FoodExpenditure}.
 
-\begin{figure}[b!]
+\begin{figure}[t!]
 \begin{center}
 \setkeys{Gin}{width=0.75\textwidth}
 <<FoodExpenditure-visualization, echo=FALSE, fig=TRUE, width=6, height=5.5>>=

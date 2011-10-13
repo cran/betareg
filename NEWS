@@ -1,3 +1,32 @@
+Changes in Version 2.4-0
+
+  o Support bias-corrected (BC) and bias-reduced (BR) maximum likelihood
+    estimation of beta regressions. See the "type" argument of betareg().
+    To enable BC/BR, an additional Fisher scoring iteration was added
+    that (by default) also enhances the usual ML results.
+    
+  o New vignette("betareg-ext", package = "betareg") introducing BC/BR
+    estimation along with the recent additions beta regression trees and latent
+    class beta regression (aka finite mixture beta regression models).
+
+  o Enabled fitting of beta regression models without coefficients in the
+    mean equation.
+
+  o Enabled usage of offsets in both parts of the model, i.e., one can use
+    betareg(y ~ x + offset(o1) | z + offset(o2)) which is also equivalent to
+    betareg(y ~ x | z + offset(o2), offset = o1), i.e., the "offset"
+    argument of betareg is employed for the mean equation only. Consequently,
+    betareg_object$offset is now a list with two elements (mean/precision).
+
+  o Added warning and ad-hoc workaround in the starting value selection
+    of betareg.fit() for the precision model. If no valid starting value can be
+    obtained, a warning is issued and c(1, 0, ..., 0) is employed.
+
+  o Added betareg_object$nobs in the return object containing the number
+    of observations with non-zero weights. Then nobs() can be used to extract
+    this and consequently BIC() can be used to compute the BIC.
+
+
 Changes in Version 2.3-0
 
   o New betatree() function for beta regression trees based
@@ -11,7 +40,7 @@ Changes in Version 2.3-0
     flexmix() function from the "flexmix" package. For enabling this
     plug-in, the driver FLXMRbeta() is provided.
 
-  o Added some tests/vignette-betareg.R based on the models fitted
+  o Added tests/vignette-betareg.R based on the models fitted
     in vignette("betareg", package = "betareg").
 
 

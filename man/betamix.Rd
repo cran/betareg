@@ -21,12 +21,13 @@
 }
 
 \usage{
-betamix(formula, data, k, fixed, subset, na.action, 
+betamix(formula, data, k, subset, na.action, 
   link = c("logit", "probit", "cloglog", "cauchit", "log",
-  "loglog"), link.phi = "log", control = betareg.control(...),
-  FLXconcomitant = NULL, extra_components, verbose = FALSE, ID,
-  nstart = 1, FLXcontrol = list(), cluster = NULL,
-  which = "BIC", ...)
+    "loglog"), link.phi = "log",
+  control = betareg.control(...), cluster = NULL,
+  FLXconcomitant = NULL, FLXcontrol = list(), verbose = FALSE,
+  nstart = if (missing(cluster)) 3 else 1, which = "BIC", 
+  ID, fixed, extra_components, ...)
 
 extraComponent(type = c("uniform", "betareg"), coef, delta,
   link = "logit", link.phi = "log")
@@ -40,8 +41,6 @@ extraComponent(type = c("uniform", "betareg"), coef, delta,
   \item{k}{a vector of integers indicating the number of components of
     the finite mixture; passed in turn to the \code{k} argument
     of \code{\link[flexmix]{stepFlexmix}}.}
-  \item{fixed}{symbolic description of the model for the parameters
-    fixed over components (of type \code{~ x | z})}.
   \item{link}{character specification of the link function in
     the mean model (mu). Currently, \code{"logit"}, \code{"probit"},
     \code{"cloglog"}, \code{"cauchit"}, \code{"log"}, \code{"loglog"} are supported.
@@ -54,31 +53,33 @@ extraComponent(type = c("uniform", "betareg"), coef, delta,
     Alternatively, an object of class \code{"link-glm"} can be supplied.}
   \item{control}{a list of control arguments specified via
     \code{\link{betareg.control}}.}
-  \item{FLXconcomitant}{concomitant variable model; object of class
-    \code{FLXP}. Default is the object returned by calling
-    \code{\link[flexmix]{FLXPconstant}}.}
-  \item{extra_components}{a list containing objects returned by
-    \code{extraComponent()}.}
-  \item{verbose}{a logical; if \code{TRUE} progress information is shown
-    for different starts of the EM algorithm.}
-  \item{ID}{grouping variable indicating if observations are from the same
-    individual, i.e. the component membership is restricted to be the
-    same for these observations.}
-  \item{nstart}{for each value of \code{k} run
-    \code{\link[flexmix]{stepFlexmix}} \code{nstart} times and keep only
-    the solution with maximum likelihood.}
-  \item{FLXcontrol}{object of class \code{"FLXcontrol"} or a named list;
-    controls the EM algorithm and passed in turn to the \code{control}
-    argument of \code{\link[flexmix]{flexmix}}.}
   \item{cluster}{Either a matrix with \code{k} columns of initial
     cluster membership probabilities for each observation; or a factor
     or integer vector with the initial cluster
     assignments of observations at the start of the EM
     algorithm. Default is random assignment into \code{k}
     clusters.}
+  \item{FLXconcomitant}{concomitant variable model; object of class
+    \code{FLXP}. Default is the object returned by calling
+    \code{\link[flexmix]{FLXPconstant}}.}
+  \item{FLXcontrol}{object of class \code{"FLXcontrol"} or a named list;
+    controls the EM algorithm and passed in turn to the \code{control}
+    argument of \code{\link[flexmix]{flexmix}}.}
+  \item{verbose}{a logical; if \code{TRUE} progress information is shown
+    for different starts of the EM algorithm.}
+  \item{nstart}{for each value of \code{k} run
+    \code{\link[flexmix]{stepFlexmix}} \code{nstart} times and keep only
+    the solution with maximum likelihood.}
   \item{which}{number of model to get if \code{k} is a vector of
     integers longer than one. If character, interpreted as
     number of components or name of an information criterion.}
+  \item{ID}{grouping variable indicating if observations are from the same
+    individual, i.e. the component membership is restricted to be the
+    same for these observations.}
+  \item{fixed}{symbolic description of the model for the parameters
+    fixed over components (of type \code{~ x | z}).}
+  \item{extra_components}{a list containing objects returned by
+    \code{extraComponent()}.}
   \item{\dots}{arguments passed to \code{\link{betareg.control}}.}
 
   \item{type}{specifies if the component follows a uniform distribution
@@ -94,7 +95,7 @@ extraComponent(type = c("uniform", "betareg"), coef, delta,
   The arguments and the model specification are similar to
   \code{\link{betareg}}. Internally \code{\link[flexmix]{stepFlexmix}}
   is called with suitable arguments to fit the finite mixture model with
-  the EM algorithm.
+  the EM algorithm. See Grün et al. (2011) for more details.
 
   \code{extra_components} is a list where each element corresponds to a
   component where the parameters are fixed a-priori.
@@ -110,6 +111,12 @@ extraComponent(type = c("uniform", "betareg"), coef, delta,
 Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \url{http://www.jstatsoft.org/v34/i02/}.
+
+Grün, B., Kosmidis, I., and Zeileis, A. (2011).
+  Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
+  Working Paper 2011-22. Working Papers in Economics and Statistics,
+  Research Platform Empirical and Experimental Economics, Universität Innsbruck.
+  \url{http://EconPapers.RePEc.org/RePEc:inn:wpaper:2011-22}
 
 Grün, B., and Leisch, F. (2008). FlexMix Version 2: Finite Mixtures
   with Concomitant Variables and Varying and Constant Parameters.
@@ -144,18 +151,25 @@ rs_mix <- betamix(accuracy ~ iq, data = ReadingSkills, k = 3,
 
 ## visualize result
 ## intensities based on posterior probabilities
-prob <- 2 * (posterior(rs_mix)[cbind(1:nrow(ReadingSkills), clusters(rs_mix))] - 0.5)
+prob <- 2 * (posterior(rs_mix)[cbind(1:nrow(ReadingSkills),
+   clusters(rs_mix))] - 0.5)
 ## associated HCL colors
-col0 <- hcl(c(130, 260, 0), 65, 45, fixup = FALSE)
+col0 <- hcl(c(260, 0, 130), 65, 45, fixup = FALSE)
 col1 <- col0[clusters(rs_mix)]
-col2 <- hcl(c(130, 260, 0)[clusters(rs_mix)], 65 * abs(prob)^1.5, 95 - 50 * abs(prob)^1.5, fixup = FALSE)
+col2 <- hcl(c(260, 0, 130)[clusters(rs_mix)], 65 * abs(prob)^1.5,
+   95 - 50 * abs(prob)^1.5, fixup = FALSE)
 ## scatter plot
-plot(accuracy ~ iq, data = ReadingSkills, col = col2, pch = 19, cex = 1.5, xlim = c(-2, 2))
-points(accuracy ~ iq, data = ReadingSkills, cex = 1.5, pch = 1, col = col1)
+plot(accuracy ~ iq, data = ReadingSkills, col = col2, pch = 19,
+   cex = 1.5, xlim = c(-2, 2))
+points(accuracy ~ iq, data = ReadingSkills, cex = 1.5, pch = 1,
+   col = col1)
 ## fitted lines
 iq <- -30:30/10
-cf <- rbind(c(qlogis(0.99), 0), coef(rs_mix, model = "mean", component = 2:3))
-for(i in 1:3) lines(iq, plogis(cf[i, 1] + cf[i, 2] * iq), lwd = 2, col = col0[i]) 
+cf <- rbind(coef(rs_mix, model = "mean", component = 1:2),
+   c(qlogis(0.99), 0))
+for(i in 1:3)
+   lines(iq, plogis(cf[i, 1] + cf[i, 2] * iq), lwd = 2,
+         col = col0[i]) 
 }
 
 \keyword{regression}

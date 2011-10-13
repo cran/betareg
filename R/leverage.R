@@ -13,7 +13,10 @@ gleverage.betareg <- function(model, ...)
   y <- if(is.null(model$y)) model.response(model.frame(model)) else model$y
   x <- if(is.null(model$x)) model.matrix(model, model = "mean") else model$x$mean
   z <- if(is.null(model$x)) model.matrix(model, model = "precision") else model$x$precision
-  offset <- if(is.null(model$offset)) rep(0, NROW(x)) else model$offset
+  if(NCOL(x) < 1L) return(structure(rep.int(0, NROW(x)), .Names = rownames(x)))
+
+  if(is.null(model$offset$mean)) model$offset$mean <- rep(0, NROW(x))
+  if(is.null(model$offset$precision)) model$offset$precision <- rep(0, NROW(z))
   wts <- weights(model)
   if(is.null(wts)) wts <- 1
   ystar <- qlogis(y)
@@ -23,8 +26,8 @@ gleverage.betareg <- function(model, ...)
   gamma <- model$coefficients$precision
 
   ## compute different types of "fitted" values
-  eta <- as.vector(x %*% beta + offset)
-  phi_eta <- as.vector(z %*% gamma)
+  eta <- as.vector(x %*% beta + model$offset[[1L]])
+  phi_eta <- as.vector(z %*% gamma + model$offset[[2L]])
   mu <- model$link$mean$linkinv(eta)
   phi <- model$link$precision$linkinv(phi_eta)
   psi1 <- trigamma(mu * phi)
@@ -81,7 +84,10 @@ hatvalues.betareg <- function(model, ...)
   y <- if(is.null(model$y)) model.response(model.frame(model)) else model$y
   x <- if(is.null(model$x)) model.matrix(model, model = "mean") else model$x$mean
   z <- if(is.null(model$x)) model.matrix(model, model = "precision") else model$x$precision
-  offset <- if(is.null(model$offset)) rep(0, NROW(x)) else model$offset
+  if(NCOL(x) < 1L) return(structure(rep.int(0, NROW(x)), .Names = rownames(x)))
+  
+  if(is.null(model$offset$mean)) model$offset$mean <- rep(0, NROW(x))
+  if(is.null(model$offset$precision)) model$offset$precision <- rep(0, NROW(z))
   wts <- weights(model)
   if(is.null(wts)) wts <- 1
   
@@ -90,8 +96,8 @@ hatvalues.betareg <- function(model, ...)
   gamma <- model$coefficients$precision
 
   ## compute different types of "fitted" values
-  eta <- as.vector(x %*% beta + offset)
-  phi_eta <- as.vector(z %*% gamma)
+  eta <- as.vector(x %*% beta + model$offset[[1L]])
+  phi_eta <- as.vector(z %*% gamma + model$offset[[2L]])
   mu <- model$link$mean$linkinv(eta)
   phi <- model$link$precision$linkinv(phi_eta)
   psi1 <- trigamma(mu * phi)

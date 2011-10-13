@@ -1,4 +1,6 @@
 \name{ReadingSkills}
+\encoding{latin1}
+
 \alias{ReadingSkills}
 
 \title{Dyslexia and IQ Predicting Reading Accuracy}
@@ -41,6 +43,12 @@ Example 3 from
 Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \url{http://www.jstatsoft.org/v34/i02/}.
+
+Grün, B., Kosmidis, I., and Zeileis, A. (2011).
+  Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
+  Working Paper 2011-22. Working Papers in Economics and Statistics,
+  Research Platform Empirical and Experimental Economics, Universitaet Innsbruck.
+  \url{http://EconPapers.RePEc.org/RePEc:inn:wpaper:2011-22}
 
 Pammer, K., and Kevan, A. (2004).
   The Contribution of Visual Sensitivity, Phonological Processing

@@ -81,7 +81,8 @@ halfnormal.betareg <- function(model, nsim = 100, level = 0.90, type = "sweighte
   y <- if(is.null(model$y)) model.response(model.frame(model)) else model$y
   x <- if(is.null(model$x)) model.matrix(model, model = "mean") else model$x$mean
   z <- if(is.null(model$x)) model.matrix(model, model = "precision") else model$x$precision
-  offset <- if(is.null(model$offset)) rep(0, NROW(x)) else model$offset
+  if(is.null(model$offset$mean)) model$offset$mean <- rep(0, NROW(x))
+  if(is.null(model$offset$precision)) model$offset$precision <- rep(0, NROW(z))
   wts <- weights(model)
 
   n <- NROW(x)
@@ -96,10 +97,12 @@ halfnormal.betareg <- function(model, nsim = 100, level = 0.90, type = "sweighte
   
   for(i in 1:nsim) {
     ysim <- rbeta(n, mu * phi, (1 - mu) * phi)
-    fit <- suppressWarnings(betareg.fit(x, ysim, z, weights = wts, offset = offset,
+    ctrl <- model$control
+    ctrl$hessian <- FALSE
+    ctrl$start <- model$coefficients
+    fit <- suppressWarnings(betareg.fit(x, ysim, z, weights = wts, offset = model$offset,
       link = model$link$mean$name, link.phi = model$link$precision$name,
-        control = c(model$control, list(phi = model$phi, method = model$method,
-	  hessian = FALSE, start = model$coefficients))))
+        control = ctrl))
     fit$y <- ysim
     fit$x <- list(mean = x, precision = z)
     class(fit) <- "betareg"

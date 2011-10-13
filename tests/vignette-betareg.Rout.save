@@ -1,8 +1,8 @@
 
-R version 2.13.0 Under development (unstable) (2010-10-20 r53384)
-Copyright (C) 2010 The R Foundation for Statistical Computing
+R version 2.13.2 (2011-09-30)
+Copyright (C) 2011 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
-Platform: x86_64-unknown-linux-gnu (64-bit)
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -22,6 +22,13 @@ Type 'q()' to quit R.
 Loading required package: Formula
 > library("lmtest")
 Loading required package: zoo
+
+Attaching package: 'zoo'
+
+The following object(s) are masked from 'package:base':
+
+    as.Date
+
 > library("strucchange")
 Loading required package: sandwich
 > 
@@ -43,14 +50,14 @@ Coefficients (mean model with logit link):
               Estimate Std. Error z value Pr(>|z|)    
 (Intercept) -6.1595710  0.1823247 -33.784  < 2e-16 ***
 batch1       1.7277289  0.1012294  17.067  < 2e-16 ***
-batch2       1.3225969  0.1179021  11.218  < 2e-16 ***
+batch2       1.3225969  0.1179020  11.218  < 2e-16 ***
 batch3       1.5723099  0.1161045  13.542  < 2e-16 ***
 batch4       1.0597141  0.1023598  10.353  < 2e-16 ***
 batch5       1.1337518  0.1035232  10.952  < 2e-16 ***
 batch6       1.0401618  0.1060365   9.809  < 2e-16 ***
 batch7       0.5436922  0.1091275   4.982 6.29e-07 ***
 batch8       0.4959007  0.1089257   4.553 5.30e-06 ***
-batch9       0.3857929  0.1185933   3.253  0.00114 ** 
+batch9       0.3857930  0.1185933   3.253  0.00114 ** 
 temp         0.0109669  0.0004126  26.577  < 2e-16 ***
 
 Phi coefficients (precision model with identity link):
@@ -59,9 +66,10 @@ Phi coefficients (precision model with identity link):
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
+Type of estimator: ML (maximum likelihood)
 Log-likelihood:  84.8 on 12 Df
 Pseudo R-squared: 0.9617
-Number of iterations in BFGS optimization: 51 
+Number of iterations: 51 (BFGS) + 3 (Fisher scoring) 
 > 
 > gy_loglog <- betareg(yield ~ batch + temp, data = GasolineYield,
 +   link = "loglog")
@@ -94,9 +102,10 @@ Phi coefficients (precision model with identity link):
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
+Type of estimator: ML (maximum likelihood)
 Log-likelihood: 96.16 on 12 Df
 Pseudo R-squared: 0.9852
-Number of iterations in BFGS optimization: 51 
+Number of iterations: 51 (BFGS) + 2 (Fisher scoring) 
 > 
 > summary(gy_logit)$pseudo.r.squared
 [1] 0.9617312
@@ -115,28 +124,29 @@ Standardized weighted residuals 2:
 
 Coefficients (mean model with logit link):
               Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -5.9232377  0.1835262 -32.275  < 2e-16 ***
-batch1       1.6019882  0.0638563  25.087  < 2e-16 ***
-batch2       1.2972664  0.0991001  13.090  < 2e-16 ***
-batch3       1.5653384  0.0997392  15.694  < 2e-16 ***
-batch4       1.0300721  0.0632884  16.276  < 2e-16 ***
-batch5       1.1541631  0.0656428  17.582  < 2e-16 ***
-batch6       1.0194450  0.0663511  15.364  < 2e-16 ***
-batch7       0.6222589  0.0656326   9.481  < 2e-16 ***
-batch8       0.5645827  0.0601848   9.381  < 2e-16 ***
-batch9       0.3594386  0.0671407   5.354 8.63e-08 ***
+(Intercept) -5.9232361  0.1835262 -32.275  < 2e-16 ***
+batch1       1.6019877  0.0638561  25.087  < 2e-16 ***
+batch2       1.2972663  0.0991001  13.090  < 2e-16 ***
+batch3       1.5653383  0.0997392  15.694  < 2e-16 ***
+batch4       1.0300720  0.0632882  16.276  < 2e-16 ***
+batch5       1.1541630  0.0656427  17.582  < 2e-16 ***
+batch6       1.0194446  0.0663510  15.364  < 2e-16 ***
+batch7       0.6222591  0.0656325   9.481  < 2e-16 ***
+batch8       0.5645830  0.0601846   9.381  < 2e-16 ***
+batch9       0.3594390  0.0671406   5.354 8.63e-08 ***
 temp         0.0103595  0.0004362  23.751  < 2e-16 ***
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) 1.364110   1.225781   1.113    0.266    
+(Intercept) 1.364089   1.225781   1.113    0.266    
 temp        0.014570   0.003618   4.027 5.65e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
+Type of estimator: ML (maximum likelihood)
 Log-likelihood: 86.98 on 13 Df
 Pseudo R-squared: 0.9519
-Number of iterations in BFGS optimization: 33 
+Number of iterations: 33 (BFGS) + 28 (Fisher scoring) 
 > 
 > AIC(gy_logit, gy_logit2, gy_loglog)
           df       AIC
@@ -165,14 +175,15 @@ Model 2: yield ~ batch + temp + I(predict(gy_loglog, type = "link")^2)
 > gy_logit4 <- update(gy_logit, subset = -4)
 > coef(gy_logit, model = "precision")
    (phi) 
-440.2783 
+440.2784 
 > coef(gy_logit4, model = "precision")
    (phi) 
 577.7907 
 > 
 > gy_loglog2 <- update(gy_loglog, link.phi = "log")
 > summary(gy_loglog2)$iterations
-[1] 21
+  optim scoring 
+     21       2 
 > 
 > 
 > ## FoodExpenditure
@@ -190,28 +201,29 @@ Standardized weighted residuals 2:
 
 Coefficients (mean model with logit link):
               Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -5.9232377  0.1835262 -32.275  < 2e-16 ***
-batch1       1.6019882  0.0638563  25.087  < 2e-16 ***
-batch2       1.2972664  0.0991001  13.090  < 2e-16 ***
-batch3       1.5653384  0.0997392  15.694  < 2e-16 ***
-batch4       1.0300721  0.0632884  16.276  < 2e-16 ***
-batch5       1.1541631  0.0656428  17.582  < 2e-16 ***
-batch6       1.0194450  0.0663511  15.364  < 2e-16 ***
-batch7       0.6222589  0.0656326   9.481  < 2e-16 ***
-batch8       0.5645827  0.0601848   9.381  < 2e-16 ***
-batch9       0.3594386  0.0671407   5.354 8.63e-08 ***
+(Intercept) -5.9232361  0.1835262 -32.275  < 2e-16 ***
+batch1       1.6019877  0.0638561  25.087  < 2e-16 ***
+batch2       1.2972663  0.0991001  13.090  < 2e-16 ***
+batch3       1.5653383  0.0997392  15.694  < 2e-16 ***
+batch4       1.0300720  0.0632882  16.276  < 2e-16 ***
+batch5       1.1541630  0.0656427  17.582  < 2e-16 ***
+batch6       1.0194446  0.0663510  15.364  < 2e-16 ***
+batch7       0.6222591  0.0656325   9.481  < 2e-16 ***
+batch8       0.5645830  0.0601846   9.381  < 2e-16 ***
+batch9       0.3594390  0.0671406   5.354 8.63e-08 ***
 temp         0.0103595  0.0004362  23.751  < 2e-16 ***
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) 1.364110   1.225781   1.113    0.266    
+(Intercept) 1.364089   1.225781   1.113    0.266    
 temp        0.014570   0.003618   4.027 5.65e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
+Type of estimator: ML (maximum likelihood)
 Log-likelihood: 86.98 on 13 Df
 Pseudo R-squared: 0.9519
-Number of iterations in BFGS optimization: 33 
+Number of iterations: 33 (BFGS) + 28 (Fisher scoring) 
 > lrtest(gy_logit, gy_logit2)
 Likelihood ratio test
 
@@ -266,7 +278,7 @@ Standardized weighted residuals 2:
 
 Coefficients (mean model with logit link):
              Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -0.622547   0.223853  -2.781 0.005418 ** 
+(Intercept) -0.622548   0.223854  -2.781 0.005418 ** 
 income      -0.012299   0.003036  -4.052 5.09e-05 ***
 persons      0.118462   0.035341   3.352 0.000802 ***
 
@@ -276,9 +288,10 @@ Phi coefficients (precision model with identity link):
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
+Type of estimator: ML (maximum likelihood)
 Log-likelihood: 45.33 on 4 Df
 Pseudo R-squared: 0.3878
-Number of iterations in BFGS optimization: 28 
+Number of iterations: 28 (BFGS) + 4 (Fisher scoring) 
 > 
 > fe_beta2 <- betareg(I(food/income) ~ income + persons | persons,
 +   data = FoodExpenditure)
@@ -304,9 +317,10 @@ persons      -0.4835     0.1335  -3.623 0.000291 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
+Type of estimator: ML (maximum likelihood)
 Log-likelihood: 49.18 on 5 Df
 Pseudo R-squared: 0.3852
-Number of iterations in BFGS optimization: 20 
+Number of iterations: 20 (BFGS) + 1 (Fisher scoring) 
 > 
 > lrtest(fe_beta, fe_beta2)
 Likelihood ratio test
@@ -346,8 +360,8 @@ Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
 (Intercept)   1.6011     0.2259   7.089 1.41e-08 ***
 dyslexia     -1.2056     0.2259  -5.338 4.01e-06 ***
-iq            0.3594     0.2255   1.594    0.119    
-dyslexia:iq  -0.4229     0.2255  -1.875    0.068 .  
+iq            0.3594     0.2255   1.594   0.1188    
+dyslexia:iq  -0.4229     0.2255  -1.875   0.0681 .  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
@@ -383,6 +397,7 @@ iq            1.2291     0.4596   2.674  0.00749 **
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
+Type of estimator: ML (maximum likelihood)
 Log-likelihood:  65.9 on 7 Df
 Pseudo R-squared: 0.5756
 Number of iterations in BFGS optimization: 25 

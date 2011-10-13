@@ -74,7 +74,7 @@ Ferrari, S.L.P., and Cribari-Neto, F. (2004).
 
 Simas, A.B., and Barreto-Souza, W., and Rocha, A.V. (2010).
   Improved Estimators for a General Class of Beta Regression Models.
-  \emph{Computational Statistics \& Data Analysis}, \bold{54}(2), 348--366.
+  \emph{Computational Statistics & Data Analysis}, \bold{54}(2), 348--366.
 }
 
 \seealso{\code{\link{betareg}}}

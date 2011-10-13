@@ -15,5 +15,31 @@ citEntry(entry = "Article",
   paste("Francisco Cribari-Neto, Achim Zeileis (2010).",
         "Beta Regression in R.",
         "Journal of Statistical Software 34(2), 1-24.",
-        "URL http://www.jstatsoft.org/v34/i02/.")
+        "URL http://www.jstatsoft.org/v34/i02/."),
+
+  header       = "If you use betareg(), please cite:"
 )
+
+citEntry(entry = "TechReport",
+  title        = "Extended Beta Regression in {R}: Shaken, Stirred, Mixed, and Partitioned",
+  author       = personList(as.person("Bettina Gr\\\"un"),
+		   as.person("Ioannis Kosmidis"),  
+		   as.person("Achim Zeileis")),
+  institution  = "Working Papers in Economics and Statistics, Research Platform Empirical
+  		  and Experimental Economics, Universit\\\"at Innsbruck",
+  year         = "2011",
+  type         = "Working Paper",
+  number       = "2011-22",
+  month        = "October",
+  url	       = "http://EconPapers.RePEc.org/RePEc:inn:wpaper:2011-22",
+  
+  textVersion  = 
+  paste("Bettina Gruen, Ioannis Kosmidis, Achim Zeileis (2011).", 
+	"Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.",
+ 	"Working Paper 2011-22.",
+ 	"Working Papers in Economics and Statistics, Research Platform Empirical and Experimental Economics, Universitaet Innsbruck.",
+	"URL http://EconPapers.RePEc.org/RePEc:inn:wpaper:2011-22"),
+	
+  header       = "If you use betatree(), betamix(), or bias correction/reduction in betareg(), please cite:"
+)
+
