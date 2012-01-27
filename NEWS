@@ -1,3 +1,15 @@
+Changes in Version 2.4-1
+
+  o Formula interface for betamix() changed to allow for three parts
+    in the right hand side where the third part relates to the
+    concomitant variables.
+
+  o Modified the internal structure of vignettes/tests. The original
+    vignettes are now moved to the vignettes directory, containing also
+    .Rout.save files. Similarly, an .Rout.save for the examples is
+    added in the tests directory.
+
+
 Changes in Version 2.4-0
 
   o Support bias-corrected (BC) and bias-reduced (BR) maximum likelihood

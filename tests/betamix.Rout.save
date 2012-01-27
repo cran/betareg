@@ -1,0 +1,136 @@
+
+R version 2.14.1 (2011-12-22)
+Copyright (C) 2011 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ## package and data
+> library("betareg")
+Loading required package: Formula
+> data("ReadingSkills", package = "betareg")
+> 
+> ## beta regression mixture model
+> set.seed(1071)
+> rs_mix <- betamix(accuracy ~ iq, data = ReadingSkills, k = 3,
++   extra_components = extraComponent(type = "uniform",
++     coef = 0.99, delta = 0.01), nstart = 10)
+Loading required package: flexmix
+Loading required package: lattice
+Loading required package: modeltools
+Loading required package: stats4
+Loading required package: multcomp
+Loading required package: mvtnorm
+Loading required package: survival
+Loading required package: splines
+> 
+> ## fitted model
+> print(rs_mix)
+
+Call:
+betamix(formula = accuracy ~ iq, data = ReadingSkills, k = 3, 
+    nstart = 10, extra_components = extraComponent(type = "uniform", 
+        coef = 0.99, delta = 0.01))
+
+Cluster sizes:
+ 1  2  3 
+10 20 14 
+
+convergence after 43 iterations
+> summary(rs_mix)
+$Comp.1
+$Comp.1$mean
+            Estimate Std. Error z value  Pr(>|z|)    
+(Intercept)  1.40342    0.26332  5.3296 9.842e-08 ***
+iq           0.82502    0.21630  3.8142 0.0001366 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+$Comp.1$precision
+            Estimate Std. Error z value  Pr(>|z|)    
+(Intercept)  2.68508    0.45435  5.9097 3.428e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+
+$Comp.2
+$Comp.2$mean
+             Estimate Std. Error z value  Pr(>|z|)    
+(Intercept)  0.502523   0.082476  6.0930 1.108e-09 ***
+iq          -0.048414   0.112923 -0.4287    0.6681    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+$Comp.2$precision
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  4.25160    0.74737  5.6888 1.28e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+
+> 
+> ## further methods
+> table(clusters(rs_mix), ReadingSkills$dyslexia)
+   
+    no yes
+  1  7   3
+  2  4  16
+  3 14   0
+> posterior(rs_mix)
+              [,1]         [,2]      [,3]
+ [1,] 9.999997e-01 2.768414e-07 0.0000000
+ [2,] 8.670169e-01 1.329831e-01 0.0000000
+ [3,] 1.000000e+00 5.425397e-10 0.0000000
+ [4,] 1.523716e-01 8.527825e-29 0.8476284
+ [5,] 9.999938e-01 6.151228e-06 0.0000000
+ [6,] 4.653661e-01 5.346339e-01 0.0000000
+ [7,] 9.254650e-01 7.453500e-02 0.0000000
+ [8,] 1.604308e-06 2.646945e-31 0.9999984
+ [9,] 2.211010e-03 1.833024e-32 0.9977890
+[10,] 9.426572e-02 8.522169e-34 0.9057343
+[11,] 3.074747e-02 3.171891e-33 0.9692525
+[12,] 1.625715e-01 2.891468e-34 0.8374285
+[13,] 4.023456e-02 2.451518e-33 0.9597654
+[14,] 2.678934e-01 3.323862e-35 0.7321066
+[15,] 1.874204e-04 5.501559e-32 0.9998126
+[16,] 4.023456e-02 2.451518e-33 0.9597654
+[17,] 3.605430e-01 6.394570e-01 0.0000000
+[18,] 2.545211e-01 4.950539e-35 0.7454789
+[19,] 7.957373e-02 9.204263e-01 0.0000000
+[20,] 2.378348e-01 7.419915e-35 0.7621652
+[21,] 1.000000e+00 6.580187e-18 0.0000000
+[22,] 8.013005e-04 2.990355e-32 0.9991987
+[23,] 6.718344e-01 3.281656e-01 0.0000000
+[24,] 4.104297e-02 9.589570e-01 0.0000000
+[25,] 2.592923e-01 4.338367e-35 0.7407077
+[26,] 8.199040e-02 9.180096e-01 0.0000000
+[27,] 1.365661e-01 8.634339e-01 0.0000000
+[28,] 8.387865e-01 1.612135e-01 0.0000000
+[29,] 1.845430e-01 8.154570e-01 0.0000000
+[30,] 2.557900e-01 7.442100e-01 0.0000000
+[31,] 3.939434e-02 9.606057e-01 0.0000000
+[32,] 9.963120e-03 9.900369e-01 0.0000000
+[33,] 2.896911e-03 9.971031e-01 0.0000000
+[34,] 3.356567e-01 6.643433e-01 0.0000000
+[35,] 1.003576e-01 8.996424e-01 0.0000000
+[36,] 5.047909e-01 4.952091e-01 0.0000000
+[37,] 3.668632e-01 6.331368e-01 0.0000000
+[38,] 1.336951e-01 8.663049e-01 0.0000000
+[39,] 5.544942e-01 4.455058e-01 0.0000000
+[40,] 3.208905e-01 6.791095e-01 0.0000000
+[41,] 3.068675e-01 6.931325e-01 0.0000000
+[42,] 2.416411e-01 7.583589e-01 0.0000000
+[43,] 2.812002e-01 7.187998e-01 0.0000000
+[44,] 2.554529e-01 7.445471e-01 0.0000000
+> 

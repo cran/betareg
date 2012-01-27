@@ -3,7 +3,7 @@ betamix <- function(formula, data, k, subset, na.action,
                     link.phi = "log", 
                     control = betareg.control(...),
                     cluster = NULL, FLXconcomitant = NULL, FLXcontrol = list(), 
-                    verbose = FALSE, nstart = if (missing(cluster)) 3 else 1, which = "BIC", 
+                    verbose = FALSE, nstart = if (is.null(cluster)) 3 else 1, which = "BIC", 
                     ID, fixed, extra_components, ...)
 {
   ## beta regression mixtures rely on flexmix package
@@ -40,8 +40,14 @@ betamix <- function(formula, data, k, subset, na.action,
   ## formula
   oformula <- as.formula(formula)
   formula <- Formula(formula)
-  stopifnot(length(formula)[1] == 1L & length(formula)[2] >= 1L)
-  if(length(formula)[2] == 1L) {
+  stopifnot(length(formula)[1L] == 1L & length(formula)[2L] >= 1L & length(formula)[2L] <= 3L)
+  if(length(formula)[2L] == 3L){
+    if (!is.null(FLXconcomitant))
+      warning("only concomitant variables specified in formula used")
+    conc <- formula(formula, lhs = 0, rhs = 3)
+    FLXconcomitant <- FLXPmultinom(conc)
+  }
+  if(length(formula)[2L] == 1L){
     precision <- ~ 1
   } else {
     precision <- formula(formula, lhs = 0, rhs = 2)
@@ -66,25 +72,25 @@ betamix <- function(formula, data, k, subset, na.action,
          else max(cluster)
   }
   rval <- if (!missing(extra_components)) {
-    flexmix::stepFlexmix(fullformula, data = mf, k = k, nrep = nstart, 
+    flexmix::stepFlexmix(fullformula, data = mf, k = k, nrep = nstart,
                          model = FLXMRbeta_extra(precision = precision,
                            link = link, link.phi = link.phi, control = control,
                            extra_components = extra_components),
                          concomitant = FLXconcomitant, control = FLXcontrol,
-                         verbose = verbose)
+                         cluster = cluster, verbose = verbose)
   } else if (missing(fixed)) {
     flexmix::stepFlexmix(fullformula, data = mf, k = k, nrep = nstart, 
                           model = FLXMRbeta(precision = precision,
                             link = link, link.phi = link.phi, control = control),
                          concomitant = FLXconcomitant, control = FLXcontrol,
-                         verbose = verbose)
+                         cluster = cluster, verbose = verbose)
   } else {
     flexmix::stepFlexmix(fullformula, data = mf, k = k, nrep = nstart,
                           model = FLXMRbetafix(precision = precision,
                             fixed = fixed, fixed_precision = fixed_precision,
                             link = link, link.phi = link.phi, control = control),
                          concomitant = FLXconcomitant, control = FLXcontrol,
-                         verbose = verbose)
+                         cluster = cluster, verbose = verbose)
   }
   if (is(rval, "stepFlexmix")) rval <- getModel(rval, which = which)
   structure(list(flexmix = rval, call = cl), class = "betamix")

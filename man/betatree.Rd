@@ -37,7 +37,7 @@ betaReg(control = betareg.control())
     and precision of \code{y}, respectively. For details see \code{\link{betareg}}.}
   \item{partition}{symbolic description of the partitioning variables,
     e.g., \code{~ p1 + p2}. The argument \code{partition} can be omitted
-    if \code{formula} is a three-part formula of type \code{y ~ x | z | p1 + p1}.}  
+    if \code{formula} is a three-part formula of type \code{y ~ x | z | p1 + p2}.}  
   \item{data, subset, na.action}{arguments controlling formula processing.}
   \item{link}{character specification of the link function in
     the mean model (mu). Currently, \code{"logit"}, \code{"probit"},
@@ -124,6 +124,20 @@ coef(bt)
 sctest(bt)
 summary(bt, node = 2)
 summary(bt, node = 3)
+
+## add a numerical variable with relevant information for splitting
+ReadingSkills$x4 <- rnorm(nrow(ReadingSkills), c(-1.5, 1.5)[ReadingSkills$dyslexia])
+
+bt2 <- betatree(accuracy ~ iq | iq, ~ x1 + x2 + x3 + x4,
+  data = ReadingSkills, minsplit = 10)
+plot(bt2)
+
+## inspect result
+coef(bt2)
+sctest(bt2)
+summary(bt2, node = 2)
+summary(bt2, node = 3)
+
 }
 
 \keyword{tree}
