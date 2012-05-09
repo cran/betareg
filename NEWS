@@ -1,3 +1,15 @@
+Changes in Version 3.0-0
+
+  o New release accompanying the second JSS paper: "Extended Beta
+    Regression in R: Shaken, Stirred, Mixed, and Partitioned" by Gruen,
+    Kosmidis, and Zeileis which appears as Journal of Statistical
+    Software 48(11). See also citation("betareg"). The paper presents
+    the recently introduced features: bias correction/reduction in
+    betareg(), recursive partitioning via betatree(), and finite
+    mixture modeling via betamix(). See also vignette("betareg-ext",
+    package = "betareg") for the vignette version within the package.
+
+
 Changes in Version 2.4-1
 
   o Formula interface for betamix() changed to allow for three parts

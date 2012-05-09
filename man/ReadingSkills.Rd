@@ -44,11 +44,10 @@ Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \url{http://www.jstatsoft.org/v34/i02/}.
 
-Grün, B., Kosmidis, I., and Zeileis, A. (2011).
+Grün, B., Kosmidis, I., and Zeileis, A. (2012).
   Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
-  Working Paper 2011-22. Working Papers in Economics and Statistics,
-  Research Platform Empirical and Experimental Economics, Universitaet Innsbruck.
-  \url{http://EconPapers.RePEc.org/RePEc:inn:wpaper:2011-22}
+  \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
+  \url{http://www.jstatsoft.org/v48/i11/}.
 
 Pammer, K., and Kevan, A. (2004).
   The Contribution of Visual Sensitivity, Phonological Processing

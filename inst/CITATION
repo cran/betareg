@@ -20,25 +20,23 @@ citEntry(entry = "Article",
   header       = "If you use betareg(), please cite:"
 )
 
-citEntry(entry = "TechReport",
+citEntry(entry = "Article",
   title        = "Extended Beta Regression in {R}: Shaken, Stirred, Mixed, and Partitioned",
   author       = personList(as.person("Bettina Gr\\\"un"),
-		   as.person("Ioannis Kosmidis"),  
-		   as.person("Achim Zeileis")),
-  institution  = "Working Papers in Economics and Statistics, Research Platform Empirical
-  		  and Experimental Economics, Universit\\\"at Innsbruck",
-  year         = "2011",
-  type         = "Working Paper",
-  number       = "2011-22",
-  month        = "October",
-  url	       = "http://EconPapers.RePEc.org/RePEc:inn:wpaper:2011-22",
-  
-  textVersion  = 
-  paste("Bettina Gruen, Ioannis Kosmidis, Achim Zeileis (2011).", 
-	"Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.",
- 	"Working Paper 2011-22.",
- 	"Working Papers in Economics and Statistics, Research Platform Empirical and Experimental Economics, Universitaet Innsbruck.",
-	"URL http://EconPapers.RePEc.org/RePEc:inn:wpaper:2011-22"),
+                   as.person("Ioannis Kosmidis"),
+                   as.person("Achim Zeileis")),
+  journal      = "Journal of Statistical Software",
+  year         = "2012",
+  volume       = "48",
+  number       = "11",
+  pages        = "1--25",
+  url          = "http://www.jstatsoft.org/v48/i11/",
+
+  textVersion  =
+  paste("Bettina Gruen, Ioannis Kosmidis, Achim Zeileis (2012).",
+        "Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.",
+        "Journal of Statistical Software, 48(11), 1-25.",
+        "URL http://www.jstatsoft.org/v48/i11/."),
 	
   header       = "If you use betatree(), betamix(), or bias correction/reduction in betareg(), please cite:"
 )

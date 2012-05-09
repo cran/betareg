@@ -26,7 +26,12 @@
 \Keywords{beta regression, bias correction, bias reduction, recursive partitioning, finite mixture, \proglang{R}}
 \Plainkeywords{beta regression, bias correction, bias reduction, recursive partitioning, finite mixture, R}
 
-\Abstract{Beta regression -- an increasingly popular approach for
+\Abstract{
+  This introduction to the extended features of the \proglang{R} package
+  \pkg{betareg} is a (slightly) modified version of \cite{betareg:Gruen+Kosmidis+Zeileis:2012},
+  published in the \emph{Journal of Statistical Software}.
+
+  Beta regression -- an increasingly popular approach for
   modeling rates and proportions -- is extended in various directions:
   (a)~bias correction/reduction of the maximum likelihood estimator,
   (b)~beta regression tree models by means of recursive partitioning,
@@ -109,7 +114,7 @@ betamix_methods <-
 Beta regression is a model for continuous response variables $y$ which
 assume values in the open unit interval $(0, 1)$. Such response
 variables may stem from rates, proportions, concentrations, etc. A
-regression model where the mean as well as the precision is modelled
+regression model where the mean as well as the precision is modeled
 through covariates was introduced by
 \cite{betareg:Ferrari+Cribari-Neto:2004} along with the extensions by
 \cite{betareg:Smithson+Verkuilen:2006} and
@@ -117,7 +122,7 @@ through covariates was introduced by
 referred to as ``double index regression model'' because it
 contains two regression parts: one for the mean and one for the
 precision.  \cite{betareg:Ferrari+Cribari-Neto:2004} employed an
-alternative parametrization of the beta distribution characterizing
+alternative parameterization of the beta distribution characterizing
 more easily the mean and the variance.  In this parameterization the
 beta distribution has the density
 %
@@ -254,7 +259,7 @@ misleading negative conclusions about the effect of BC/BR on
 inferences for beta regression models. In
 \cite{betareg:Kosmidis+Firth:2010}, it is shown that BC/BR for beta
 regression models can be desirable because the ML estimator of $\phi$
-may demonstrate substantial upwards bias, which in turn may lead to
+may demonstrate substantial upward bias, which in turn may lead to
 underestimation of asymptotic standard errors and hence
 over-optimistic Wald-type inferences (e.g., confidence intervals with
 coverage far below the nominal levels).
@@ -347,7 +352,7 @@ for notational simplicity.  The same convention is used for the
 derivations below, additionally concealing the dependence on $\theta$
 unless otherwise stated.
 
-The log-likelihood for the beta regression model in \eqref{eq:density}
+Up to an additive constant the log-likelihood for the beta regression model in \eqref{eq:density}
 is $\ell(\theta) = \sum_{i =1}^n \ell_i(\theta)$ with
 \begin{equation}
 \label{eq:loglik}
@@ -481,7 +486,7 @@ with $\kappa_{3,i} = \E\left\{\left(\bar{T}_i -
     \bar{U}_i\right)^3\right\} = \psi^{(2)}(\phi_i\mu_i) -
 \psi^{(2)}(\phi_i(1 - \mu_i))$ $(i =1, \ldots, n)$. Furthermore,
 $C_t^\topd$ denotes the diagonal matrix with non-zero components the
-elements of $t$-th column of a matrix $C$.
+elements of the $t$-th column of a matrix $C$.
 
 \subsection[Implementation in betareg]{Implementation in \pkg{betareg}}
 
@@ -974,7 +979,7 @@ original scale.
 To emphasize that BC/BR may potentially be crucial for
 empirical analyses, Appendix~\ref{sec:gasoline} replicates the results
 of \cite{betareg:Kosmidis+Firth:2010} for a beta regression where
-substantial upwards bias was detected for the ML estimator of the
+substantial upward bias was detected for the ML estimator of the
 precision parameter, which in turn causes underestimated asymptotic
 standard errors; note the direct dependence of the expected
 information matrix on the precision parameters in \eqref{eq:expinfo}.
@@ -1141,7 +1146,7 @@ the relationship between reading \code{accuracy} and nonverbal \code{iq}
 score is  different for some subgroups in the data without having
 further covariates potentially describing the groups available.
 In particular, we assume that the information whether the children are
-dyslexic or not is not available. Modelling the relationship between
+dyslexic or not is not available. Modeling the relationship between
 reading accuracy and IQ score is now complicated by the fact that
 latent groups exist in the data where this relationship is
 different.
@@ -1290,7 +1295,7 @@ latent group capturing the dyslexic children (component 1) are very similar.
 % The fitted regression lines for the dyslexic children as well as the
 % latent group capturing the dyslexic children (component~1) are very
 % similar as indicated by the comparison of the two red lines.
-In contrast, the group of nondyslexic children is modelled
+In contrast, the group of nondyslexic children is modeled
 differently. With observed dyslexia, the heterogeneity in the control
 group is captured by differences in the precision submodel, i.e.,
 in the variance. However, for unobserved dyslexia, it is more natural
@@ -1333,7 +1338,7 @@ functions has been designed to be as similar as possible to
 \fct{betareg}, in order to facilitate their use by users that are
 already familiar with the \fct{betareg} function.
 %
-For modelling heterogeneity \fct{betareg.fit} is reused to fit the
+For modeling heterogeneity \fct{betareg.fit} is reused to fit the
 models in the nodes when beta regression trees are constructed, and in
 the M-step when finite mixture models are fitted. For this task, only
 a small amount of additional code --- some \proglang{S4} glue --- was
@@ -1402,7 +1407,7 @@ writeLines(apply(cfse, 1, paste, collapse = " & "))
 \end{table}
 %
 The estimate of the precision parameter shrinks considerably when bias
-correction/reduction is used, indicating a large upwards bias for the
+correction/reduction is used, indicating a large upward bias for the
 ML estimator of $\phi$.
 %
 <<GasolineYield-phi>>=

@@ -59,7 +59,7 @@ betaReg(control = betareg.control())
   beta regression (implemented in \code{\link{betareg}}, see Cribari-Neto
   and Zeileis 2010). For plugging in \code{betareg} into \code{mob} some
   glue is required which is provided by \code{\link{betaReg}}. See also
-  Grün at al. (2011) for more details.
+  Grün at al. (2012) for more details.
 
   Various methods are provided for \code{"betatree"} objects, most of them
   inherit their behavior from \code{"mob"} objects (e.g., \code{print}, \code{summary},
@@ -88,11 +88,10 @@ Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \url{http://www.jstatsoft.org/v34/i02/}.
 
-Grün, B., Kosmidis, I., and Zeileis, A. (2011).
+Grün, B., Kosmidis, I., and Zeileis, A. (2012).
   Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
-  Working Paper 2011-22. Working Papers in Economics and Statistics,
-  Research Platform Empirical and Experimental Economics, Universität Innsbruck.
-  \url{http://EconPapers.RePEc.org/RePEc:inn:wpaper:2011-22}
+  \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
+  \url{http://www.jstatsoft.org/v48/i11/}.
 
 Zeileis, A., Hothorn, T., and Hornik K. (2008).
   Model-Based Recursive Partitioning.

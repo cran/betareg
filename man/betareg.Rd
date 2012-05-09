@@ -75,7 +75,7 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
   (for \code{type = "ML"} and \code{"BC"}) or solving the bias-adjusted estimating equations
   (for \code{type = "BR"}). For the former two estimators, the optional Fisher scoring
   can be disabled by setting \code{fsmaxit = 0} in the control arguments. See
-  Cribari-Neto and Zeileis (2010) and Grün et al. (2011) for details.
+  Cribari-Neto and Zeileis (2010) and Grün et al. (2012) for details.
 
   In the beta regression as introduced by Ferrari and Cribari-Neto (2004), the mean of
   the response is linked to a linear predictor described by \code{y ~ x1 + x2} using
@@ -178,11 +178,10 @@ Ferrari, S.L.P., and Cribari-Neto, F. (2004).
   Beta Regression for Modeling Rates and Proportions.
   \emph{Journal of Applied Statistics}, \bold{31}(7), 799--815.
 
-Grün, B., Kosmidis, I., and Zeileis, A. (2011).
+Grün, B., Kosmidis, I., and Zeileis, A. (2012).
   Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
-  Working Paper 2011-22. Working Papers in Economics and Statistics,
-  Research Platform Empirical and Experimental Economics, Universität Innsbruck.
-  \url{http://EconPapers.RePEc.org/RePEc:inn:wpaper:2011-22}
+  \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
+  \url{http://www.jstatsoft.org/v48/i11/}.
 
 Kosmidis, I., and Firth, D. (2010).
   A Generic Algorithm for Reducing Bias in Parametric Estimation.

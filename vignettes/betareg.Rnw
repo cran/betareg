@@ -24,7 +24,7 @@
   This introduction to the \proglang{R} package \pkg{betareg} is a (slightly)
   modified version of \cite{betareg:Cribari-Neto+Zeileis:2010}, published in the
   \emph{Journal of Statistical Software}. A follow-up paper with various
-  extensions is \cite{betareg:Gruen+Kosmidis+Zeileis:2011} -- a slightly modified
+  extensions is \cite{betareg:Gruen+Kosmidis+Zeileis:2012} -- a slightly modified
   version of which is also provided within the package as
   \code{vignette("betareg-ext", package = "betareg")}
 

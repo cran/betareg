@@ -98,7 +98,7 @@ extraComponent(type = c("uniform", "betareg"), coef, delta,
   The arguments and the model specification are similar to
   \code{\link{betareg}}. Internally \code{\link[flexmix]{stepFlexmix}}
   is called with suitable arguments to fit the finite mixture model with
-  the EM algorithm. See Grün et al. (2011) for more details.
+  the EM algorithm. See Grün et al. (2012) for more details.
 
   \code{extra_components} is a list where each element corresponds to a
   component where the parameters are fixed a-priori.
@@ -115,11 +115,10 @@ Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \url{http://www.jstatsoft.org/v34/i02/}.
 
-Grün, B., Kosmidis, I., and Zeileis, A. (2011).
+Grün, B., Kosmidis, I., and Zeileis, A. (2012).
   Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
-  Working Paper 2011-22. Working Papers in Economics and Statistics,
-  Research Platform Empirical and Experimental Economics, Universität Innsbruck.
-  \url{http://EconPapers.RePEc.org/RePEc:inn:wpaper:2011-22}
+  \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
+  \url{http://www.jstatsoft.org/v48/i11/}.
 
 Grün, B., and Leisch, F. (2008). FlexMix Version 2: Finite Mixtures
   with Concomitant Variables and Varying and Constant Parameters.
