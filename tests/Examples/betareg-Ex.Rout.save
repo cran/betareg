@@ -1,14 +1,12 @@
 
-R version 2.14.1 (2011-12-22)
-Copyright (C) 2011 The R Foundation for Statistical Computing
+R version 2.15.1 (2012-06-22) -- "Roasted Marshmallows"
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -57,9 +55,9 @@ Loading required package: nnet
 > 
 > cleanEx()
 
-detaching ‘package:nnet’, ‘package:flexmix’, ‘package:multcomp’,
-  ‘package:survival’, ‘package:splines’, ‘package:mvtnorm’,
-  ‘package:modeltools’, ‘package:stats4’, ‘package:lattice’
+detaching 'package:nnet', 'package:flexmix', 'package:multcomp',
+  'package:survival', 'package:splines', 'package:mvtnorm',
+  'package:modeltools', 'package:stats4', 'package:lattice'
 
 > nameEx("FoodExpenditure")
 > ### * FoodExpenditure
@@ -81,9 +79,9 @@ detaching ‘package:nnet’, ‘package:flexmix’, ‘package:multcomp’,
 > library("lmtest")
 Loading required package: zoo
 
-Attaching package: ‘zoo’
+Attaching package: 'zoo'
 
-The following object(s) are masked from ‘package:base’:
+The following object(s) are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -127,7 +125,7 @@ Number of iterations: 28 (BFGS) + 4 (Fisher scoring)
 > 
 > cleanEx()
 
-detaching ‘package:lmtest’, ‘package:zoo’
+detaching 'package:lmtest', 'package:zoo'
 
 > nameEx("GasolineYield")
 > ### * GasolineYield
@@ -170,7 +168,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 75.68 on 6 Df
 Pseudo R-squared: 0.9398
-Number of iterations: 147 (BFGS) + 5 (Fisher scoring) 
+Number of iterations: 144 (BFGS) + 5 (Fisher scoring) 
 > 
 > ## Ferrari and Cribari-Neto (2004)
 > gy2 <- betareg(yield ~ batch + temp, data = GasolineYield)
@@ -303,9 +301,9 @@ Loading required package: nnet
 > 
 > cleanEx()
 
-detaching ‘package:nnet’, ‘package:flexmix’, ‘package:multcomp’,
-  ‘package:survival’, ‘package:splines’, ‘package:mvtnorm’,
-  ‘package:modeltools’, ‘package:stats4’, ‘package:lattice’
+detaching 'package:nnet', 'package:flexmix', 'package:multcomp',
+  'package:survival', 'package:splines', 'package:mvtnorm',
+  'package:modeltools', 'package:stats4', 'package:lattice'
 
 > nameEx("MockJurors")
 > ### * MockJurors
@@ -323,9 +321,9 @@ detaching ‘package:nnet’, ‘package:flexmix’, ‘package:multcomp’,
 > library("lmtest")
 Loading required package: zoo
 
-Attaching package: ‘zoo’
+Attaching package: 'zoo'
 
-The following object(s) are masked from ‘package:base’:
+The following object(s) are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -387,7 +385,7 @@ Model 2: confidence ~ verdict * conflict | verdict * conflict
 1   2 28.226                         
 2   8 40.117  6 23.782  0.0005728 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > ## McFadden's pseudo-R-squared
 > 1 - as.vector(logLik(mj_null)/logLik(mj_vd))
 [1] 0.296407
@@ -405,7 +403,7 @@ Loading required package: lattice
 > 
 > cleanEx()
 
-detaching ‘package:lattice’, ‘package:lmtest’, ‘package:zoo’
+detaching 'package:lattice', 'package:lmtest', 'package:zoo'
 
 > nameEx("ReadingSkills")
 > ### * ReadingSkills
@@ -441,7 +439,7 @@ dyslexia     -1.2056     0.2259  -5.338 4.01e-06 ***
 iq            0.3594     0.2255   1.594   0.1188    
 dyslexia:iq  -0.4229     0.2255  -1.875   0.0681 .  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Residual standard error: 1.2 on 40 degrees of freedom
 Multiple R-squared: 0.6151,	Adjusted R-squared: 0.5862 
@@ -617,9 +615,9 @@ Loading required package: nnet
 > 
 > cleanEx()
 
-detaching ‘package:nnet’, ‘package:flexmix’, ‘package:multcomp’,
-  ‘package:survival’, ‘package:splines’, ‘package:mvtnorm’,
-  ‘package:modeltools’, ‘package:stats4’, ‘package:lattice’
+detaching 'package:nnet', 'package:flexmix', 'package:multcomp',
+  'package:survival', 'package:splines', 'package:mvtnorm',
+  'package:modeltools', 'package:stats4', 'package:lattice'
 
 > nameEx("betamix")
 > ### * betamix
@@ -703,7 +701,7 @@ $Comp.2
 (Intercept)  0.41536    0.64005  0.6490  0.51637  
 w            1.00360    0.50781  1.9763  0.04812 *
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 $Comp.3
              Estimate Std. Error z value Pr(>|z|)
@@ -715,9 +713,9 @@ w           -0.180655   0.436804 -0.4136   0.6792
 > 
 > cleanEx()
 
-detaching ‘package:nnet’, ‘package:flexmix’, ‘package:multcomp’,
-  ‘package:survival’, ‘package:splines’, ‘package:mvtnorm’,
-  ‘package:modeltools’, ‘package:stats4’, ‘package:lattice’
+detaching 'package:nnet', 'package:flexmix', 'package:multcomp',
+  'package:survival', 'package:splines', 'package:mvtnorm',
+  'package:modeltools', 'package:stats4', 'package:lattice'
 
 > nameEx("betareg")
 > ### * betareg
@@ -776,9 +774,9 @@ Number of iterations: 51 (BFGS) + 3 (Fisher scoring)
 > library("lmtest")
 Loading required package: zoo
 
-Attaching package: ‘zoo’
+Attaching package: 'zoo'
 
-The following object(s) are masked from ‘package:base’:
+The following object(s) are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -827,7 +825,7 @@ Model 2: I(food/income) ~ income
 1   4 45.334                       
 2   3 40.511 -1 9.646   0.001898 **
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > waldtest(fe_beta, fe_beta2)
 Wald test
 
@@ -837,7 +835,7 @@ Model 2: I(food/income) ~ income
 1     34                         
 2     35 -1 11.236  0.0008023 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > 
 > 
 > ## Section 3 from online supplements to Simas et al. (2010)
@@ -891,13 +889,13 @@ Model 2: yield ~ batch + temp | temp
 1  12 84.798                      
 2  13 86.977  1 4.359    0.03681 *
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > 
 > 
 > 
 > cleanEx()
 
-detaching ‘package:lmtest’, ‘package:zoo’
+detaching 'package:lmtest', 'package:zoo'
 
 > nameEx("betareg.control")
 > ### * betareg.control
@@ -1060,9 +1058,9 @@ Loading required package: coin
 Loading required package: mvtnorm
 Loading required package: zoo
 
-Attaching package: ‘zoo’
+Attaching package: 'zoo'
 
-The following object(s) are masked from ‘package:base’:
+The following object(s) are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -1160,8 +1158,8 @@ Number of iterations: 19 (BFGS) + 8 (Fisher scoring)
 > sctest(bt2)
 $`1`
                  x1       x2        x3          x4
-statistic 8.5250961 5.569861 1.0567635 19.94405052
-p.value   0.9094631 0.998710 0.9999042  0.03531255
+statistic 8.5250961 5.569861 1.0567635 19.94405058
+p.value   0.9094631 0.998710 0.9999042  0.03531254
 
 $`2`
                  x1       x2       x3        x4
@@ -1222,18 +1220,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 22.38 on 4 Df
 Pseudo R-squared: 0.3292
-Number of iterations: 18 (BFGS) + 2 (Fisher scoring) 
+Number of iterations: 18 (BFGS) + 1 (Fisher scoring) 
 > 
 > 
 > 
 > 
 > cleanEx()
 
-detaching ‘package:party’, ‘package:vcd’, ‘package:colorspace’,
-  ‘package:MASS’, ‘package:strucchange’, ‘package:sandwich’,
-  ‘package:zoo’, ‘package:coin’, ‘package:mvtnorm’,
-  ‘package:modeltools’, ‘package:stats4’, ‘package:grid’,
-  ‘package:survival’, ‘package:splines’
+detaching 'package:party', 'package:vcd', 'package:colorspace',
+  'package:MASS', 'package:strucchange', 'package:sandwich',
+  'package:zoo', 'package:coin', 'package:mvtnorm',
+  'package:modeltools', 'package:stats4', 'package:grid',
+  'package:survival', 'package:splines'
 
 > nameEx("gleverage")
 > ### * gleverage
@@ -1543,7 +1541,7 @@ Number of iterations: 33 (BFGS) + 28 (Fisher scoring)
 > ### * <FOOTER>
 > ###
 > cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  30.797 0.648 32.135 0 0 
+Time elapsed:  48.719 0.224 49.139 0 0 
 > grDevices::dev.off()
 null device 
           1 

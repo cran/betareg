@@ -125,7 +125,7 @@ betareg.fit <- function(x, y, z = NULL, weights = NULL, offset = NULL,
   } else {
     m <- NCOL(z)
     if(m < 1L) stop("dispersion regression needs to have at least one parameter")
-    phi_const <- (m == 1L) && isTRUE(all.equal(z[, 1L], rep.int(1, n)))
+    phi_const <- (m == 1L) && isTRUE(all.equal(as.vector(z[, 1L]), rep.int(1, n)))
   }
 
   ## link processing
