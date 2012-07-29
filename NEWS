@@ -1,6 +1,13 @@
+Changes in Version 3.0-2
+
+  o Avoid .Call()ing logit link functions directly, instead
+    use elements of make.link("logit").
+
+
 Changes in Version 3.0-1
 
-  o Small consistency updates in labeling for current R-devel.
+  o Small consistency updates in labeling coefficients for
+    current R-devel.
 
 
 Changes in Version 3.0-0

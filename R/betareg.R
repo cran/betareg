@@ -143,7 +143,7 @@ betareg.fit <- function(x, y, z = NULL, weights = NULL, offset = NULL,
           eta <- pmin(eta, 700)
           pmax(exp(-eta - exp(-eta)), .Machine$double.eps)
         },
-        dmu.deta = function(eta) pmax(exp(-exp(-eta) - eta)*(exp(-eta) - 1), .Machine$double.eps),
+        dmu.deta = function(eta) pmax(exp(-exp(-eta) - eta) * expm1(-eta), .Machine$double.eps),
         valideta = function(eta) TRUE,
         name = "loglog"
       ), class = "link-glm")
