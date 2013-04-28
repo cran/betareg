@@ -1,6 +1,6 @@
 Package: betareg
-Version: 3.0-2
-Date: 2012-07-29
+Version: 3.0-3
+Date: 2013-04-28
 Title: Beta Regression
 Authors@R: c(person(given = "Achim", family = "Zeileis", role =
         c("aut", "cre"), email = "Achim.Zeileis@R-project.org"),
@@ -20,15 +20,17 @@ Description: Beta regression for modeling beta-distributed dependent
         estimation as well as finite mixture models and recursive
         partitioning for beta regressions are provided.
 Depends: R (>= 2.10.0), stats, Formula
-Imports: graphics, methods, flexmix, lmtest, modeltools, sandwich
+Imports: graphics, methods, flexmix, Formula, lmtest, modeltools,
+        sandwich
 Suggests: car, flexmix, lattice, lmtest, modeltools, party, sandwich,
         strucchange
 License: GPL-2
-Packaged: 2012-07-29 15:53:36 UTC; zeileis
+Packaged: 2013-04-28 10:14:23 UTC; zeileis
 Author: Achim Zeileis [aut, cre], Francisco Cribari-Neto [aut], Bettina
         Gruen [aut], Ioannis Kosmidis [aut], Alexandre B. Simas [ctb]
         (earlier version by), Andrea V. Rocha [ctb] (earlier version
         by)
 Maintainer: Achim Zeileis <Achim.Zeileis@R-project.org>
+NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2012-07-29 16:00:35
+Date/Publication: 2013-04-28 14:55:55

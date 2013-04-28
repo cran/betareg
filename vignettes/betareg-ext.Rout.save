@@ -201,7 +201,7 @@ betaReg fit with coefficients:
 > sctest(rs_tree)
 $`1`
               dyslexia        x1       x2        x3
-statistic 2.268741e+01 8.5250961 5.569861 3.6273300
+statistic 2.268741e+01 8.5250962 5.569861 3.6273300
 p.value   5.847856e-04 0.9094631 0.998710 0.9142006
 
 $`2`
@@ -399,3 +399,6 @@ $\beta_{11}$ & $ 0.01097$\phantom{)} & (0.00041) & $ 0.01094$\phantom{)} & (0.00
 $\log\phi$ & $ 6.08741$\phantom{)} & (0.24990) & $ 5.71191$\phantom{)} & (0.24986) & $ 5.61608$\phantom{)} & (0.24984) \\ \hline
 
  *** Run successfully completed ***
+> proc.time()
+   user  system elapsed 
+ 22.925   0.112  23.119 

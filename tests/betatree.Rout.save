@@ -1,7 +1,6 @@
 
-R version 2.14.1 (2011-12-22)
-Copyright (C) 2011 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 3.0.0 (2013-04-03) -- "Masked Marvel"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -43,7 +42,7 @@ Loading required package: zoo
 
 Attaching package: 'zoo'
 
-The following object(s) are masked from 'package:base':
+The following object is masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -129,7 +128,7 @@ Number of iterations: 19 (BFGS) + 8 (Fisher scoring)
 > sctest(rs_tree)
 $`1`
               dyslexia        x1       x2        x3
-statistic 2.268741e+01 8.5250961 5.569861 3.6273300
+statistic 2.268741e+01 8.5250962 5.569861 3.6273300
 p.value   5.847856e-04 0.9094631 0.998710 0.9142006
 
 $`2`
@@ -143,3 +142,6 @@ statistic    0
 p.value      1
 
 > 
+> proc.time()
+   user  system elapsed 
+  3.312   0.116   3.428 

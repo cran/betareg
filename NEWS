@@ -1,3 +1,13 @@
+Changes in Version 3.0-3
+
+  o The predict() method gained support for type = "quantile", so that
+    quantiles of the response distribution can be predicted.
+
+  o The "Formula" package is now not only in the list of dependencies
+    but is also imported in the NAMESPACE, in order to facilitate
+    importing "betareg" in other packages.
+
+
 Changes in Version 3.0-2
 
   o Avoid .Call()ing logit link functions directly, instead

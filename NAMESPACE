@@ -1,4 +1,4 @@
-import("graphics", "stats")
+import("graphics", "stats", "Formula")
 
 importFrom("sandwich", "estfun")
 importFrom("sandwich", "bread")

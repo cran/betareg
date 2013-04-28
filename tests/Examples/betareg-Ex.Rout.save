@@ -1,7 +1,6 @@
 
-R version 2.15.1 (2012-06-22) -- "Roasted Marshmallows"
-Copyright (C) 2012 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
+R version 3.0.0 (2013-04-03) -- "Masked Marvel"
+Copyright (C) 2013 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -22,7 +21,7 @@ Type 'q()' to quit R.
 > library('betareg')
 Loading required package: Formula
 > 
-> assign(".oldSearch", search(), pos = 'CheckExEnv')
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > cleanEx()
 > nameEx("CarTask")
 > ### * CarTask
@@ -43,21 +42,12 @@ Loading required package: Formula
 +   FLXconcomitant = FLXPmultinom(~ task))
 Loading required package: flexmix
 Loading required package: lattice
-Loading required package: modeltools
-Loading required package: stats4
-Loading required package: multcomp
-Loading required package: mvtnorm
-Loading required package: survival
-Loading required package: splines
-Loading required package: nnet
 > 
 > 
 > 
 > cleanEx()
 
-detaching 'package:nnet', 'package:flexmix', 'package:multcomp',
-  'package:survival', 'package:splines', 'package:mvtnorm',
-  'package:modeltools', 'package:stats4', 'package:lattice'
+detaching 'package:flexmix', 'package:lattice'
 
 > nameEx("FoodExpenditure")
 > ### * FoodExpenditure
@@ -81,7 +71,7 @@ Loading required package: zoo
 
 Attaching package: 'zoo'
 
-The following object(s) are masked from 'package:base':
+The following object is masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -89,7 +79,7 @@ The following object(s) are masked from 'package:base':
 
 	studentized Breusch-Pagan test
 
-data:  fe_lin 
+data:  fe_lin
 BP = 5.9348, df = 2, p-value = 0.05144
 
 > 
@@ -289,21 +279,12 @@ Number of iterations: 51 (BFGS) + 4 (Fisher scoring)
 +   FLXconcomitant = FLXPmultinom(~ task))
 Loading required package: flexmix
 Loading required package: lattice
-Loading required package: modeltools
-Loading required package: stats4
-Loading required package: multcomp
-Loading required package: mvtnorm
-Loading required package: survival
-Loading required package: splines
-Loading required package: nnet
 > 
 > 
 > 
 > cleanEx()
 
-detaching 'package:nnet', 'package:flexmix', 'package:multcomp',
-  'package:survival', 'package:splines', 'package:mvtnorm',
-  'package:modeltools', 'package:stats4', 'package:lattice'
+detaching 'package:flexmix', 'package:lattice'
 
 > nameEx("MockJurors")
 > ### * MockJurors
@@ -323,7 +304,7 @@ Loading required package: zoo
 
 Attaching package: 'zoo'
 
-The following object(s) are masked from 'package:base':
+The following object is masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -385,7 +366,7 @@ Model 2: confidence ~ verdict * conflict | verdict * conflict
 1   2 28.226                         
 2   8 40.117  6 23.782  0.0005728 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > ## McFadden's pseudo-R-squared
 > 1 - as.vector(logLik(mj_null)/logLik(mj_vd))
 [1] 0.296407
@@ -439,11 +420,11 @@ dyslexia     -1.2056     0.2259  -5.338 4.01e-06 ***
 iq            0.3594     0.2255   1.594   0.1188    
 dyslexia:iq  -0.4229     0.2255  -1.875   0.0681 .  
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 Residual standard error: 1.2 on 40 degrees of freedom
-Multiple R-squared: 0.6151,	Adjusted R-squared: 0.5862 
-F-statistic: 21.31 on 3 and 40 DF,  p-value: 2.083e-08 
+Multiple R-squared:  0.6151,	Adjusted R-squared:  0.5862 
+F-statistic: 21.31 on 3 and 40 DF,  p-value: 2.083e-08
 
 > ## Beta regression (with numerical rather than analytic standard errors)
 > ## (Note: Smithson & Verkuilen erroneously compute one-sided p-values)
@@ -603,21 +584,12 @@ sa_stress  4 -595.9202
 +   FLXconcomitant = FLXPmultinom(~ priming + eliciting))
 Loading required package: flexmix
 Loading required package: lattice
-Loading required package: modeltools
-Loading required package: stats4
-Loading required package: multcomp
-Loading required package: mvtnorm
-Loading required package: survival
-Loading required package: splines
-Loading required package: nnet
 > 
 > 
 > 
 > cleanEx()
 
-detaching 'package:nnet', 'package:flexmix', 'package:multcomp',
-  'package:survival', 'package:splines', 'package:mvtnorm',
-  'package:modeltools', 'package:stats4', 'package:lattice'
+detaching 'package:flexmix', 'package:lattice'
 
 > nameEx("betamix")
 > ### * betamix
@@ -646,12 +618,6 @@ detaching 'package:nnet', 'package:flexmix', 'package:multcomp',
 +   coef = 0.99, delta = 0.01))
 Loading required package: flexmix
 Loading required package: lattice
-Loading required package: modeltools
-Loading required package: stats4
-Loading required package: multcomp
-Loading required package: mvtnorm
-Loading required package: survival
-Loading required package: splines
 > 
 > ## visualize result
 > ## intensities based on posterior probabilities
@@ -689,7 +655,6 @@ Loading required package: splines
 +   extra_components = extraComponent(type = "uniform",
 +   coef = 0.99, delta = 0.01), cluster = posterior(rs_mix),
 +   FLXconcomitant = FLXPmultinom(~w))
-Loading required package: nnet
 > coef(rs_mix2, which = "concomitant")
   (Intercept)          w
 1  0.00000000  0.0000000
@@ -701,7 +666,7 @@ $Comp.2
 (Intercept)  0.41536    0.64005  0.6490  0.51637  
 w            1.00360    0.50781  1.9763  0.04812 *
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 $Comp.3
              Estimate Std. Error z value Pr(>|z|)
@@ -713,9 +678,7 @@ w           -0.180655   0.436804 -0.4136   0.6792
 > 
 > cleanEx()
 
-detaching 'package:nnet', 'package:flexmix', 'package:multcomp',
-  'package:survival', 'package:splines', 'package:mvtnorm',
-  'package:modeltools', 'package:stats4', 'package:lattice'
+detaching 'package:flexmix', 'package:lattice'
 
 > nameEx("betareg")
 > ### * betareg
@@ -776,7 +739,7 @@ Loading required package: zoo
 
 Attaching package: 'zoo'
 
-The following object(s) are masked from 'package:base':
+The following object is masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -784,7 +747,7 @@ The following object(s) are masked from 'package:base':
 
 	studentized Breusch-Pagan test
 
-data:  fe_lin 
+data:  fe_lin
 BP = 5.9348, df = 2, p-value = 0.05144
 
 > fe_beta <- betareg(I(food/income) ~ income + persons, data = FoodExpenditure)
@@ -825,7 +788,7 @@ Model 2: I(food/income) ~ income
 1   4 45.334                       
 2   3 40.511 -1 9.646   0.001898 **
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > waldtest(fe_beta, fe_beta2)
 Wald test
 
@@ -835,7 +798,7 @@ Model 2: I(food/income) ~ income
 1     34                         
 2     35 -1 11.236  0.0008023 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > 
 > ## Section 3 from online supplements to Simas et al. (2010)
@@ -889,7 +852,7 @@ Model 2: yield ~ batch + temp | temp
 1  12 84.798                      
 2  13 86.977  1 4.359    0.03681 *
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > 
 > 
@@ -1060,7 +1023,7 @@ Loading required package: zoo
 
 Attaching package: 'zoo'
 
-The following object(s) are masked from 'package:base':
+The following object is masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -1079,7 +1042,7 @@ Loading required package: colorspace
 > sctest(bt)
 $`1`
               dyslexia        x1       x2        x3
-statistic 2.268741e+01 8.5250961 5.569861 1.0567635
+statistic 2.268741e+01 8.5250962 5.569861 1.0567635
 p.value   5.847856e-04 0.9094631 0.998710 0.9999042
 
 $`2`
@@ -1158,7 +1121,7 @@ Number of iterations: 19 (BFGS) + 8 (Fisher scoring)
 > sctest(bt2)
 $`1`
                  x1       x2        x3          x4
-statistic 8.5250961 5.569861 1.0567635 19.94405058
+statistic 8.5250962 5.569861 1.0567635 19.94405064
 p.value   0.9094631 0.998710 0.9999042  0.03531254
 
 $`2`
@@ -1195,7 +1158,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 38.62 on 4 Df
 Pseudo R-squared: 0.3292
-Number of iterations: 17 (BFGS) + 1 (Fisher scoring) 
+Number of iterations: 17 (BFGS) + 2 (Fisher scoring) 
 > summary(bt2, node = 3)
 
 Call:
@@ -1304,41 +1267,75 @@ detaching 'package:party', 'package:vcd', 'package:colorspace',
 +   predict(gy2, type = "response"),
 +   predict(gy2, type = "link"),
 +   predict(gy2, type = "precision"),
-+   predict(gy2, type = "variance")
++   predict(gy2, type = "variance"),
++   predict(gy2, type = "quantile", at = c(0.25, 0.5, 0.75))
 + )
-         [,1]       [,2]       [,3]         [,4]
-1  0.09997030 -2.1975546   77.55630 1.145373e-03
-2  0.18657948 -1.4723909  215.06200 7.024260e-04
-3  0.32142578 -0.7472272  596.36246 3.651238e-04
-4  0.47378921 -0.1049393 1471.75136 1.692838e-04
-5  0.08567673 -2.3676029   93.72999 8.269423e-04
-6  0.14211525 -1.7978314  208.88539 5.808814e-04
-7  0.26284576 -1.0312297  613.99653 3.150552e-04
-8  0.10324409 -2.1616877   85.88389 1.065615e-03
-9  0.17651800 -1.5401188  205.86393 7.026812e-04
-10 0.30244665 -0.8356741  554.46132 3.798152e-04
-11 0.07880568 -2.4586860  120.07465 5.995916e-04
-12 0.14364751 -1.7853197  309.57002 3.960875e-04
-13 0.24750690 -1.1119533  798.11684 2.330663e-04
-14 0.34394188 -0.6457767 1537.50973 1.466652e-04
-15 0.16956516 -1.5887122  342.81006 4.095657e-04
-16 0.27545027 -0.9671433  821.71666 2.425834e-04
-17 0.33691381 -0.6770778 1235.66499 1.806495e-04
-18 0.10547585 -2.1378099  191.39968 4.903890e-04
-19 0.23606454 -1.1743781  742.04019 2.427030e-04
-20 0.32316164 -0.7392798 1368.34435 1.597321e-04
-21 0.05383471 -2.8664989  120.07465 4.207035e-04
-22 0.07928368 -2.4521196  215.06200 3.378557e-04
-23 0.16906299 -1.5922826  720.72869 1.946447e-04
-24 0.27062919 -0.9914327 1677.97206 1.175654e-04
-25 0.08270107 -2.4062009  248.79507 3.036954e-04
-26 0.17115802 -1.5774423  798.11684 1.775247e-04
-27 0.31885402 -0.7590433 2523.26796 8.603925e-05
-28 0.12701435 -1.9276191  650.84437 1.701046e-04
-29 0.23660619 -1.1713769 1885.41604 9.574966e-05
-30 0.10507878 -2.1420253  798.11684 1.176764e-04
-31 0.11951904 -1.9969926  978.71400 1.074132e-04
-32 0.18401511 -1.4893780 1998.56571 7.509308e-05
+                                                     q_0.25      q_0.5
+1  0.09997030 -2.1975546   77.55630 1.145373e-03 0.07549306 0.09653422
+2  0.18657948 -1.4723909  215.06200 7.024260e-04 0.16816141 0.18560681
+3  0.32142578 -0.7472272  596.36246 3.651238e-04 0.30841729 0.32122603
+4  0.47378921 -0.1049393 1471.75136 1.692838e-04 0.46500324 0.47377734
+5  0.08567673 -2.3676029   93.72999 8.269423e-04 0.06489692 0.08273480
+6  0.14211525 -1.7978314  208.88539 5.808814e-04 0.12524873 0.14097226
+7  0.26284576 -1.0312297  613.99653 3.150552e-04 0.25072516 0.26258813
+8  0.10324409 -2.1616877   85.88389 1.065615e-03 0.07972496 0.10016550
+9  0.17651800 -1.5401188  205.86393 7.026812e-04 0.15805951 0.17546930
+10 0.30244665 -0.8356741  554.46132 3.798152e-04 0.28916034 0.30220897
+11 0.07880568 -2.4586860  120.07465 5.995916e-04 0.06118775 0.07647135
+12 0.14364751 -1.7853197  309.57002 3.960875e-04 0.12981151 0.14287972
+13 0.24750690 -1.1119533  798.11684 2.330663e-04 0.23708990 0.24729591
+14 0.34394188 -0.6457767 1537.50973 1.466652e-04 0.33573361 0.34387420
+15 0.16956516 -1.5887122  342.81006 4.095657e-04 0.15556251 0.16892216
+16 0.27545027 -0.9671433  821.71666 2.425834e-04 0.26483999 0.27526801
+17 0.33691381 -0.6770778 1235.66499 1.806495e-04 0.32779629 0.33682580
+18 0.10547585 -2.1378099  191.39968 4.903890e-04 0.08983849 0.10410171
+19 0.23606454 -1.1743781  742.04019 2.427030e-04 0.22542250 0.23582731
+20 0.32316164 -0.7392798 1368.34435 1.597321e-04 0.31458683 0.32307546
+21 0.05383471 -2.8664989  120.07465 4.207035e-04 0.03892848 0.05136993
+22 0.07928368 -2.4521196  215.06200 3.378557e-04 0.06624459 0.07798069
+23 0.16906299 -1.5922826  720.72869 1.946447e-04 0.15948521 0.16875678
+24 0.27062919 -0.9914327 1677.97206 1.175654e-04 0.26326427 0.27053804
+25 0.08270107 -2.4062009  248.79507 3.036954e-04 0.07038929 0.08158360
+26 0.17115802 -1.5774423  798.11684 1.775247e-04 0.16202069 0.17088326
+27 0.31885402 -0.7590433 2523.26796 8.603925e-05 0.31257024 0.31880615
+28 0.12701435 -1.9276191  650.84437 1.701046e-04 0.11801311 0.12663223
+29 0.23660619 -1.1713769 1885.41604 9.574966e-05 0.22995419 0.23651304
+30 0.10507878 -2.1420253  798.11684 1.176764e-04 0.09758762 0.10474890
+31 0.11951904 -1.9969926  978.71400 1.074132e-04 0.11239006 0.11925985
+32 0.18401511 -1.4893780 1998.56571 7.509308e-05 0.17811235 0.18390969
+       q_0.75
+1  0.12074136
+2  0.20394068
+3  0.33421676
+4  0.48256225
+5  0.10327886
+6  0.15774019
+7  0.27468582
+8  0.12343883
+9  0.19383720
+10 0.31547416
+11 0.09389756
+12 0.15664851
+13 0.25769409
+14 0.35207641
+15 0.18286831
+16 0.28586202
+17 0.34593544
+18 0.11962147
+19 0.24644820
+20 0.33164255
+21 0.06607706
+22 0.09090812
+23 0.17830729
+24 0.27789478
+25 0.09379888
+26 0.17999609
+27 0.32508563
+28 0.13559952
+29 0.24315669
+30 0.11221069
+31 0.12636570
+32 0.18980299
 > 
 > 
 > 
@@ -1540,8 +1537,8 @@ Number of iterations: 33 (BFGS) + 28 (Fisher scoring)
 > 
 > ### * <FOOTER>
 > ###
-> cat("Time elapsed: ", proc.time() - get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  48.719 0.224 49.139 0 0 
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  48.771 0.188 49.152 0 0 
 > grDevices::dev.off()
 null device 
           1 

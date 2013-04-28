@@ -586,9 +586,24 @@ print.summary.betareg <- function(x, digits = max(3, getOption("digits") - 3), .
 }
 
 predict.betareg <- function(object, newdata = NULL,
-  type = c("response", "link", "precision", "variance"), na.action = na.pass, ...)
+  type = c("response", "link", "precision", "variance", "quantile"),
+  na.action = na.pass, at = 0.5, ...)
 {
   type <- match.arg(type)
+
+  if(type == "quantile") {
+    qfun <- function(at, mu, phi) {
+      rval <- sapply(at, function(p) qbeta(p, mu * phi, (1 - mu) * phi))
+      if(length(at) > 1L) {
+        if(NCOL(rval) == 1L) rval <- matrix(rval, ncol = length(at),
+	  dimnames = list(unique(names(rval)), NULL))
+        colnames(rval) <- paste("q_", at, sep = "")
+      } else {
+        rval <- drop(rval)
+      }
+      rval   
+    }
+  }
 
   if(missing(newdata)) {
 
@@ -611,6 +626,14 @@ predict.betareg <- function(object, newdata = NULL,
         offset <- if(is.null(object$offset$precision)) rep.int(0, NROW(z)) else object$offset$precision
         phi <- object$link$precision$linkinv(drop(z %*% gamma + offset))
         object$fitted.values * (1 - object$fitted.values) / (1 + phi)
+      },
+      "quantile" = {
+        mu <- object$fitted.values
+        gamma <- object$coefficients$precision
+        z <- if(is.null(object$x)) model.matrix(object, model = "precision") else object$x$precision
+        offset <- if(is.null(object$offset$precision)) rep.int(0, NROW(z)) else object$offset$precision
+        phi <- object$link$precision$linkinv(drop(z %*% gamma + offset))
+        qfun(at, mu, phi)
       }
     )
     return(rval)
@@ -621,20 +644,21 @@ predict.betareg <- function(object, newdata = NULL,
       "response" = "mean",
       "link" = "mean",
       "precision" = "precision",
-      "variance" = "full")
+      "variance" = "full",
+      "quantile" = "full")
 
     mf <- model.frame(delete.response(object$terms[[tnam]]), newdata, na.action = na.action, xlev = object$levels[[tnam]])
     newdata <- newdata[rownames(mf), , drop = FALSE]
     offset <- list(mean = rep.int(0, nrow(mf)), precision = rep.int(0, nrow(mf)))
 
-    if(type %in% c("response", "link", "variance")) {
+    if(type %in% c("response", "link", "variance", "quantile")) {
       X <- model.matrix(delete.response(object$terms$mean), mf, contrasts = object$contrasts$mean)
       if(!is.null(object$call$offset)) offset[[1L]] <- offset[[1L]] + eval(object$call$offset, newdata)
       if(!is.null(off.num <- attr(object$terms$mean, "offset"))) {
         for(j in off.num) offset[[1L]] <- offset[[1L]] + eval(attr(object$terms$mean, "variables")[[j + 1L]], newdata)
       }
     }
-    if(type %in% c("precision", "variance")) {
+    if(type %in% c("precision", "variance", "quantile")) {
       Z <- model.matrix(object$terms$precision, mf, contrasts = object$contrasts$precision)
       if(!is.null(off.num <- attr(object$terms$precision, "offset"))) {
         for(j in off.num) offset[[2L]] <- offset[[2L]] + eval(attr(object$terms$precision, "variables")[[j + 1L]], newdata)
@@ -655,6 +679,11 @@ predict.betareg <- function(object, newdata = NULL,
         mu <- object$link$mean$linkinv(drop(X %*% object$coefficients$mean + offset[[1L]]))
         phi <- object$link$precision$linkinv(drop(Z %*% object$coefficients$precision + offset[[2L]]))
         mu * (1 - mu) / (1 + phi)
+      },
+      "quantile" = {
+        mu <- object$link$mean$linkinv(drop(X %*% object$coefficients$mean + offset[[1L]]))
+        phi <- object$link$precision$linkinv(drop(Z %*% object$coefficients$precision + offset[[2L]]))
+        qfun(at, mu, phi)
       }
     )
     return(rval)
