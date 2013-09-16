@@ -236,17 +236,14 @@ betareg.fit <- function(x, y, z = NULL, weights = NULL, offset = NULL,
 
   ## objective function
   loglikfun <- function(par, fit = NULL) {
-    ## extract fitted means/precisions
+    ## extract fitted parameters
     if(is.null(fit)) fit <- fitfun(par)
-    mu <- fit$mu
-    phi <- fit$phi
-
+    alpha <- fit$mu * fit$phi
+    beta <- (1 - fit$mu) * fit$phi
+    
     ## compute log-likelihood
-    if(any(!is.finite(phi))) NaN else { ## catch extreme cases without warning
-      ## Use dbeta() instead of 'textbook' formula:
-      ## ll <- lgamma(phi) - lgamma(mu * phi) - lgamma((1 - mu) * phi) +
-      ##   (mu * phi - 1) * log(y) + ((1 - mu) * phi - 1) * log(1 - y)
-      ll <- suppressWarnings(dbeta(y, mu * phi, (1 - mu) * phi, log = TRUE))
+    if(any(!is.finite(fit$phi)) | any(alpha > 1e300) | any(beta > 1e300)) NaN else { ## catch extreme cases without warning
+      ll <- suppressWarnings(dbeta(y, alpha, beta, log = TRUE))
       if(any(!is.finite(ll))) NaN else sum(weights * ll) ## again: catch extreme cases without warning
     }
   }

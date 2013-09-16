@@ -26,21 +26,21 @@ betatree <- function(formula, partition, data, subset = NULL, na.action = na.omi
 
   ## formula/data/model pre-processing
   betamod <- betaReg(control)
-  ff <- dpp(betamod, formula,
+  ff <- modeltools::dpp(betamod, formula,
     other = list(part = partition, precision = precision), 
     data = data, subset = subset, na.action = na.action)
 
   ## call mob()
-  rval <- mob(ff, model = betamod,
+  rval <- party::mob(ff, model = betamod,
     link = link, link.phi = link.phi,
-    control = mob_control(objfun = function(object) - as.vector(logLik(object)), ...))
+    control = party::mob_control(objfun = function(object) - as.vector(logLik(object)), ...))
 
   ## add class and return
   structure(list(mob = rval), class = "betatree")
 }
 
 ## convenience plotting
-plot.betatree <- function(x, terminal_panel = node_bivplot, tnex = 2,
+plot.betatree <- function(x, terminal_panel = party::node_bivplot, tnex = 2,
   pval = TRUE, id = TRUE, ...) {
   plot(x$mob, terminal_panel = terminal_panel, tnex = tnex,
     tp_args = list(id = id, ...), ip_args = list(pval = pval, id = id))
@@ -57,11 +57,19 @@ print.betatree <- function(x, ...) {
   invisible(x)
 }
 
+## infrastructure (copied from party)
+terminal_nodeIDs <- function(node) {
+  if(node$terminal) return(node$nodeID)
+  ll <- terminal_nodeIDs(node$left)
+  rr <- terminal_nodeIDs(node$right)
+  return(c(ll, rr))
+}
+
 ## parameters for beta-regression trees
 coef.betatree <- function (object, node = NULL, ...) 
 {
   object <- object$mob
-  if(is.null(node)) node <- party:::terminal_nodeIDs(object@tree)
+  if(is.null(node)) node <- terminal_nodeIDs(object@tree)
   rval <- sapply(nodes(object, node), function(z) coef(z$model, ...))
   if (!is.null(dim(rval))) {
     rval <- t(rval)
@@ -78,11 +86,11 @@ coef.betatree <- function (object, node = NULL, ...)
 
 ## StatModel creator function for plug-in to mob()
 betaReg <- function(control = betareg.control()) {
-  stopifnot(require("modeltools"))
+  stopifnot(requireNamespace("modeltools"))
   new("StatModel",
     capabilities = new("StatModelCapabilities"),
     name = "beta regression model",
-    dpp = ModelEnvFormula,
+    dpp = modeltools::ModelEnvFormula,
     fit = function(object, weights = NULL, ...) {
       ## extract design and response matrix from the `ModelEnv' object
       y <- as.vector(object@get("responseMatrix"))
@@ -150,7 +158,7 @@ print.betaReg <- function(x, digits = max(3, getOption("digits") - 3), ...)
 }
 
 summary.betaReg <- function(object, type = "response", ...)
-  betareg:::summary.betareg(object, type = type, ...)
+  summary.betareg(object, type = type, ...)
 
 reweight.betaReg <- function(object, weights, ...) {
      fit <- betaReg(betareg.control(

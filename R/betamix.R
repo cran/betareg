@@ -7,7 +7,7 @@ betamix <- function(formula, data, k, subset, na.action,
                     ID, fixed, extra_components, ...)
 {
   ## beta regression mixtures rely on flexmix package
-  stopifnot(require("flexmix"))
+  stopifnot(requireNamespace("flexmix"))
   ## Determine model.frame similar to betareg
 
   if (!missing(extra_components) & !missing(fixed))
@@ -45,7 +45,7 @@ betamix <- function(formula, data, k, subset, na.action,
     if (!is.null(FLXconcomitant))
       warning("only concomitant variables specified in formula used")
     conc <- formula(formula, lhs = 0, rhs = 3)
-    FLXconcomitant <- FLXPmultinom(conc)
+    FLXconcomitant <- flexmix::FLXPmultinom(conc)
   }
   if(length(formula)[2L] == 1L){
     precision <- ~ 1
@@ -274,7 +274,7 @@ function(object, components, parms) {
 
 setMethod("refit_optim", signature(object = "FLXMRbeta"),
 function(object, components, coef, se) {
-  Design <- FLXgetDesign(object, components)
+  Design <- flexmix::FLXgetDesign(object, components)
   x <- lapply(1:nrow(Design), function(k) {
     rval <- cbind(Estimate = coef[as.logical(Design[k,])],
                   "Std. Error" = se[as.logical(Design[k,])])

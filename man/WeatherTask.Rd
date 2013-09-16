@@ -55,6 +55,7 @@
 }
 \examples{
 data("WeatherTask", package = "betareg")
+library("flexmix")
 wt_betamix <- betamix(agreement ~ 1, data = WeatherTask, k = 2,
   extra_components = extraComponent(type = "betareg", coef =
     list(mean = 0, precision = 2)),

@@ -2,7 +2,9 @@ import("graphics", "stats", "Formula")
 
 importFrom("sandwich", "estfun")
 importFrom("sandwich", "bread")
+
 importFrom("lmtest", "coeftest")
+importFrom("lmtest", "coeftest.default")
 
 importClassFrom("flexmix", "FLXM")
 importClassFrom("flexmix", "FLXMR")
@@ -23,8 +25,16 @@ importFrom("flexmix", "summary")
 importFrom("flexmix", "predict")
 importFrom("flexmix", "fitted")
 
-importFrom("modeltools", "posterior")
 importFrom("modeltools", "clusters")
+importFrom("modeltools", "parameters")
+importFrom("modeltools", "posterior")
+importFrom("modeltools", "refit")
+
+importFrom("methods", "new")
+importFrom("methods", "show")
+importFrom("methods", "setOldClass")
+importFrom("methods", "setClass")
+importFrom("methods", "setMethod")
 
 export(
   ## beta regression

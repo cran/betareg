@@ -184,6 +184,7 @@ w <- rnorm(nrow(ReadingSkills),
 ## accuracy ~ iq | 1 | w
 ## The posteriors from the previously fitted model are used
 ## for initialization.
+library("flexmix")
 rs_mix2 <- betamix(accuracy ~ iq, data = ReadingSkills,
   extra_components = extraComponent(type = "uniform",
   coef = 0.99, delta = 0.01), cluster = posterior(rs_mix),
