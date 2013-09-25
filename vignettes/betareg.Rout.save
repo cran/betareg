@@ -2,7 +2,6 @@
 > options(width = 70, prompt = "R> ", continue = "+  ")
 
 > library("betareg")
-Loading required package: Formula
 
 > par(mfrow = c(1, 2), mar = c(4.1, 4.1, 4.1, 0.1))
 
@@ -189,9 +188,9 @@ Number of iterations: 51 (BFGS) + 3 (Fisher scoring)
 > library("lmtest")
 Loading required package: zoo
 
-Attaching package: ‘zoo’
+Attaching package: 'zoo'
 
-The following object(s) are masked from ‘package:base’:
+The following objects are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -200,7 +199,7 @@ The following object(s) are masked from ‘package:base’:
 
 	studentized Breusch-Pagan test
 
-data:  fe_lm 
+data:  fe_lm
 BP = 5.9348, df = 2, p-value = 0.05144
 
 
@@ -241,7 +240,7 @@ Number of iterations: 28 (BFGS) + 4 (Fisher scoring)
 (Intercept) 1.3640888  1.2257812  1.1128    0.2658    
 temp        0.0145703  0.0036183  4.0269 5.653e-05 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 > lrtest(gy_logit, gy_logit2)
 Likelihood ratio test
@@ -252,7 +251,7 @@ Model 2: yield ~ batch + temp | temp
 1  12 84.798                      
 2  13 86.977  1 4.359    0.03681 *
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 > fe_beta2 <- betareg(I(food/income) ~ income + persons | 
 +     persons, data = FoodExpenditure)
@@ -266,7 +265,7 @@ Model 2: I(food/income) ~ income + persons | persons
 1   4 45.334                        
 2   5 49.185  1 7.7029   0.005513 **
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 > AIC(fe_beta, fe_beta2, k = log(nrow(FoodExpenditure)))
          df       AIC
@@ -297,7 +296,7 @@ Model 2: yield ~ batch + temp + I(predict(gy_logit, type = "link")^2)
 1  12 84.798                         
 2  13 96.001  1 22.407  2.205e-06 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 > lrtest(gy_loglog, . ~ . + I(predict(gy_loglog, type = "link")^2))
 Likelihood ratio test
@@ -382,7 +381,7 @@ dyslexia    -1.20563    0.22586 -5.3380 4.011e-06 ***
 iq           0.35945    0.22548  1.5941   0.11878    
 dyslexia:iq -0.42286    0.22548 -1.8754   0.06805 .  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 > rs_beta <- betareg(accuracy ~ dyslexia * iq | dyslexia + 
@@ -401,7 +400,7 @@ dyslexia:iq       -0.58126    0.17258 -3.3681 0.0007568 ***
 (phi)_dyslexia     1.74656    0.29398  5.9410 2.832e-09 ***
 (phi)_iq           1.22907    0.45957  2.6744 0.0074862 ** 
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 > set.seed(123)
@@ -424,3 +423,6 @@ Loading required package: sandwich
 > plot(y2_gefp, aggregate = FALSE)
 
  *** Run successfully completed ***
+> proc.time()
+   user  system elapsed 
+ 11.732   0.748  13.279 

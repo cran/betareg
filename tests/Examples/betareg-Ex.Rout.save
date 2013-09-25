@@ -1,7 +1,7 @@
 
-R version 3.0.1 (2013-05-16) -- "Good Sport"
-Copyright (C) 2013 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2014-09-24 r66673) -- "Unsuffered Consequences"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -70,7 +70,7 @@ Loading required package: zoo
 
 Attaching package: 'zoo'
 
-The following object is masked from 'package:base':
+The following objects are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -157,7 +157,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 75.68 on 6 Df
 Pseudo R-squared: 0.9398
-Number of iterations: 144 (BFGS) + 5 (Fisher scoring) 
+Number of iterations: 147 (BFGS) + 4 (Fisher scoring) 
 > 
 > ## Ferrari and Cribari-Neto (2004)
 > gy2 <- betareg(yield ~ batch + temp, data = GasolineYield)
@@ -303,7 +303,7 @@ Loading required package: zoo
 
 Attaching package: 'zoo'
 
-The following object is masked from 'package:base':
+The following objects are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -738,7 +738,7 @@ Loading required package: zoo
 
 Attaching package: 'zoo'
 
-The following object is masked from 'package:base':
+The following objects are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -1016,7 +1016,7 @@ Loading required package: zoo
 
 Attaching package: 'zoo'
 
-The following object is masked from 'package:base':
+The following objects are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -1034,7 +1034,7 @@ Loading required package: stats4
 > sctest(bt)
 $`1`
               dyslexia        x1       x2        x3
-statistic 2.268741e+01 8.5250962 5.569861 1.0567635
+statistic 2.268741e+01 8.5250961 5.569861 1.0567635
 p.value   5.847856e-04 0.9094631 0.998710 0.9999042
 
 $`2`
@@ -1113,8 +1113,8 @@ Number of iterations: 19 (BFGS) + 8 (Fisher scoring)
 > sctest(bt2)
 $`1`
                  x1       x2        x3          x4
-statistic 8.5250962 5.569861 1.0567635 19.94405064
-p.value   0.9094631 0.998710 0.9999042  0.03531254
+statistic 8.5250961 5.569861 1.0567635 19.94405056
+p.value   0.9094631 0.998710 0.9999042  0.03531255
 
 $`2`
                  x1       x2       x3        x4
@@ -1150,7 +1150,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 38.62 on 4 Df
 Pseudo R-squared: 0.3292
-Number of iterations: 17 (BFGS) + 2 (Fisher scoring) 
+Number of iterations: 17 (BFGS) + 1 (Fisher scoring) 
 > summary(bt2, node = 3)
 
 Call:
@@ -1175,7 +1175,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 22.38 on 4 Df
 Pseudo R-squared: 0.3292
-Number of iterations: 18 (BFGS) + 1 (Fisher scoring) 
+Number of iterations: 18 (BFGS) + 2 (Fisher scoring) 
 > 
 > 
 > 
@@ -1529,7 +1529,7 @@ Number of iterations: 33 (BFGS) + 28 (Fisher scoring)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  46.836 0.164 47.073 0 0 
+Time elapsed:  43.44 1.284 44.808 0 0 
 > grDevices::dev.off()
 null device 
           1 

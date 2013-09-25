@@ -46,9 +46,9 @@ function(model, data, formula, lhs=TRUE, ...) {
   model_precision <- model
   model_precision@fullformula <- model_precision@formula <- . ~ .
   model_precision@fixed <- model@fixed_precision
-  model <- getMethod("FLXgetModelmatrix", "FLXMRfix", where = "package:flexmix")(model, data, formula, lhs, ...)
+  model <- getMethod("FLXgetModelmatrix", "FLXMRfix", where = asNamespace("flexmix"))(model, data, formula, lhs, ...)
   colnames(model@x) <- colnames(model@design)
-  model_precision <- getMethod("FLXgetModelmatrix", "FLXMRfix", where = "package:flexmix")(model_precision, data, model@precision, lhs = FALSE, ...)
+  model_precision <- getMethod("FLXgetModelmatrix", "FLXMRfix", where = asNamespace("flexmix"))(model_precision, data, model@precision, lhs = FALSE, ...)
   model@z <- model_precision@x
   colnames(model@z) <- colnames(model_precision@design)
   model@terms_precision <- model_precision@terms

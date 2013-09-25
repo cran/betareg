@@ -1,8 +1,7 @@
 
-R version 2.15.2 (2012-10-26) -- "Trick or Treat"
-Copyright (C) 2012 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2014-09-24 r66673) -- "Unsuffered Consequences"
+Copyright (C) 2014 The R Foundation for Statistical Computing
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -18,7 +17,6 @@ Type 'q()' to quit R.
 
 > ## package and data
 > library("betareg")
-Loading required package: Formula
 > data("ReadingSkills", package = "betareg")
 > 
 > ## beta regression mixture model
@@ -26,14 +24,6 @@ Loading required package: Formula
 > rs_mix <- betamix(accuracy ~ iq, data = ReadingSkills, k = 3,
 +   extra_components = extraComponent(type = "uniform",
 +     coef = 0.99, delta = 0.01), nstart = 10)
-Loading required package: flexmix
-Loading required package: lattice
-Loading required package: modeltools
-Loading required package: stats4
-Loading required package: multcomp
-Loading required package: mvtnorm
-Loading required package: survival
-Loading required package: splines
 > 
 > ## fitted model
 > print(rs_mix)
@@ -55,13 +45,13 @@ $Comp.1$mean
 (Intercept)  1.40342    0.26332  5.3296 9.842e-08 ***
 iq           0.82502    0.21630  3.8142 0.0001366 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 $Comp.1$precision
             Estimate Std. Error z value  Pr(>|z|)    
 (Intercept)  2.68508    0.45435  5.9097 3.428e-09 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 $Comp.2
@@ -70,13 +60,13 @@ $Comp.2$mean
 (Intercept)  0.502523   0.082476  6.0930 1.108e-09 ***
 iq          -0.048414   0.112923 -0.4287    0.6681    
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 $Comp.2$precision
             Estimate Std. Error z value Pr(>|z|)    
 (Intercept)  4.25160    0.74737  5.6888 1.28e-08 ***
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 > 
@@ -98,7 +88,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
  [7,] 9.254650e-01 7.453500e-02 0.0000000
  [8,] 1.604308e-06 2.646945e-31 0.9999984
  [9,] 2.211010e-03 1.833024e-32 0.9977890
-[10,] 9.426572e-02 8.522170e-34 0.9057343
+[10,] 9.426572e-02 8.522169e-34 0.9057343
 [11,] 3.074747e-02 3.171891e-33 0.9692525
 [12,] 1.625715e-01 2.891468e-34 0.8374285
 [13,] 4.023456e-02 2.451518e-33 0.9597654
@@ -136,4 +126,4 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
 > proc.time()
    user  system elapsed 
- 19.773   0.112  19.934 
+ 18.728   0.680  19.438 

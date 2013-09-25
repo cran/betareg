@@ -26,6 +26,7 @@ importFrom("flexmix", "predict")
 importFrom("flexmix", "fitted")
 
 importFrom("modeltools", "clusters")
+importFrom("modeltools", "getModel")
 importFrom("modeltools", "parameters")
 importFrom("modeltools", "posterior")
 importFrom("modeltools", "refit")

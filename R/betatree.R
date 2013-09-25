@@ -49,7 +49,7 @@ plot.betatree <- function(x, terminal_panel = party::node_bivplot, tnex = 2,
 ## hand-crafted "Next()" to bridge to
 ## un-exported S4 classes "mob"/"BinaryTree", argh!
 logLik.betatree <- function(object, ...) logLik(object$mob, ...)
-sctest.betatree <- function(x, ...) sctest(x$mob, ...)
+sctest.betatree <- function(x, ...) strucchange::sctest(x$mob, ...)
 weights.betatree <- function(object, ...) weights(object$mob, ...)
 summary.betatree <- function(object, ...) summary(object$mob, ...)
 print.betatree <- function(x, ...) {
@@ -70,7 +70,7 @@ coef.betatree <- function (object, node = NULL, ...)
 {
   object <- object$mob
   if(is.null(node)) node <- terminal_nodeIDs(object@tree)
-  rval <- sapply(nodes(object, node), function(z) coef(z$model, ...))
+  rval <- sapply(party::nodes(object, node), function(z) coef(z$model, ...))
   if (!is.null(dim(rval))) {
     rval <- t(rval)
     rownames(rval) <- node

@@ -6,8 +6,6 @@ betamix <- function(formula, data, k, subset, na.action,
                     verbose = FALSE, nstart = if (is.null(cluster)) 3 else 1, which = "BIC", 
                     ID, fixed, extra_components, ...)
 {
-  ## beta regression mixtures rely on flexmix package
-  stopifnot(requireNamespace("flexmix"))
   ## Determine model.frame similar to betareg
 
   if (!missing(extra_components) & !missing(fixed))
@@ -92,7 +90,7 @@ betamix <- function(formula, data, k, subset, na.action,
                          concomitant = FLXconcomitant, control = FLXcontrol,
                          cluster = cluster, verbose = verbose)
   }
-  if (is(rval, "stepFlexmix")) rval <- getModel(rval, which = which)
+  if (is(rval, "stepFlexmix")) rval <- modeltools::getModel(rval, which = which)
   structure(list(flexmix = rval, call = cl), class = "betamix")
 }
 
@@ -216,6 +214,8 @@ function(model, data, formula, lhs=TRUE, ...) {
   model_precision <- model
   model_precision@formula <- . ~ .
   model_precision@terms <- NULL
+  model_precision@contrasts <- NULL
+  model_precision@xlevels <- NULL
   model_precision <- callNextMethod(model_precision, data, model@precision, lhs = FALSE, ...)
   model@z <- model_precision@x
   model@terms_precision <- model_precision@terms

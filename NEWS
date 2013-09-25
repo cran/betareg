@@ -1,3 +1,11 @@
+Changes in Version 3.0-5
+
+  o The "Formula" package is now only in Imports but not Depends (see below).
+
+  o Method "FLXgetModelmatrix" for "FLXMRbeta" objects modified due to
+    changes in flexmix 2.3.12. 
+
+
 Changes in Version 3.0-4
 
   o For some datasets betareg() would just "hang" because dbeta() "hangs"
