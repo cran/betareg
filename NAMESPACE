@@ -1,41 +1,63 @@
 import("graphics", "stats", "Formula")
 
-importFrom("sandwich", "estfun")
-importFrom("sandwich", "bread")
+importFrom("grDevices",
+  "dev.interactive"
+)
 
-importFrom("lmtest", "coeftest")
-importFrom("lmtest", "coeftest.default")
+importFrom("sandwich",
+  "estfun",
+  "bread"
+)
 
-importClassFrom("flexmix", "FLXM")
-importClassFrom("flexmix", "FLXMR")
-importClassFrom("flexmix", "FLXMRfix")
+importFrom("lmtest",
+  "coeftest",
+  "coeftest.default"
+)
 
-importFrom("flexmix", "existGradient")
-importFrom("flexmix", "FLXdeterminePostunscaled")
-importFrom("flexmix", "FLXgetModelmatrix")
-importFrom("flexmix", "FLXgetDesign")
-importFrom("flexmix", "FLXgradlogLikfun")
-importFrom("flexmix", "FLXmstep")
-importFrom("flexmix", "FLXremoveComponent")
-importFrom("flexmix", "FLXreplaceParameters")
-importFrom("flexmix", "FLXgetParameters")
-importFrom("flexmix", "refit_optim")
-importFrom("flexmix", "logLik")
-importFrom("flexmix", "summary")
-importFrom("flexmix", "predict")
-importFrom("flexmix", "fitted")
+importClassFrom("flexmix",
+  "FLXM",
+  "FLXMR",
+  "FLXMRfix"
+)
 
-importFrom("modeltools", "clusters")
-importFrom("modeltools", "getModel")
-importFrom("modeltools", "parameters")
-importFrom("modeltools", "posterior")
-importFrom("modeltools", "refit")
+importFrom("flexmix",
+  "existGradient",
+  "FLXdeterminePostunscaled",
+  "FLXgetModelmatrix",
+  "FLXgetDesign",
+  "FLXgradlogLikfun",
+  "FLXmstep",
+  "FLXremoveComponent",
+  "FLXreplaceParameters",
+  "FLXgetParameters",
+  "refit_optim",
+  "logLik",
+  "summary",
+  "predict",
+  "fitted"
+)
 
-importFrom("methods", "new")
-importFrom("methods", "show")
-importFrom("methods", "setOldClass")
-importFrom("methods", "setClass")
-importFrom("methods", "setMethod")
+importFrom("modeltools",
+  "clusters",
+  "getModel",
+  "parameters",
+  "posterior",
+  "refit"
+)
+
+importFrom("methods",
+  "as",
+  "callNextMethod",
+  "getMethod",
+  "is",
+  "new",
+  "setOldClass",
+  "setClass",
+  "setMethod",
+  "show",
+  "slot",
+  "slotNames"
+)
 
 export(
   ## beta regression
@@ -46,8 +68,6 @@ export(
   
   ## beta regression trees
   "betatree",
-  "betaReg",
-  "reweight.betaReg",
   "sctest.betatree",
 
   ## beta mixture models
@@ -76,18 +96,10 @@ S3method("print", "summary.betareg")
 S3method("update", "betareg")
 S3method("vcov", "betareg")
 
-## methods for class betaReg
-S3method("estfun", "betaReg")
-S3method("print", "betaReg")
-S3method("summary", "betaReg")
-
 ## methods for class betatree
-S3method("coef", "betatree")
-S3method("logLik", "betatree")
 S3method("plot", "betatree")
 S3method("print", "betatree")
-S3method("summary", "betatree")
-S3method("weights", "betatree")
+S3method("predict", "betatree")
 
 ## methods for class betamix
 S3method("coef", "betamix")

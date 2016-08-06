@@ -80,6 +80,8 @@ Simas, A.B., and Barreto-Souza, W., and Rocha, A.V. (2010).
 \seealso{\code{\link{betareg}}}
 
 \examples{
+options(digits = 4)
+
 data("GasolineYield", package = "betareg")
 
 gy2 <- betareg(yield ~ batch + temp | temp, data = GasolineYield)

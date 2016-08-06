@@ -51,7 +51,7 @@
   model-based recursive partioning, and finite mixture models,
   respectively. Specifically, the new functions \fct{betatree} and
   \fct{betamix} reuse the object-oriented flexible implementation from
-  the \proglang{R} packages \pkg{party} and \pkg{flexmix}, respectively.
+  the \proglang{R} packages \pkg{partykit} and \pkg{flexmix}, respectively.
 }
 
 \Address{
@@ -84,7 +84,7 @@
 %% need no \usepackage{Sweave}
 \SweaveOpts{engine = R, eps = FALSE, keep.source = TRUE}
 %\VignetteIndexEntry{Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned}
-%\VignetteDepends{stats,betareg,party,flexmix}
+%\VignetteDepends{stats,betareg,partykit,flexmix}
 %\VignetteKeywords{beta regression, bias correction, bias reduction, recursive partitioning, finite mixture, R}
 %\VignettePackage{betareg}
 
@@ -235,8 +235,8 @@ by using finite mixture models. Therefore, extensions of the
 taken into account when covariates that characterize the groups are
 available, and when the heterogeneity is due to latent variables. The
 new function \fct{betatree} provides model-based recursive
-partitioning of beta regressions leveraging tools from the \pkg{party}
-package \citep{betareg:Hothorn+Hornik+Strobl:2011}, and the function
+partitioning of beta regressions leveraging tools from the \pkg{partykit}
+package \citep{betareg:Hothorn+Zeileis:2015}, and the function
 \fct{betamix} provides beta regression mixture models (or latent class
 beta regression) reusing the generic functionality from the
 \pkg{flexmix} package \citep{betareg:Leisch+Gruen:2012}.
@@ -638,7 +638,7 @@ Beta regression trees are implemented in the \pkg{betareg} package in function
 \fct{betatree} taking the following arguments:
 %
 \begin{Code}
-  betatree(formula, partition, data, subset, na.action,
+  betatree(formula, partition, data, subset, na.action, weights, offset,
     link = "logit", link.phi = "log", control = betareg.control(), ...)
 \end{Code}
 %
@@ -649,20 +649,20 @@ $c_i = (c_{i1}, \dots, c_{il})^\top$.
 As an alternative, \code{partition} may be omitted when \code{formula} has three parts
 on the right hand side, such as \code{y ~ x1 + x2 | z1 | c1 + c2 + c3}, specifying
 mean regressors $x_i$, presicion regressors $z_i$, and partitioning variables $c_i$,
-respectively.
+respectively. The formula \code{y ~ c1 + c2 + c3} is short for
+\code{y ~ 1 | 1 | c1 + c2 + c3}.
 
 The \fct{betatree} function takes all arguments and carries out all
 data preprocessing and then calls the function \fct{mob} from the
-\pkg{party} package
-\citep{betareg:Hothorn+Hornik+Zeileis:2006,betareg:Hothorn+Hornik+Strobl:2011}. The
+\pkg{partykit} package
+\citep{betareg:Hothorn+Zeileis:2015}. The
 latter can perform all steps of the MOB algorithm in an
 object-oriented manner, provided that a suitable model fitting
 function (optimizing the log-likelihood) is specified and that
 extractor functions are available for the optimized log-likelihood
 \eqref{eq:loglik} and the score function \eqref{eq:scores} at the
 estimated parameters. For model fitting \fct{betareg.fit} is employed
-(through a suitable convenience interface called \fct{betaReg}) and
-for extractions the \fct{logLik} and \fct{estfun} methods \citep[see
+and for extractions the \fct{logLik} and \fct{estfun} methods \citep[see
 also][]{betareg:Zeileis:2006a} are leveraged. To control the details
 of the MOB algorithm -- such as the significance level and the minimal
 subsample size in step~4 -- the \code{...} argument is passed to
@@ -1025,11 +1025,11 @@ for the symbolic description of the partitioning variables and both
 formulas are evaluated using \code{data}. Additional control arguments
 for the recursive partitioning method used in \fct{mob\_control} can
 be specified via the \code{\dots} argument. In this case the minimum
-number of observations in a node is given by \code{minsplit = 10}.
+number of observations in a node is given by \code{minsize = 10}.
 %
 <<ReadingSkills-tree, echo=TRUE, eval=FALSE>>=
 rs_tree <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
-  data = ReadingSkills, minsplit = 10)
+  data = ReadingSkills, minsize = 10)
 @
 %
 <<ReadingSkills-tree0, echo=FALSE, results=hide>>=
@@ -1051,14 +1051,13 @@ variables.
 %
 <<ReadingSkills-tree2, echo=TRUE, eval=FALSE>>=
 rs_tree <- betatree(accuracy ~ iq | iq | dyslexia + x1 + x2 + x3,
-  data = ReadingSkills, minsplit = 10)
+  data = ReadingSkills, minsize = 10)
 @
 %
-The returned object is of class \code{"\Sexpr{class(rs_tree)}"} which
-contains an object of class
-\code{"\Sexpr{class(rs_tree[["mob"]])}"}. All methods for
-\code{"\Sexpr{class(rs_tree[["mob"]])}"} can be reused, e.g., the
-\fct{print} method and the \fct{plot} method (see
+The returned object is of class \code{"\Sexpr{class(rs_tree)[1]}"} which
+inherits from \code{"\Sexpr{class(rs_tree)[2]}"} and \code{"\Sexpr{class(rs_tree)[3]}"}.
+All methods for \code{"\Sexpr{class(rs_tree)[2]}"}/\code{"\Sexpr{class(rs_tree)[3]}"}
+objects can be reused, e.g., the \fct{print} method and the \fct{plot} method (see
 Figure~\ref{fig:betatree}).
 %
 <<ReadingSkills-tree3, echo=TRUE>>=
@@ -1125,6 +1124,7 @@ parameter instability tests were insignificant (see node~2) or because
 the node size is too small for a further split (see node~3).
 %
 <<ReadingSkills-tree-sctest>>=
+library("strucchange")
 sctest(rs_tree)
 @
 %
@@ -1132,7 +1132,7 @@ In node~1 only dyslexia shows significant instability while the noise
 variables are all insignificant. In node~2, dyslexia cannot be used
 for splitting anymore and all other variables are still
 insignificant and thus the partitioning stops.  With only 19~observations,
-node~3 is considered too small to warrant further splitting given that \code{minsplit = 10}
+node~3 is considered too small to warrant further splitting given that \code{minsize = 10}
 requires that each node contains at least 10 observations and hence no
 tests are carried out.
 
@@ -1333,7 +1333,7 @@ scoring iteration is accordingly modified using a bias adjustment.
 To fit beta regression trees and finite mixtures of beta regressions
 the new functions \fct{betatree} and \fct{betamix} are available in
 package \pkg{betareg}. These functions borrow functionality from the
-packages \pkg{party} and \pkg{flexmix}. The interface of the two new
+packages \pkg{partykit} and \pkg{flexmix}. The interface of the two new
 functions has been designed to be as similar as possible to
 \fct{betareg}, in order to facilitate their use by users that are
 already familiar with the \fct{betareg} function.
@@ -1341,8 +1341,8 @@ already familiar with the \fct{betareg} function.
 For modeling heterogeneity \fct{betareg.fit} is reused to fit the
 models in the nodes when beta regression trees are constructed, and in
 the M-step when finite mixture models are fitted. For this task, only
-a small amount of additional code --- some \proglang{S4} glue --- was
-necessary to inherit the functionality provided by the \pkg{party} and
+a small amount of additional code was
+necessary to inherit the functionality provided by the \pkg{partykit} and
 \pkg{flexmix} packages to the package \pkg{betareg}.
 
 Overall, the increased flexibility of the extended package

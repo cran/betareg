@@ -1,3 +1,5 @@
+options(digits = 4)
+
 ## Package and data
 library("betareg")
 data("GasolineYield", package = "betareg")

@@ -67,6 +67,8 @@ betareg.control(phi = TRUE, method = "BFGS", maxit = 5000,
 \seealso{\code{\link{betareg}}}
 
 \examples{
+options(digits = 4)
+
 data("GasolineYield", package = "betareg")
 
 ## regression with phi as full model parameter

@@ -1,4 +1,4 @@
-betamix <- function(formula, data, k, subset, na.action, 
+betamix <- function(formula, data, k, subset, na.action, weights, offset,
                     link = c("logit", "probit", "cloglog", "cauchit", "log", "loglog"),
                     link.phi = "log", 
                     control = betareg.control(...),
@@ -15,7 +15,7 @@ betamix <- function(formula, data, k, subset, na.action,
   cl <- match.call()
   if(missing(data)) data <- environment(formula)
   mf <- match.call(expand.dots = FALSE)
-  m <- match(c("formula", "data", "subset", "na.action"), names(mf), 0)
+  m <- match(c("formula", "data", "subset", "na.action", "weights", "offset"), names(mf), 0)
   mf <- mf[c(1, m)]
   mf$drop.unused.levels <- TRUE
   
@@ -35,6 +35,38 @@ betamix <- function(formula, data, k, subset, na.action,
   }
   n <- nrow(mf)
   
+  ## weights
+  if(!missing(weights)) {
+    wi <- which(names(mf) == "weights")
+    wi <- wi[length(wi)]
+    weights <- mf[[wi]]
+    mf[[wi]] <- NULL
+  } else {
+    weights <- NULL
+  }
+  if(!is.null(weights)) {
+    if(length(weights) == 1) weights <- rep(weights, n)
+    weights <- as.vector(weights)
+    names(weights) <- rownames(mf)
+    if (!all.equal(as.integer(weights), as.numeric(weights)))
+      stop("only integer weights allowed")
+    weights <- as.integer(weights)
+  }
+  
+  ## offset
+  if(!missing(offset)) {
+    wi <- which(names(mf) == "offset")
+    wi <- wi[length(wi)]
+    offset <- mf[[wi]]
+    mf[[wi]] <- NULL
+  } else {
+    offset <- NULL
+  }
+  if(!is.null(offset)) {
+    if(length(offset) == 1L) offset <- rep(offset, n)
+    offset <- as.vector(offset)
+  }
+
   ## formula
   oformula <- as.formula(formula)
   formula <- Formula(formula)
@@ -70,23 +102,23 @@ betamix <- function(formula, data, k, subset, na.action,
          else max(cluster)
   }
   rval <- if (!missing(extra_components)) {
-    flexmix::stepFlexmix(fullformula, data = mf, k = k, nrep = nstart,
+    flexmix::stepFlexmix(fullformula, data = mf, k = k, weights = weights, nrep = nstart,
                          model = FLXMRbeta_extra(precision = precision,
-                           link = link, link.phi = link.phi, control = control,
+                           offset = offset, link = link, link.phi = link.phi, control = control,
                            extra_components = extra_components),
                          concomitant = FLXconcomitant, control = FLXcontrol,
                          cluster = cluster, verbose = verbose)
   } else if (missing(fixed)) {
-    flexmix::stepFlexmix(fullformula, data = mf, k = k, nrep = nstart, 
+    flexmix::stepFlexmix(fullformula, data = mf, k = k, weights = weights, nrep = nstart, 
                           model = FLXMRbeta(precision = precision,
-                            link = link, link.phi = link.phi, control = control),
+                            offset = offset, link = link, link.phi = link.phi, control = control),
                          concomitant = FLXconcomitant, control = FLXcontrol,
                          cluster = cluster, verbose = verbose)
   } else {
-    flexmix::stepFlexmix(fullformula, data = mf, k = k, nrep = nstart,
+    flexmix::stepFlexmix(fullformula, data = mf, k = k, weights = weights, nrep = nstart,
                           model = FLXMRbetafix(precision = precision,
                             fixed = fixed, fixed_precision = fixed_precision,
-                            link = link, link.phi = link.phi, control = control),
+                            offset = offset, link = link, link.phi = link.phi, control = control),
                          concomitant = FLXconcomitant, control = FLXcontrol,
                          cluster = cluster, verbose = verbose)
   }

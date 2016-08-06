@@ -32,6 +32,8 @@
 }
 
 \examples{
+options(digits = 4)
+
 data("GasolineYield", package = "betareg")
 
 gy2 <- betareg(yield ~ batch + temp | temp, data = GasolineYield)

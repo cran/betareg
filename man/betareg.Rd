@@ -196,6 +196,8 @@ Simas, A.B., Barreto-Souza, W., and Rocha, A.V. (2010).
   \code{\link[Formula]{Formula}}}
 
 \examples{
+options(digits = 4)
+
 ## Section 4 from Ferrari and Cribari-Neto (2004)
 data("GasolineYield", package = "betareg")
 data("FoodExpenditure", package = "betareg")

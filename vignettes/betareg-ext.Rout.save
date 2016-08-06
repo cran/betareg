@@ -146,8 +146,41 @@ Log-likelihood &  & $66.734$\phantom{)} & $66.334$\phantom{)} & $66.134$\phantom
 +     load("betareg-ext-betatree.rda")
 + } else {
 +     rs_tree <- betatree(accuracy ~ iq | i .... [TRUNCATED] 
-Loading required package: party
-Loading required package: grid
+
+> plot(rs_tree)
+
+> plot(rs_tree)
+
+> coef(rs_tree)
+  (Intercept)          iq (phi)_(Intercept)  (phi)_iq
+2   1.6565251  1.46570750          1.272597 2.0478577
+3   0.3809322 -0.08622808          4.807662 0.8260329
+
+> rs_tree
+Beta regression tree
+
+Model formula:
+accuracy ~ iq + iq | dyslexia + x1 + x2 + x3
+
+Fitted party:
+[1] root
+|   [2] dyslexia in no: n = 25
+|             (Intercept)                iq (phi)_(Intercept) 
+|                1.656525          1.465708          1.272597 
+|                (phi)_iq 
+|                2.047858 
+|   [3] dyslexia in yes: n = 19
+|             (Intercept)                iq (phi)_(Intercept) 
+|              0.38093218       -0.08622808        4.80766206 
+|                (phi)_iq 
+|              0.82603290 
+
+Number of inner nodes:    1
+Number of terminal nodes: 2
+Number of parameters per node: 4
+Objective function (negative log-likelihood): 66.73409
+
+> library("strucchange")
 Loading required package: zoo
 
 Attaching package: 'zoo'
@@ -157,54 +190,20 @@ The following objects are masked from 'package:base':
     as.Date, as.Date.numeric
 
 Loading required package: sandwich
-Loading required package: strucchange
-Loading required package: modeltools
-Loading required package: stats4
-
-> plot(rs_tree)
-
-> plot(rs_tree)
-
-> coef(rs_tree)
-  (Intercept)          iq (phi)_(Intercept)  (phi)_iq
-2   1.6565251  1.46570751          1.272597 2.0478578
-3   0.3809322 -0.08622808          4.807662 0.8260329
-
-> rs_tree
-1) dyslexia == {no}; criterion = 0.999, statistic = 22.687
-  2)*  weights = 25 
-Terminal node model
-betaReg fit with coefficients:
-      (Intercept)                 iq  (phi)_(Intercept)  
-            1.657              1.466              1.273  
-         (phi)_iq  
-            2.048  
-
-1) dyslexia == {yes}
-  3)*  weights = 19 
-Terminal node model
-betaReg fit with coefficients:
-      (Intercept)                 iq  (phi)_(Intercept)  
-          0.38093           -0.08623            4.80766  
-         (phi)_iq  
-          0.82603  
-
 
 > sctest(rs_tree)
 $`1`
               dyslexia        x1       x2        x3
-statistic 2.268741e+01 8.5250961 5.569861 3.6273300
+statistic 2.268741e+01 8.5250963 5.569861 3.6273300
 p.value   5.847856e-04 0.9094631 0.998710 0.9142006
 
 $`2`
           dyslexia        x1        x2        x3
-statistic        0 6.4116324 4.5170190 8.2019125
+statistic        0 6.4116323 4.5170190 8.2019125
 p.value         NA 0.8412097 0.9751644 0.2325712
 
 $`3`
-          [,1]
-statistic    0
-p.value      1
+NULL
 
 
 > if (cache & file.exists("betareg-ext-betamix.rda")) {
@@ -390,4 +389,4 @@ $\log\phi$ & $ 6.08741$\phantom{)} & (0.24990) & $ 5.71191$\phantom{)} & (0.2498
  *** Run successfully completed ***
 > proc.time()
    user  system elapsed 
- 24.432   1.116  26.462 
+ 17.080   0.112  17.233 

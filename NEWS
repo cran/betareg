@@ -1,3 +1,20 @@
+Changes in Version 3.1-0
+
+  o The betatree() function now uses the new mob() implementation from the
+    "partykit" package (instead of the old "party" package). The user interface
+    essentially remained the same but now many more options are available through
+    the new mob() function. The returned model object is now inheriting from
+    "modelparty"/"party".
+
+  o Included "grDevices" in Imports.
+  
+  o Fixed model.frame() method for "betareg" objects which do not store the
+    model frame in $model.
+
+  o betamix() gained arguments "weights" (case weights for observations) and
+    "offset" (for the mean linear predictor).
+
+
 Changes in Version 3.0-5
 
   o The "Formula" package is now only in Imports but not Depends (see below).

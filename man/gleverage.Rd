@@ -45,6 +45,7 @@ Wei, B.-C., and Hu, Y.-Q., and Fung, W.-K. (1998).
 \seealso{\code{\link{betareg}}}
 
 \examples{
+options(digits = 4)
 data("GasolineYield", package = "betareg")
 gy <- betareg(yield ~ batch + temp, data = GasolineYield)
 gleverage(gy)

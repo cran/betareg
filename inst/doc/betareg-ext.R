@@ -122,7 +122,7 @@ ReadingSkills$x3 <- factor(sample(0:1, n, replace = TRUE))
 ### code chunk number 9: ReadingSkills-tree (eval = FALSE)
 ###################################################
 ## rs_tree <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
-##   data = ReadingSkills, minsplit = 10)
+##   data = ReadingSkills, minsize = 10)
 
 
 ###################################################
@@ -132,7 +132,7 @@ if(cache & file.exists("betareg-ext-betatree.rda")) {
   load("betareg-ext-betatree.rda")
 } else {
 rs_tree <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
-  data = ReadingSkills, minsplit = 10)
+  data = ReadingSkills, minsize = 10)
 if(cache) {
   save(rs_tree, file = "betareg-ext-betatree.rda")
 } else {
@@ -145,7 +145,7 @@ if(cache) {
 ### code chunk number 11: ReadingSkills-tree2 (eval = FALSE)
 ###################################################
 ## rs_tree <- betatree(accuracy ~ iq | iq | dyslexia + x1 + x2 + x3,
-##   data = ReadingSkills, minsplit = 10)
+##   data = ReadingSkills, minsize = 10)
 
 
 ###################################################
@@ -175,6 +175,7 @@ rs_tree
 ###################################################
 ### code chunk number 16: ReadingSkills-tree-sctest
 ###################################################
+library("strucchange")
 sctest(rs_tree)
 
 

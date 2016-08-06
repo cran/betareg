@@ -51,6 +51,8 @@ Ferrari, S.L.P., and Cribari-Neto, F. (2004).
 \seealso{\code{\link{betareg}}}
 
 \examples{
+options(digits = 4)
+
 data("GasolineYield", package = "betareg")
 
 gy <- betareg(yield ~ gravity + pressure + temp10 + temp, data = GasolineYield)

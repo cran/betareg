@@ -1,3 +1,5 @@
+options(digits = 4)
+
 ## package and data
 library("betareg")
 data("ReadingSkills", package = "betareg")
@@ -14,4 +16,4 @@ summary(rs_mix)
 
 ## further methods
 table(clusters(rs_mix), ReadingSkills$dyslexia)
-posterior(rs_mix)
+round(posterior(rs_mix), digits = 4)

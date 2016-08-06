@@ -1,7 +1,7 @@
 
-R Under development (unstable) (2014-09-24 r66673) -- "Unsuffered Consequences"
-Copyright (C) 2014 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -605,6 +605,8 @@ detaching 'package:flexmix', 'package:lattice'
 > 
 > ### ** Examples
 > 
+> options(digits = 4)
+> 
 > ## data with two groups of dyslexic and non-dyslexic children
 > data("ReadingSkills", package = "betareg")
 > 
@@ -655,22 +657,22 @@ Loading required package: lattice
 +   coef = 0.99, delta = 0.01), cluster = posterior(rs_mix),
 +   FLXconcomitant = FLXPmultinom(~w))
 > coef(rs_mix2, which = "concomitant")
-  (Intercept)          w
-1  0.00000000  0.0000000
-2  0.41499996  1.0035962
-3 -0.09352429 -0.1806346
+  (Intercept)       w
+1     0.00000  0.0000
+2     0.41500  1.0036
+3    -0.09352 -0.1806
 > summary(rs_mix2, which = "concomitant")
 $Comp.2
             Estimate Std. Error z value Pr(>|z|)  
-(Intercept)  0.41536    0.64005  0.6490  0.51637  
-w            1.00360    0.50781  1.9763  0.04812 *
+(Intercept)    0.415      0.640    0.65    0.516  
+w              1.004      0.508    1.98    0.048 *
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 $Comp.3
-             Estimate Std. Error z value Pr(>|z|)
-(Intercept) -0.093392   0.646390 -0.1445   0.8851
-w           -0.180655   0.436804 -0.4136   0.6792
+            Estimate Std. Error z value Pr(>|z|)
+(Intercept)  -0.0934     0.6464   -0.14     0.89
+w            -0.1807     0.4368   -0.41     0.68
 
 > 
 > 
@@ -691,6 +693,8 @@ detaching 'package:flexmix', 'package:lattice'
 > 
 > ### ** Examples
 > 
+> options(digits = 4)
+> 
 > ## Section 4 from Ferrari and Cribari-Neto (2004)
 > data("GasolineYield", package = "betareg")
 > data("FoodExpenditure", package = "betareg")
@@ -703,32 +707,32 @@ Call:
 betareg(formula = yield ~ batch + temp, data = GasolineYield)
 
 Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.8750 -0.8149  0.1601  0.8384  2.0483 
+   Min     1Q Median     3Q    Max 
+-2.875 -0.815  0.160  0.838  2.048 
 
 Coefficients (mean model with logit link):
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -6.1595710  0.1823247 -33.784  < 2e-16 ***
-batch1       1.7277289  0.1012294  17.067  < 2e-16 ***
-batch2       1.3225969  0.1179020  11.218  < 2e-16 ***
-batch3       1.5723099  0.1161045  13.542  < 2e-16 ***
-batch4       1.0597141  0.1023598  10.353  < 2e-16 ***
-batch5       1.1337518  0.1035232  10.952  < 2e-16 ***
-batch6       1.0401618  0.1060365   9.809  < 2e-16 ***
-batch7       0.5436922  0.1091275   4.982 6.29e-07 ***
-batch8       0.4959007  0.1089257   4.553 5.30e-06 ***
-batch9       0.3857930  0.1185933   3.253  0.00114 ** 
-temp         0.0109669  0.0004126  26.577  < 2e-16 ***
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -6.159571   0.182325  -33.78  < 2e-16 ***
+batch1       1.727729   0.101229   17.07  < 2e-16 ***
+batch2       1.322597   0.117902   11.22  < 2e-16 ***
+batch3       1.572310   0.116105   13.54  < 2e-16 ***
+batch4       1.059714   0.102360   10.35  < 2e-16 ***
+batch5       1.133752   0.103523   10.95  < 2e-16 ***
+batch6       1.040162   0.106036    9.81  < 2e-16 ***
+batch7       0.543692   0.109127    4.98  6.3e-07 ***
+batch8       0.495901   0.108926    4.55  5.3e-06 ***
+batch9       0.385793   0.118593    3.25   0.0011 ** 
+temp         0.010967   0.000413   26.58  < 2e-16 ***
 
 Phi coefficients (precision model with identity link):
       Estimate Std. Error z value Pr(>|z|)    
-(phi)    440.3      110.0   4.002 6.29e-05 ***
+(phi)      440        110       4  6.3e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood:  84.8 on 12 Df
-Pseudo R-squared: 0.9617
+Log-likelihood: 84.8 on 12 Df
+Pseudo R-squared: 0.962
 Number of iterations: 51 (BFGS) + 3 (Fisher scoring) 
 > 
 > ## Table 2
@@ -747,7 +751,7 @@ The following objects are masked from 'package:base':
 	studentized Breusch-Pagan test
 
 data:  fe_lin
-BP = 5.9348, df = 2, p-value = 0.05144
+BP = 5.9, df = 2, p-value = 0.05
 
 > fe_beta <- betareg(I(food/income) ~ income + persons, data = FoodExpenditure)
 > summary(fe_beta)
@@ -756,24 +760,24 @@ Call:
 betareg(formula = I(food/income) ~ income + persons, data = FoodExpenditure)
 
 Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.7818 -0.4445  0.2024  0.6852  1.8755 
+   Min     1Q Median     3Q    Max 
+-2.782 -0.444  0.202  0.685  1.876 
 
 Coefficients (mean model with logit link):
-             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -0.622548   0.223854  -2.781 0.005418 ** 
-income      -0.012299   0.003036  -4.052 5.09e-05 ***
-persons      0.118462   0.035341   3.352 0.000802 ***
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -0.62255    0.22385   -2.78   0.0054 ** 
+income      -0.01230    0.00304   -4.05  5.1e-05 ***
+persons      0.11846    0.03534    3.35   0.0008 ***
 
 Phi coefficients (precision model with identity link):
       Estimate Std. Error z value Pr(>|z|)    
-(phi)    35.61       8.08   4.407 1.05e-05 ***
+(phi)    35.61       8.08    4.41    1e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 45.33 on 4 Df
-Pseudo R-squared: 0.3878
+Log-likelihood: 45.3 on 4 Df
+Pseudo R-squared: 0.388
 Number of iterations: 28 (BFGS) + 4 (Fisher scoring) 
 > 
 > ## nested model comparisons via Wald and LR tests
@@ -784,8 +788,8 @@ Likelihood ratio test
 Model 1: I(food/income) ~ income + persons
 Model 2: I(food/income) ~ income
   #Df LogLik Df Chisq Pr(>Chisq)   
-1   4 45.334                       
-2   3 40.511 -1 9.646   0.001898 **
+1   4   45.3                       
+2   3   40.5 -1  9.65     0.0019 **
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > waldtest(fe_beta, fe_beta2)
@@ -793,9 +797,9 @@ Wald test
 
 Model 1: I(food/income) ~ income + persons
 Model 2: I(food/income) ~ income
-  Res.Df Df  Chisq Pr(>Chisq)    
-1     34                         
-2     35 -1 11.236  0.0008023 ***
+  Res.Df Df Chisq Pr(>Chisq)    
+1     34                        
+2     35 -1  11.2      8e-04 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
@@ -812,33 +816,33 @@ Call:
 betareg(formula = yield ~ batch + temp | temp, data = GasolineYield)
 
 Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.5399 -0.7792 -0.1167  0.8621  2.9419 
+   Min     1Q Median     3Q    Max 
+-2.540 -0.779 -0.117  0.862  2.942 
 
 Coefficients (mean model with logit link):
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -5.9232361  0.1835262 -32.275  < 2e-16 ***
-batch1       1.6019877  0.0638561  25.087  < 2e-16 ***
-batch2       1.2972663  0.0991001  13.090  < 2e-16 ***
-batch3       1.5653383  0.0997392  15.694  < 2e-16 ***
-batch4       1.0300720  0.0632882  16.276  < 2e-16 ***
-batch5       1.1541630  0.0656427  17.582  < 2e-16 ***
-batch6       1.0194446  0.0663510  15.364  < 2e-16 ***
-batch7       0.6222591  0.0656325   9.481  < 2e-16 ***
-batch8       0.5645830  0.0601846   9.381  < 2e-16 ***
-batch9       0.3594390  0.0671406   5.354 8.63e-08 ***
-temp         0.0103595  0.0004362  23.751  < 2e-16 ***
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -5.923236   0.183526  -32.27  < 2e-16 ***
+batch1       1.601988   0.063856   25.09  < 2e-16 ***
+batch2       1.297266   0.099100   13.09  < 2e-16 ***
+batch3       1.565338   0.099739   15.69  < 2e-16 ***
+batch4       1.030072   0.063288   16.28  < 2e-16 ***
+batch5       1.154163   0.065643   17.58  < 2e-16 ***
+batch6       1.019445   0.066351   15.36  < 2e-16 ***
+batch7       0.622259   0.065632    9.48  < 2e-16 ***
+batch8       0.564583   0.060185    9.38  < 2e-16 ***
+batch9       0.359439   0.067141    5.35  8.6e-08 ***
+temp         0.010359   0.000436   23.75  < 2e-16 ***
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) 1.364089   1.225781   1.113    0.266    
-temp        0.014570   0.003618   4.027 5.65e-05 ***
+(Intercept)  1.36409    1.22578    1.11     0.27    
+temp         0.01457    0.00362    4.03  5.7e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 86.98 on 13 Df
-Pseudo R-squared: 0.9519
+Log-likelihood:   87 on 13 Df
+Pseudo R-squared: 0.952
 Number of iterations: 33 (BFGS) + 28 (Fisher scoring) 
 > 
 > ## LRT row in Table 18
@@ -848,8 +852,8 @@ Likelihood ratio test
 Model 1: yield ~ batch + temp
 Model 2: yield ~ batch + temp | temp
   #Df LogLik Df Chisq Pr(>Chisq)  
-1  12 84.798                      
-2  13 86.977  1 4.359    0.03681 *
+1  12   84.8                      
+2  13   87.0  1  4.36      0.037 *
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > 
@@ -871,6 +875,8 @@ detaching 'package:lmtest', 'package:zoo'
 > 
 > ### ** Examples
 > 
+> options(digits = 4)
+> 
 > data("GasolineYield", package = "betareg")
 > 
 > ## regression with phi as full model parameter
@@ -882,13 +888,13 @@ betareg(formula = yield ~ batch + temp, data = GasolineYield)
 
 Coefficients (mean model with logit link):
 (Intercept)       batch1       batch2       batch3       batch4       batch5  
-   -6.15957      1.72773      1.32260      1.57231      1.05971      1.13375  
+     -6.160        1.728        1.323        1.572        1.060        1.134  
      batch6       batch7       batch8       batch9         temp  
-    1.04016      0.54369      0.49590      0.38579      0.01097  
+      1.040        0.544        0.496        0.386        0.011  
 
 Phi coefficients (precision model with identity link):
 (phi)  
-440.3  
+  440  
 
 > 
 > ## regression with phi as nuisance parameter
@@ -900,54 +906,54 @@ betareg(formula = yield ~ batch + temp, data = GasolineYield, phi = FALSE)
 
 Coefficients (mean model with logit link):
 (Intercept)       batch1       batch2       batch3       batch4       batch5  
-   -6.15957      1.72773      1.32260      1.57231      1.05971      1.13375  
+     -6.160        1.728        1.323        1.572        1.060        1.134  
      batch6       batch7       batch8       batch9         temp  
-    1.04016      0.54369      0.49590      0.38579      0.01097  
+      1.040        0.544        0.496        0.386        0.011  
 
 > 
 > ## compare reported output
 > coef(gy1)
- (Intercept)       batch1       batch2       batch3       batch4       batch5 
- -6.15957105   1.72772888   1.32259692   1.57230989   1.05971411   1.13375178 
-      batch6       batch7       batch8       batch9         temp        (phi) 
-  1.04016181   0.54369223   0.49590066   0.38579296   0.01096687 440.27838856 
+(Intercept)      batch1      batch2      batch3      batch4      batch5 
+   -6.15957     1.72773     1.32260     1.57231     1.05971     1.13375 
+     batch6      batch7      batch8      batch9        temp       (phi) 
+    1.04016     0.54369     0.49590     0.38579     0.01097   440.27839 
 > coef(gy2)
 (Intercept)      batch1      batch2      batch3      batch4      batch5 
--6.15957105  1.72772888  1.32259692  1.57230989  1.05971411  1.13375178 
+   -6.15957     1.72773     1.32260     1.57231     1.05971     1.13375 
      batch6      batch7      batch8      batch9        temp 
- 1.04016181  0.54369223  0.49590066  0.38579296  0.01096687 
+    1.04016     0.54369     0.49590     0.38579     0.01097 
 > summary(gy1)
 
 Call:
 betareg(formula = yield ~ batch + temp, data = GasolineYield)
 
 Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.8750 -0.8149  0.1601  0.8384  2.0483 
+   Min     1Q Median     3Q    Max 
+-2.875 -0.815  0.160  0.838  2.048 
 
 Coefficients (mean model with logit link):
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -6.1595710  0.1823247 -33.784  < 2e-16 ***
-batch1       1.7277289  0.1012294  17.067  < 2e-16 ***
-batch2       1.3225969  0.1179020  11.218  < 2e-16 ***
-batch3       1.5723099  0.1161045  13.542  < 2e-16 ***
-batch4       1.0597141  0.1023598  10.353  < 2e-16 ***
-batch5       1.1337518  0.1035232  10.952  < 2e-16 ***
-batch6       1.0401618  0.1060365   9.809  < 2e-16 ***
-batch7       0.5436922  0.1091275   4.982 6.29e-07 ***
-batch8       0.4959007  0.1089257   4.553 5.30e-06 ***
-batch9       0.3857930  0.1185933   3.253  0.00114 ** 
-temp         0.0109669  0.0004126  26.577  < 2e-16 ***
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -6.159571   0.182325  -33.78  < 2e-16 ***
+batch1       1.727729   0.101229   17.07  < 2e-16 ***
+batch2       1.322597   0.117902   11.22  < 2e-16 ***
+batch3       1.572310   0.116105   13.54  < 2e-16 ***
+batch4       1.059714   0.102360   10.35  < 2e-16 ***
+batch5       1.133752   0.103523   10.95  < 2e-16 ***
+batch6       1.040162   0.106036    9.81  < 2e-16 ***
+batch7       0.543692   0.109127    4.98  6.3e-07 ***
+batch8       0.495901   0.108926    4.55  5.3e-06 ***
+batch9       0.385793   0.118593    3.25   0.0011 ** 
+temp         0.010967   0.000413   26.58  < 2e-16 ***
 
 Phi coefficients (precision model with identity link):
       Estimate Std. Error z value Pr(>|z|)    
-(phi)    440.3      110.0   4.002 6.29e-05 ***
+(phi)      440        110       4  6.3e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood:  84.8 on 12 Df
-Pseudo R-squared: 0.9617
+Log-likelihood: 84.8 on 12 Df
+Pseudo R-squared: 0.962
 Number of iterations: 51 (BFGS) + 3 (Fisher scoring) 
 > summary(gy2)
 
@@ -955,28 +961,28 @@ Call:
 betareg(formula = yield ~ batch + temp, data = GasolineYield, phi = FALSE)
 
 Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.8750 -0.8149  0.1601  0.8384  2.0483 
+   Min     1Q Median     3Q    Max 
+-2.875 -0.815  0.160  0.838  2.048 
 
 Coefficients (mean model with logit link):
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -6.1595710  0.1823247 -33.784  < 2e-16 ***
-batch1       1.7277289  0.1012294  17.067  < 2e-16 ***
-batch2       1.3225969  0.1179020  11.218  < 2e-16 ***
-batch3       1.5723099  0.1161045  13.542  < 2e-16 ***
-batch4       1.0597141  0.1023598  10.353  < 2e-16 ***
-batch5       1.1337518  0.1035232  10.952  < 2e-16 ***
-batch6       1.0401618  0.1060365   9.809  < 2e-16 ***
-batch7       0.5436922  0.1091275   4.982 6.29e-07 ***
-batch8       0.4959007  0.1089257   4.553 5.30e-06 ***
-batch9       0.3857930  0.1185933   3.253  0.00114 ** 
-temp         0.0109669  0.0004126  26.577  < 2e-16 ***
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -6.159571   0.182325  -33.78  < 2e-16 ***
+batch1       1.727729   0.101229   17.07  < 2e-16 ***
+batch2       1.322597   0.117902   11.22  < 2e-16 ***
+batch3       1.572310   0.116105   13.54  < 2e-16 ***
+batch4       1.059714   0.102360   10.35  < 2e-16 ***
+batch5       1.133752   0.103523   10.95  < 2e-16 ***
+batch6       1.040162   0.106036    9.81  < 2e-16 ***
+batch7       0.543692   0.109127    4.98  6.3e-07 ***
+batch8       0.495901   0.108926    4.55  5.3e-06 ***
+batch9       0.385793   0.118593    3.25   0.0011 ** 
+temp         0.010967   0.000413   26.58  < 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood:  84.8 on 12 Df
-Pseudo R-squared: 0.9617
+Log-likelihood: 84.8 on 12 Df
+Pseudo R-squared: 0.962
 Number of iterations: 51 (BFGS) + 3 (Fisher scoring) 
 > 
 > 
@@ -989,12 +995,13 @@ Number of iterations: 51 (BFGS) + 3 (Fisher scoring)
 > 
 > ### Name: betatree
 > ### Title: Beta Regression Trees
-> ### Aliases: betatree coef.betatree logLik.betatree plot.betatree
-> ###   print.betatree sctest.betatree summary.betatree weights.betatree
-> ###   betaReg print.betaReg reweight.betaReg summary.betaReg estfun.betaReg
+> ### Aliases: betatree plot.betatree print.betatree predict.betatree
+> ###   sctest.betatree
 > ### Keywords: tree
 > 
 > ### ** Examples
+> 
+> options(digits = 4)
 > 
 > ## data with two groups of dyslexic and non-dyslexic children
 > data("ReadingSkills", package = "betareg")
@@ -1007,11 +1014,67 @@ Number of iterations: 51 (BFGS) + 3 (Fisher scoring)
 > ## fit beta regression tree: in each node
 > ##   - accurcay's mean and precision depends on iq
 > ##   - partitioning is done by dyslexia and the noise variables x1, x2, x3
-> ## only dyslexi is correctly selected for splitting
+> ## only dyslexia is correctly selected for splitting
 > bt <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
-+   data = ReadingSkills, minsplit = 10)
-Loading required package: party
-Loading required package: grid
++   data = ReadingSkills, minsize = 10)
+> plot(bt)
+> 
+> ## inspect result
+> coef(bt)
+  (Intercept)       iq (phi)_(Intercept) (phi)_iq
+2      1.6565  1.46571             1.273    2.048
+3      0.3809 -0.08623             4.808    0.826
+> summary(bt, node = 2)
+
+Call:
+betatree(formula = accuracy ~ iq | iq, data = ReadingSkills)
+
+Standardized weighted residuals 2:
+   Min     1Q Median     3Q    Max 
+-1.821 -0.521  0.061  0.849  1.063 
+
+Coefficients (mean model with logit link):
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    1.657      0.286    5.78  7.3e-09 ***
+iq             1.466      0.248    5.92  3.2e-09 ***
+
+Phi coefficients (precision model with log link):
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    1.273      0.307    4.15  3.4e-05 ***
+iq             2.048      0.331    6.19  5.9e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Type of estimator: ML (maximum likelihood)
+Log-likelihood: 39.4 on 4 Df
+Pseudo R-squared: 0.149
+Number of iterations: 17 (BFGS) + 1 (Fisher scoring) 
+> summary(bt, node = 3)
+
+Call:
+betatree(formula = accuracy ~ iq | iq, data = ReadingSkills)
+
+Standardized weighted residuals 2:
+   Min     1Q Median     3Q    Max 
+-2.455 -0.659 -0.079  0.813  1.610 
+
+Coefficients (mean model with logit link):
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   0.3809     0.0486    7.83  4.8e-15 ***
+iq           -0.0862     0.0549   -1.57     0.12    
+
+Phi coefficients (precision model with log link):
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    4.808      0.414   11.61   <2e-16 ***
+iq             0.826      0.395    2.09    0.036 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Type of estimator: ML (maximum likelihood)
+Log-likelihood: 27.3 on 4 Df
+Pseudo R-squared: 0.0391
+Number of iterations: 16 (BFGS) + 2 (Fisher scoring) 
+> library("strucchange")
 Loading required package: zoo
 
 Attaching package: 'zoo'
@@ -1021,170 +1084,103 @@ The following objects are masked from 'package:base':
     as.Date, as.Date.numeric
 
 Loading required package: sandwich
-Loading required package: strucchange
-Loading required package: modeltools
-Loading required package: stats4
-> plot(bt)
-> 
-> ## inspect result
-> coef(bt)
-  (Intercept)          iq (phi)_(Intercept)  (phi)_iq
-2   1.6565251  1.46570751          1.272597 2.0478578
-3   0.3809322 -0.08622808          4.807662 0.8260329
 > sctest(bt)
 $`1`
-              dyslexia        x1       x2        x3
-statistic 2.268741e+01 8.5250961 5.569861 1.0567635
-p.value   5.847856e-04 0.9094631 0.998710 0.9999042
+           dyslexia     x1     x2     x3
+statistic 2.269e+01 8.5251 5.5699 1.0568
+p.value   5.848e-04 0.9095 0.9987 0.9999
 
 $`2`
-          dyslexia        x1        x2        x3
-statistic        0 6.4116324 4.5170190 4.2308113
-p.value         NA 0.8412097 0.9751644 0.7566428
+          dyslexia     x1     x2     x3
+statistic        0 6.4116 4.5170 4.2308
+p.value         NA 0.8412 0.9752 0.7566
 
 $`3`
-          [,1]
-statistic    0
-p.value      1
-
-> summary(bt, node = 2)
-
-Call:
 NULL
 
-Raw response residuals:
-    Min      1Q  Median      3Q     Max 
--0.3975 -0.1247  0.0043  0.1149  0.4114 
-
-Coefficients (mean model with logit link):
-            Estimate Std. Error z value Pr(>|z|)    
-(Intercept)   1.6565     0.2864   5.785 7.27e-09 ***
-iq            1.4657     0.2475   5.921 3.20e-09 ***
-
-Phi coefficients (precision model with log link):
-            Estimate Std. Error z value Pr(>|z|)    
-(Intercept)   1.2726     0.3068   4.148 3.36e-05 ***
-iq            2.0479     0.3306   6.194 5.85e-10 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
-
-Type of estimator: ML (maximum likelihood)
-Log-likelihood: 39.41 on 4 Df
-Pseudo R-squared: 0.3292
-Number of iterations: 17 (BFGS) + 1 (Fisher scoring) 
-> summary(bt, node = 3)
-
-Call:
-NULL
-
-Raw response residuals:
-    Min      1Q  Median      3Q     Max 
--0.1512  0.0170  0.1032  0.3925  0.4350 
-
-Coefficients (mean model with logit link):
-            Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  0.38093    0.04863   7.833 4.76e-15 ***
-iq          -0.08623    0.05492  -1.570    0.116    
-
-Phi coefficients (precision model with log link):
-            Estimate Std. Error z value Pr(>|z|)    
-(Intercept)   4.8077     0.4142  11.607   <2e-16 ***
-iq            0.8260     0.3946   2.093   0.0363 *  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
-
-Type of estimator: ML (maximum likelihood)
-Log-likelihood: 27.33 on 4 Df
-Pseudo R-squared: 0.3292
-Number of iterations: 19 (BFGS) + 8 (Fisher scoring) 
 > 
 > ## add a numerical variable with relevant information for splitting
 > ReadingSkills$x4 <- rnorm(nrow(ReadingSkills), c(-1.5, 1.5)[ReadingSkills$dyslexia])
 > 
 > bt2 <- betatree(accuracy ~ iq | iq, ~ x1 + x2 + x3 + x4,
-+   data = ReadingSkills, minsplit = 10)
++   data = ReadingSkills, minsize = 10)
 > plot(bt2)
 > 
 > ## inspect result
 > coef(bt2)
-  (Intercept)         iq (phi)_(Intercept)   (phi)_iq
-2   1.7060360 1.47402394          1.293303  2.0840962
-3   0.5047507 0.03390671          3.131115 -0.7683503
+  (Intercept)     iq (phi)_(Intercept) (phi)_iq
+2       1.460 1.7332            0.6222   2.8365
+3       1.127 0.3416            1.4104  -0.3735
 > sctest(bt2)
 $`1`
-                 x1       x2        x3          x4
-statistic 8.5250961 5.569861 1.0567635 19.94405056
-p.value   0.9094631 0.998710 0.9999042  0.03531255
+              x1     x2     x3       x4
+statistic 8.5251 5.5699 1.0568 19.94405
+p.value   0.9095 0.9987 0.9999  0.03485
 
 $`2`
-                 x1       x2       x3        x4
-statistic 8.9466724 3.588752 3.567712 4.7049445
-p.value   0.5964143 0.998549 0.919691 0.9848264
+NULL
 
 $`3`
-          x1 x2        x3 x4
-statistic  0  0 4.8649075  0
-p.value   NA NA 0.3014418 NA
+              x1     x2     x3       x4
+statistic 6.4811 6.6100 1.9526 17.63629
+p.value   0.9678 0.9625 0.9957  0.05837
 
 > summary(bt2, node = 2)
 
 Call:
-NULL
+betatree(formula = accuracy ~ iq | iq, data = ReadingSkills)
 
-Raw response residuals:
-    Min      1Q  Median      3Q     Max 
--0.3995 -0.1325  0.0034  0.1058  0.4013 
+Standardized weighted residuals 2:
+   Min     1Q Median     3Q    Max 
+-1.718 -0.482 -0.034  0.885  0.944 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)   1.7060     0.2916   5.850 4.92e-09 ***
-iq            1.4740     0.2478   5.948 2.72e-09 ***
+(Intercept)    1.460      0.486    3.00   0.0027 ** 
+iq             1.733      0.369    4.69  2.7e-06 ***
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)   1.2933     0.3120   4.145 3.40e-05 ***
-iq            2.0841     0.3333   6.253 4.03e-10 ***
+(Intercept)    0.622      0.506    1.23     0.22    
+iq             2.836      0.503    5.64  1.7e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 38.62 on 4 Df
-Pseudo R-squared: 0.3292
-Number of iterations: 17 (BFGS) + 1 (Fisher scoring) 
+Log-likelihood: 23.5 on 4 Df
+Pseudo R-squared: 0.348
+Number of iterations: 16 (BFGS) + 1 (Fisher scoring) 
 > summary(bt2, node = 3)
 
 Call:
-NULL
+betatree(formula = accuracy ~ iq | iq, data = ReadingSkills)
 
-Raw response residuals:
-    Min      1Q  Median      3Q     Max 
--0.1579  0.0057  0.0904  0.3525  0.3737 
+Standardized weighted residuals 2:
+   Min     1Q Median     3Q    Max 
+-1.173 -0.622 -0.406  0.141  3.619 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  0.50475    0.12449   4.054 5.02e-05 ***
-iq           0.03391    0.09980   0.340    0.734    
+(Intercept)    1.127      0.209    5.39  7.2e-08 ***
+iq             0.342      0.198    1.73    0.084 .  
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)   3.1311     0.3704   8.454   <2e-16 ***
-iq           -0.7684     0.3591  -2.140   0.0324 *  
+(Intercept)    1.410      0.262    5.38  7.4e-08 ***
+iq            -0.373      0.264   -1.42     0.16    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 22.38 on 4 Df
-Pseudo R-squared: 0.3292
-Number of iterations: 18 (BFGS) + 2 (Fisher scoring) 
-> 
+Log-likelihood: 15.7 on 4 Df
+Pseudo R-squared: 0.161
+Number of iterations: 16 (BFGS) + 1 (Fisher scoring) 
 > 
 > 
 > 
 > cleanEx()
 
-detaching 'package:party', 'package:modeltools', 'package:stats4',
-  'package:strucchange', 'package:sandwich', 'package:zoo',
-  'package:grid'
+detaching 'package:strucchange', 'package:sandwich', 'package:zoo'
 
 > nameEx("gleverage")
 > ### * gleverage
@@ -1198,17 +1194,16 @@ detaching 'package:party', 'package:modeltools', 'package:stats4',
 > 
 > ### ** Examples
 > 
+> options(digits = 4)
 > data("GasolineYield", package = "betareg")
 > gy <- betareg(yield ~ batch + temp, data = GasolineYield)
 > gleverage(gy)
-        1         2         3         4         5         6         7         8 
-0.2166653 0.2516981 0.3253746 0.4541676 0.2239175 0.3200751 0.5271369 0.2818832 
-        9        10        11        12        13        14        15        16 
-0.3010917 0.5065938 0.1969837 0.2145541 0.3053700 0.4396677 0.2908692 0.3514349 
-       17        18        19        20        21        22        23        24 
-0.4049314 0.2448004 0.3569878 0.4840069 0.2154146 0.1834851 0.2899263 0.4700661 
-       25        26        27        28        29        30        31        32 
-0.2909617 0.2982017 0.5448905 0.3677161 0.6602709 0.3181028 0.2557126 0.4569484 
+     1      2      3      4      5      6      7      8      9     10     11 
+0.2167 0.2517 0.3254 0.4542 0.2239 0.3201 0.5271 0.2819 0.3011 0.5066 0.1970 
+    12     13     14     15     16     17     18     19     20     21     22 
+0.2146 0.3054 0.4397 0.2909 0.3514 0.4049 0.2448 0.3570 0.4840 0.2154 0.1835 
+    23     24     25     26     27     28     29     30     31     32 
+0.2899 0.4701 0.2910 0.2982 0.5449 0.3677 0.6603 0.3181 0.2557 0.4569 
 > 
 > 
 > 
@@ -1249,6 +1244,8 @@ detaching 'package:party', 'package:modeltools', 'package:stats4',
 > 
 > ### ** Examples
 > 
+> options(digits = 4)
+> 
 > data("GasolineYield", package = "betareg")
 > 
 > gy2 <- betareg(yield ~ batch + temp | temp, data = GasolineYield)
@@ -1260,72 +1257,39 @@ detaching 'package:party', 'package:modeltools', 'package:stats4',
 +   predict(gy2, type = "variance"),
 +   predict(gy2, type = "quantile", at = c(0.25, 0.5, 0.75))
 + )
-                                                     q_0.25      q_0.5
-1  0.09997030 -2.1975546   77.55630 1.145373e-03 0.07549306 0.09653422
-2  0.18657948 -1.4723909  215.06200 7.024260e-04 0.16816141 0.18560681
-3  0.32142578 -0.7472272  596.36246 3.651238e-04 0.30841729 0.32122603
-4  0.47378921 -0.1049393 1471.75136 1.692838e-04 0.46500324 0.47377734
-5  0.08567673 -2.3676029   93.72999 8.269423e-04 0.06489692 0.08273480
-6  0.14211525 -1.7978314  208.88539 5.808814e-04 0.12524873 0.14097226
-7  0.26284576 -1.0312297  613.99653 3.150552e-04 0.25072516 0.26258813
-8  0.10324409 -2.1616877   85.88389 1.065615e-03 0.07972496 0.10016550
-9  0.17651800 -1.5401188  205.86393 7.026812e-04 0.15805951 0.17546930
-10 0.30244665 -0.8356741  554.46132 3.798152e-04 0.28916034 0.30220897
-11 0.07880568 -2.4586860  120.07465 5.995916e-04 0.06118775 0.07647135
-12 0.14364751 -1.7853197  309.57002 3.960875e-04 0.12981151 0.14287972
-13 0.24750690 -1.1119533  798.11684 2.330663e-04 0.23708990 0.24729591
-14 0.34394188 -0.6457767 1537.50973 1.466652e-04 0.33573361 0.34387420
-15 0.16956516 -1.5887122  342.81006 4.095657e-04 0.15556251 0.16892216
-16 0.27545027 -0.9671433  821.71666 2.425834e-04 0.26483999 0.27526801
-17 0.33691381 -0.6770778 1235.66499 1.806495e-04 0.32779629 0.33682580
-18 0.10547585 -2.1378099  191.39968 4.903890e-04 0.08983849 0.10410171
-19 0.23606454 -1.1743781  742.04019 2.427030e-04 0.22542250 0.23582731
-20 0.32316164 -0.7392798 1368.34435 1.597321e-04 0.31458683 0.32307546
-21 0.05383471 -2.8664989  120.07465 4.207035e-04 0.03892848 0.05136993
-22 0.07928368 -2.4521196  215.06200 3.378557e-04 0.06624459 0.07798069
-23 0.16906299 -1.5922826  720.72869 1.946447e-04 0.15948521 0.16875678
-24 0.27062919 -0.9914327 1677.97206 1.175654e-04 0.26326427 0.27053804
-25 0.08270107 -2.4062009  248.79507 3.036954e-04 0.07038929 0.08158360
-26 0.17115802 -1.5774423  798.11684 1.775247e-04 0.16202069 0.17088326
-27 0.31885402 -0.7590433 2523.26796 8.603925e-05 0.31257024 0.31880615
-28 0.12701435 -1.9276191  650.84437 1.701046e-04 0.11801311 0.12663223
-29 0.23660619 -1.1713769 1885.41604 9.574966e-05 0.22995419 0.23651304
-30 0.10507878 -2.1420253  798.11684 1.176764e-04 0.09758762 0.10474890
-31 0.11951904 -1.9969926  978.71400 1.074132e-04 0.11239006 0.11925985
-32 0.18401511 -1.4893780 1998.56571 7.509308e-05 0.17811235 0.18390969
-       q_0.75
-1  0.12074136
-2  0.20394068
-3  0.33421676
-4  0.48256225
-5  0.10327886
-6  0.15774019
-7  0.27468582
-8  0.12343883
-9  0.19383720
-10 0.31547416
-11 0.09389756
-12 0.15664851
-13 0.25769409
-14 0.35207641
-15 0.18286831
-16 0.28586202
-17 0.34593544
-18 0.11962147
-19 0.24644820
-20 0.33164255
-21 0.06607706
-22 0.09090812
-23 0.17830729
-24 0.27789478
-25 0.09379888
-26 0.17999609
-27 0.32508563
-28 0.13559952
-29 0.24315669
-30 0.11221069
-31 0.12636570
-32 0.18980299
+                                      q_0.25   q_0.5  q_0.75
+1  0.09997 -2.1976   77.56 1.145e-03 0.07549 0.09653 0.12074
+2  0.18658 -1.4724  215.06 7.024e-04 0.16816 0.18561 0.20394
+3  0.32143 -0.7472  596.36 3.651e-04 0.30842 0.32123 0.33422
+4  0.47379 -0.1049 1471.75 1.693e-04 0.46500 0.47378 0.48256
+5  0.08568 -2.3676   93.73 8.269e-04 0.06490 0.08273 0.10328
+6  0.14212 -1.7978  208.89 5.809e-04 0.12525 0.14097 0.15774
+7  0.26285 -1.0312  614.00 3.151e-04 0.25073 0.26259 0.27469
+8  0.10324 -2.1617   85.88 1.066e-03 0.07972 0.10017 0.12344
+9  0.17652 -1.5401  205.86 7.027e-04 0.15806 0.17547 0.19384
+10 0.30245 -0.8357  554.46 3.798e-04 0.28916 0.30221 0.31547
+11 0.07881 -2.4587  120.07 5.996e-04 0.06119 0.07647 0.09390
+12 0.14365 -1.7853  309.57 3.961e-04 0.12981 0.14288 0.15665
+13 0.24751 -1.1120  798.12 2.331e-04 0.23709 0.24730 0.25769
+14 0.34394 -0.6458 1537.51 1.467e-04 0.33573 0.34387 0.35208
+15 0.16957 -1.5887  342.81 4.096e-04 0.15556 0.16892 0.18287
+16 0.27545 -0.9671  821.72 2.426e-04 0.26484 0.27527 0.28586
+17 0.33691 -0.6771 1235.66 1.806e-04 0.32780 0.33683 0.34594
+18 0.10548 -2.1378  191.40 4.904e-04 0.08984 0.10410 0.11962
+19 0.23606 -1.1744  742.04 2.427e-04 0.22542 0.23583 0.24645
+20 0.32316 -0.7393 1368.34 1.597e-04 0.31459 0.32308 0.33164
+21 0.05383 -2.8665  120.07 4.207e-04 0.03893 0.05137 0.06608
+22 0.07928 -2.4521  215.06 3.379e-04 0.06624 0.07798 0.09091
+23 0.16906 -1.5923  720.73 1.946e-04 0.15949 0.16876 0.17831
+24 0.27063 -0.9914 1677.97 1.176e-04 0.26326 0.27054 0.27789
+25 0.08270 -2.4062  248.80 3.037e-04 0.07039 0.08158 0.09380
+26 0.17116 -1.5774  798.12 1.775e-04 0.16202 0.17088 0.18000
+27 0.31885 -0.7590 2523.27 8.604e-05 0.31257 0.31881 0.32509
+28 0.12701 -1.9276  650.84 1.701e-04 0.11801 0.12663 0.13560
+29 0.23661 -1.1714 1885.42 9.575e-05 0.22995 0.23651 0.24316
+30 0.10508 -2.1420  798.12 1.177e-04 0.09759 0.10475 0.11221
+31 0.11952 -1.9970  978.71 1.074e-04 0.11239 0.11926 0.12637
+32 0.18402 -1.4894 1998.57 7.509e-05 0.17811 0.18391 0.18980
 > 
 > 
 > 
@@ -1341,6 +1305,8 @@ detaching 'package:party', 'package:modeltools', 'package:stats4',
 > ### Keywords: regression
 > 
 > ### ** Examples
+> 
+> options(digits = 4)
 > 
 > data("GasolineYield", package = "betareg")
 > 
@@ -1376,6 +1342,8 @@ detaching 'package:party', 'package:modeltools', 'package:stats4',
 > 
 > ### ** Examples
 > 
+> options(digits = 4)
+> 
 > data("GasolineYield", package = "betareg")
 > 
 > gy2 <- betareg(yield ~ batch + temp | temp, data = GasolineYield)
@@ -1386,141 +1354,127 @@ Call:
 betareg(formula = yield ~ batch + temp | temp, data = GasolineYield)
 
 Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.5399 -0.7792 -0.1167  0.8621  2.9419 
+   Min     1Q Median     3Q    Max 
+-2.540 -0.779 -0.117  0.862  2.942 
 
 Coefficients (mean model with logit link):
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -5.9232361  0.1835262 -32.275  < 2e-16 ***
-batch1       1.6019877  0.0638561  25.087  < 2e-16 ***
-batch2       1.2972663  0.0991001  13.090  < 2e-16 ***
-batch3       1.5653383  0.0997392  15.694  < 2e-16 ***
-batch4       1.0300720  0.0632882  16.276  < 2e-16 ***
-batch5       1.1541630  0.0656427  17.582  < 2e-16 ***
-batch6       1.0194446  0.0663510  15.364  < 2e-16 ***
-batch7       0.6222591  0.0656325   9.481  < 2e-16 ***
-batch8       0.5645830  0.0601846   9.381  < 2e-16 ***
-batch9       0.3594390  0.0671406   5.354 8.63e-08 ***
-temp         0.0103595  0.0004362  23.751  < 2e-16 ***
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -5.923236   0.183526  -32.27  < 2e-16 ***
+batch1       1.601988   0.063856   25.09  < 2e-16 ***
+batch2       1.297266   0.099100   13.09  < 2e-16 ***
+batch3       1.565338   0.099739   15.69  < 2e-16 ***
+batch4       1.030072   0.063288   16.28  < 2e-16 ***
+batch5       1.154163   0.065643   17.58  < 2e-16 ***
+batch6       1.019445   0.066351   15.36  < 2e-16 ***
+batch7       0.622259   0.065632    9.48  < 2e-16 ***
+batch8       0.564583   0.060185    9.38  < 2e-16 ***
+batch9       0.359439   0.067141    5.35  8.6e-08 ***
+temp         0.010359   0.000436   23.75  < 2e-16 ***
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) 1.364089   1.225781   1.113    0.266    
-temp        0.014570   0.003618   4.027 5.65e-05 ***
+(Intercept)  1.36409    1.22578    1.11     0.27    
+temp         0.01457    0.00362    4.03  5.7e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 86.98 on 13 Df
-Pseudo R-squared: 0.9519
+Log-likelihood:   87 on 13 Df
+Pseudo R-squared: 0.952
 Number of iterations: 33 (BFGS) + 28 (Fisher scoring) 
 > coef(gy2)
       (Intercept)            batch1            batch2            batch3 
-      -5.92323614        1.60198775        1.29726625        1.56533827 
+         -5.92324           1.60199           1.29727           1.56534 
            batch4            batch5            batch6            batch7 
-       1.03007197        1.15416304        1.01944465        0.62225905 
+          1.03007           1.15416           1.01944           0.62226 
            batch8            batch9              temp (phi)_(Intercept) 
-       0.56458300        0.35943898        0.01035948        1.36408882 
+          0.56458           0.35944           0.01036           1.36409 
        (phi)_temp 
-       0.01457032 
+          0.01457 
 > vcov(gy2)
-                    (Intercept)        batch1        batch2        batch3
-(Intercept)        3.368188e-02 -4.124178e-03 -8.215820e-03 -8.839188e-03
-batch1            -4.124178e-03  4.077605e-03  2.483329e-03  2.523526e-03
-batch2            -8.215820e-03  2.483329e-03  9.820824e-03  3.401445e-03
-batch3            -8.839188e-03  2.523526e-03  3.401445e-03  9.947910e-03
-batch4            -3.672320e-03  2.189276e-03  2.395371e-03  2.426640e-03
-batch5            -4.461204e-03  2.239903e-03  2.547611e-03  2.594482e-03
-batch6            -3.901967e-03  2.203942e-03  2.439481e-03  2.475300e-03
-batch7            -3.007120e-03  2.146456e-03  2.266844e-03  2.284945e-03
-batch8            -6.258965e-04  1.992614e-03  1.803596e-03  1.774813e-03
-batch9            -1.801331e-03  2.068213e-03  2.031252e-03  2.025655e-03
-temp              -7.752898e-05  4.999128e-06  1.503982e-05  1.656923e-05
-(phi)_(Intercept) -1.859927e-02  1.681534e-04  9.769192e-04  1.420024e-03
-(phi)_temp         4.618253e-05  2.068517e-07 -1.937019e-06 -2.948183e-06
-                         batch4        batch5        batch6        batch7
-(Intercept)       -3.672320e-03 -4.461204e-03 -3.901967e-03 -3.007120e-03
-batch1             2.189276e-03  2.239903e-03  2.203942e-03  2.146456e-03
-batch2             2.395371e-03  2.547611e-03  2.439481e-03  2.266844e-03
-batch3             2.426640e-03  2.594482e-03  2.475300e-03  2.284945e-03
-batch4             4.005400e-03  2.205844e-03  2.177861e-03  2.133142e-03
-batch5             2.205844e-03  4.308969e-03  2.223056e-03  2.155852e-03
-batch6             2.177861e-03  2.223056e-03  4.402457e-03  2.139678e-03
-batch7             2.133142e-03  2.155852e-03  2.139678e-03  4.307625e-03
-batch8             2.013379e-03  1.976826e-03  2.002711e-03  2.044120e-03
-batch9             2.072227e-03  2.065082e-03  2.070137e-03  2.078208e-03
-temp               3.890765e-06  5.826640e-06  4.454355e-06  2.258686e-06
-(phi)_(Intercept)  1.408927e-04  1.011239e-03  5.044879e-04 -4.522516e-04
-(phi)_temp         6.530191e-08 -2.184587e-06 -8.969410e-07  1.470129e-06
-                         batch8        batch9          temp (phi)_(Intercept)
-(Intercept)       -6.258965e-04 -1.801331e-03 -7.752898e-05     -1.859927e-02
-batch1             1.992614e-03  2.068213e-03  4.999128e-06      1.681534e-04
-batch2             1.803596e-03  2.031252e-03  1.503982e-05      9.769192e-04
-batch3             1.774813e-03  2.025655e-03  1.656923e-05      1.420024e-03
-batch4             2.013379e-03  2.072227e-03  3.890765e-06      1.408927e-04
-batch5             1.976826e-03  2.065082e-03  5.826640e-06      1.011239e-03
-batch6             2.002711e-03  2.070137e-03  4.454355e-06      5.044879e-04
-batch7             2.044120e-03  2.078208e-03  2.258686e-06     -4.522516e-04
-batch8             3.622190e-03  2.099718e-03 -3.584650e-06     -1.307067e-03
-batch9             2.099718e-03  4.507858e-03 -7.000127e-07     -3.532699e-04
-temp              -3.584650e-06 -7.000127e-07  1.902439e-07      4.666494e-05
-(phi)_(Intercept) -1.307067e-03 -3.532699e-04  4.666494e-05      1.502540e+00
-(phi)_temp         3.674776e-06  1.118606e-06 -1.174672e-07     -4.342353e-03
-                     (phi)_temp
-(Intercept)        4.618253e-05
-batch1             2.068517e-07
-batch2            -1.937019e-06
-batch3            -2.948183e-06
-batch4             6.530191e-08
-batch5            -2.184587e-06
-batch6            -8.969410e-07
-batch7             1.470129e-06
-batch8             3.674776e-06
-batch9             1.118606e-06
-temp              -1.174672e-07
-(phi)_(Intercept) -4.342353e-03
-(phi)_temp         1.309198e-05
+                  (Intercept)     batch1     batch2     batch3     batch4
+(Intercept)         3.368e-02 -4.124e-03 -8.216e-03 -8.839e-03 -3.672e-03
+batch1             -4.124e-03  4.078e-03  2.483e-03  2.524e-03  2.189e-03
+batch2             -8.216e-03  2.483e-03  9.821e-03  3.401e-03  2.395e-03
+batch3             -8.839e-03  2.524e-03  3.401e-03  9.948e-03  2.427e-03
+batch4             -3.672e-03  2.189e-03  2.395e-03  2.427e-03  4.005e-03
+batch5             -4.461e-03  2.240e-03  2.548e-03  2.594e-03  2.206e-03
+batch6             -3.902e-03  2.204e-03  2.439e-03  2.475e-03  2.178e-03
+batch7             -3.007e-03  2.146e-03  2.267e-03  2.285e-03  2.133e-03
+batch8             -6.259e-04  1.993e-03  1.804e-03  1.775e-03  2.013e-03
+batch9             -1.801e-03  2.068e-03  2.031e-03  2.026e-03  2.072e-03
+temp               -7.753e-05  4.999e-06  1.504e-05  1.657e-05  3.891e-06
+(phi)_(Intercept)  -1.860e-02  1.682e-04  9.769e-04  1.420e-03  1.409e-04
+(phi)_temp          4.618e-05  2.069e-07 -1.937e-06 -2.948e-06  6.530e-08
+                      batch5     batch6     batch7     batch8     batch9
+(Intercept)       -4.461e-03 -3.902e-03 -3.007e-03 -6.259e-04 -1.801e-03
+batch1             2.240e-03  2.204e-03  2.146e-03  1.993e-03  2.068e-03
+batch2             2.548e-03  2.439e-03  2.267e-03  1.804e-03  2.031e-03
+batch3             2.594e-03  2.475e-03  2.285e-03  1.775e-03  2.026e-03
+batch4             2.206e-03  2.178e-03  2.133e-03  2.013e-03  2.072e-03
+batch5             4.309e-03  2.223e-03  2.156e-03  1.977e-03  2.065e-03
+batch6             2.223e-03  4.402e-03  2.140e-03  2.003e-03  2.070e-03
+batch7             2.156e-03  2.140e-03  4.308e-03  2.044e-03  2.078e-03
+batch8             1.977e-03  2.003e-03  2.044e-03  3.622e-03  2.100e-03
+batch9             2.065e-03  2.070e-03  2.078e-03  2.100e-03  4.508e-03
+temp               5.827e-06  4.454e-06  2.259e-06 -3.585e-06 -7.000e-07
+(phi)_(Intercept)  1.011e-03  5.045e-04 -4.523e-04 -1.307e-03 -3.533e-04
+(phi)_temp        -2.185e-06 -8.969e-07  1.470e-06  3.675e-06  1.119e-06
+                        temp (phi)_(Intercept) (phi)_temp
+(Intercept)       -7.753e-05        -1.860e-02  4.618e-05
+batch1             4.999e-06         1.682e-04  2.069e-07
+batch2             1.504e-05         9.769e-04 -1.937e-06
+batch3             1.657e-05         1.420e-03 -2.948e-06
+batch4             3.891e-06         1.409e-04  6.530e-08
+batch5             5.827e-06         1.011e-03 -2.185e-06
+batch6             4.454e-06         5.045e-04 -8.969e-07
+batch7             2.259e-06        -4.523e-04  1.470e-06
+batch8            -3.585e-06        -1.307e-03  3.675e-06
+batch9            -7.000e-07        -3.533e-04  1.119e-06
+temp               1.902e-07         4.666e-05 -1.175e-07
+(phi)_(Intercept)  4.666e-05         1.503e+00 -4.342e-03
+(phi)_temp        -1.175e-07        -4.342e-03  1.309e-05
 > logLik(gy2)
-'log Lik.' 86.97707 (df=13)
+'log Lik.' 86.98 (df=13)
 > AIC(gy2)
-[1] -147.9541
+[1] -148
 > 
 > coef(gy2, model = "mean")
 (Intercept)      batch1      batch2      batch3      batch4      batch5 
--5.92323614  1.60198775  1.29726625  1.56533827  1.03007197  1.15416304 
+   -5.92324     1.60199     1.29727     1.56534     1.03007     1.15416 
      batch6      batch7      batch8      batch9        temp 
- 1.01944465  0.62225905  0.56458300  0.35943898  0.01035948 
+    1.01944     0.62226     0.56458     0.35944     0.01036 
 > coef(gy2, model = "precision")
 (Intercept)        temp 
- 1.36408882  0.01457032 
+    1.36409     0.01457 
 > summary(gy2, phi = FALSE)
 
 Call:
 betareg(formula = yield ~ batch + temp | temp, data = GasolineYield)
 
 Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.5399 -0.7792 -0.1167  0.8621  2.9419 
+   Min     1Q Median     3Q    Max 
+-2.540 -0.779 -0.117  0.862  2.942 
 
 Coefficients (mean model with logit link):
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -5.9232361  0.1835262 -32.275  < 2e-16 ***
-batch1       1.6019877  0.0638561  25.087  < 2e-16 ***
-batch2       1.2972663  0.0991001  13.090  < 2e-16 ***
-batch3       1.5653383  0.0997392  15.694  < 2e-16 ***
-batch4       1.0300720  0.0632882  16.276  < 2e-16 ***
-batch5       1.1541630  0.0656427  17.582  < 2e-16 ***
-batch6       1.0194446  0.0663510  15.364  < 2e-16 ***
-batch7       0.6222591  0.0656325   9.481  < 2e-16 ***
-batch8       0.5645830  0.0601846   9.381  < 2e-16 ***
-batch9       0.3594390  0.0671406   5.354 8.63e-08 ***
-temp         0.0103595  0.0004362  23.751  < 2e-16 ***
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -5.923236   0.183526  -32.27  < 2e-16 ***
+batch1       1.601988   0.063856   25.09  < 2e-16 ***
+batch2       1.297266   0.099100   13.09  < 2e-16 ***
+batch3       1.565338   0.099739   15.69  < 2e-16 ***
+batch4       1.030072   0.063288   16.28  < 2e-16 ***
+batch5       1.154163   0.065643   17.58  < 2e-16 ***
+batch6       1.019445   0.066351   15.36  < 2e-16 ***
+batch7       0.622259   0.065632    9.48  < 2e-16 ***
+batch8       0.564583   0.060185    9.38  < 2e-16 ***
+batch9       0.359439   0.067141    5.35  8.6e-08 ***
+temp         0.010359   0.000436   23.75  < 2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 86.98 on 13 Df
-Pseudo R-squared: 0.9519
+Log-likelihood:   87 on 13 Df
+Pseudo R-squared: 0.952
 Number of iterations: 33 (BFGS) + 28 (Fisher scoring) 
 > 
 > 
@@ -1529,7 +1483,7 @@ Number of iterations: 33 (BFGS) + 28 (Fisher scoring)
 > ###
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  43.44 1.284 44.808 0 0 
+Time elapsed:  35.808 0.112 36.001 0 0 
 > grDevices::dev.off()
 null device 
           1 

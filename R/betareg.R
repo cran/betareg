@@ -524,7 +524,8 @@ summary.betareg <- function(object, phi = NULL, type = "sweighted2", ...)
   object$coefficients <- cf
 
   ## number of iterations
-  object$iterations <- c("optim" = as.vector(tail(na.omit(object$optim$count), 1)), "scoring" = as.vector(object$scoring))
+  mytail <- function(x) x[length(x)]
+  object$iterations <- c("optim" = as.vector(mytail(na.omit(object$optim$count))), "scoring" = as.vector(object$scoring))
 
   ## delete some slots
   object$fitted.values <- object$terms <- object$model <- object$y <-
@@ -875,9 +876,8 @@ terms.betareg <- function(x, model = c("mean", "precision"), ...) {
 
 model.frame.betareg <- function(formula, ...) {
   if(!is.null(formula$model)) return(formula$model)
-  if(is.Formula(formula$formula)) formula$call$formula <- formula$formula <-
-    formula(formula$formula, collapse = TRUE)
   formula$terms <- formula$terms$full
+  formula$call$formula <- formula$formula <- formula(formula$terms)
   NextMethod()
 }
 

@@ -21,7 +21,7 @@
 }
 
 \usage{
-betamix(formula, data, k, subset, na.action, 
+betamix(formula, data, k, subset, na.action, weights, offset,
   link = c("logit", "probit", "cloglog", "cauchit", "log",
     "loglog"), link.phi = "log",
   control = betareg.control(...), cluster = NULL,
@@ -38,6 +38,9 @@ extraComponent(type = c("uniform", "betareg"), coef, delta,
     or \code{y ~ x | z}; for details see \code{\link{betareg}}).}
   \item{data, subset, na.action}{arguments controlling formula processing
     via \code{\link[stats]{model.frame}}.}
+  \item{weights}{optional numeric vector of integer case weights.}
+  \item{offset}{optional numeric vector with an a priori known component to be
+    included in the linear predictor for the mean.}
   \item{k}{a vector of integers indicating the number of components of
     the finite mixture; passed in turn to the \code{k} argument
     of \code{\link[flexmix]{stepFlexmix}}.}
@@ -141,6 +144,8 @@ Leisch, F. (2004). FlexMix: A General Framework for Finite Mixture
 }
 
 \examples{
+options(digits = 4)
+
 ## data with two groups of dyslexic and non-dyslexic children
 data("ReadingSkills", package = "betareg")
 
