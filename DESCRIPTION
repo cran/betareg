@@ -1,6 +1,6 @@
 Package: betareg
-Version: 3.1-0
-Date: 2016-08-06
+Version: 3.1-1
+Date: 2018-09-26
 Title: Beta Regression
 Authors@R: c(person(given = "Achim", family = "Zeileis", role = c("aut", "cre"), email = "Achim.Zeileis@R-project.org"),
              person(given = "Francisco", family = "Cribari-Neto", role = "aut", email = "cribari@ufpe.br"),
@@ -18,7 +18,7 @@ Imports: graphics, grDevices, methods, stats, flexmix, Formula, lmtest,
 Suggests: car, lattice, partykit, strucchange
 License: GPL-2 | GPL-3
 NeedsCompilation: no
-Packaged: 2016-08-05 23:08:12 UTC; zeileis
+Packaged: 2018-09-26 21:18:22 UTC; zeileis
 Author: Achim Zeileis [aut, cre],
   Francisco Cribari-Neto [aut],
   Bettina Gruen [aut],
@@ -27,4 +27,4 @@ Author: Achim Zeileis [aut, cre],
   Andrea V. Rocha [ctb] (earlier version by)
 Maintainer: Achim Zeileis <Achim.Zeileis@R-project.org>
 Repository: CRAN
-Date/Publication: 2016-08-06 01:48:29
+Date/Publication: 2018-09-28 16:09:17 UTC

@@ -110,3 +110,8 @@ exportMethods("fitted")
 exportMethods("posterior")
 exportMethods("clusters")
 exportMethods("predict")
+
+## conditional registration of strucchange methods
+if(getRversion() >= "3.6.0") {
+  S3method(strucchange::sctest, "betatree")
+}

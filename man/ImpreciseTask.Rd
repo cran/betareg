@@ -33,13 +33,16 @@
   For each task participants were asked to provide lower and upper
   estimates for the event to occur and not to occur.  
 }
+
 \source{
-  Taken from \url{http://dl.dropbox.com/u/1857674/betareg/betareg.html}.
+  Taken from Smithson et al. (2011) supplements.
 }
+
 \references{
-  Smithson, M., Merkle, E.C., and Verkuilen, J. (in press). Beta
-  Regression Finite Mixture Models of Polarization and
-  Priming. \emph{Journal of Educational and Behavioral Statistics}.
+  Smithson, M., Merkle, E.C., and Verkuilen, J. (2011). Beta
+  Regression Finite Mixture Models of Polarization and Priming.
+  \emph{Journal of Educational and Behavioral Statistics}, \bold{36}(6), 804--831.
+  \doi{10.3102/1076998610396893}
 
   Smithson, M., and Segale, C. (2009). Partition Priming in Judgments of
   Imprecise Probabilities. \emph{Journal of Statistical Theory and

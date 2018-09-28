@@ -222,20 +222,20 @@ Cluster sizes:
  1  2  3 
 20 10 14 
 
-convergence after 48 iterations
+convergence after 20 iterations
 
 > summary(rs_mix)
 $Comp.1
 $Comp.1$mean
              Estimate Std. Error z value  Pr(>|z|)    
-(Intercept)  0.502437   0.083207  6.0384 1.556e-09 ***
-iq          -0.047179   0.114318 -0.4127    0.6798    
+(Intercept)  0.502518   0.082481  6.0925 1.112e-09 ***
+iq          -0.048411   0.112951 -0.4286    0.6682    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 $Comp.1$precision
             Estimate Std. Error z value  Pr(>|z|)    
-(Intercept)  4.23880    0.75975  5.5792 2.416e-08 ***
+(Intercept)  4.25147    0.74761  5.6868 1.295e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -243,14 +243,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 $Comp.2
 $Comp.2$mean
             Estimate Std. Error z value  Pr(>|z|)    
-(Intercept)  1.40568    0.26828  5.2396 1.609e-07 ***
-iq           0.82554    0.21693  3.8056 0.0001415 ***
+(Intercept)  1.40347    0.26337  5.3288 9.886e-08 ***
+iq           0.82503    0.21629  3.8144 0.0001365 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 $Comp.2$precision
             Estimate Std. Error z value  Pr(>|z|)    
-(Intercept)  2.68629    0.45765  5.8697 4.366e-09 ***
+(Intercept)  2.68533    0.45435  5.9103 3.414e-09 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -389,4 +389,4 @@ $\log\phi$ & $ 6.08741$\phantom{)} & (0.24990) & $ 5.71191$\phantom{)} & (0.2498
  *** Run successfully completed ***
 > proc.time()
    user  system elapsed 
- 17.080   0.112  17.233 
+  6.445   0.075   6.557 

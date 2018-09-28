@@ -1,6 +1,6 @@
 
-R version 3.2.0 (2015-04-16) -- "Full of Ingredients"
-Copyright (C) 2015 The R Foundation for Statistical Computing
+R version 3.5.1 (2018-07-02) -- "Feather Spray"
+Copyright (C) 2018 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -103,7 +103,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 27.3 on 4 Df
 Pseudo R-squared: 0.0391
-Number of iterations: 16 (BFGS) + 2 (Fisher scoring) 
+Number of iterations: 16 (BFGS) + 1 (Fisher scoring) 
 
 > coef(rs_tree)
   (Intercept)       iq (phi)_(Intercept) (phi)_iq
@@ -136,4 +136,4 @@ NULL
 > 
 > proc.time()
    user  system elapsed 
-  1.852   0.040   1.886 
+  1.458   0.068   1.514 
