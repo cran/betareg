@@ -132,6 +132,8 @@ Log-likelihood &  & $66.734$\phantom{)} & $66.334$\phantom{)} & $66.134$\phantom
 +     abline(0, 1, lty = 2)
 + })
 
+> suppressWarnings(RNGversion("3.5.0"))
+
 > set.seed(1071)
 
 > n <- nrow(ReadingSkills)
@@ -171,7 +173,7 @@ Fitted party:
 |                2.047858 
 |   [3] dyslexia in yes: n = 19
 |             (Intercept)                iq (phi)_(Intercept) 
-|              0.38093218       -0.08622808        4.80766206 
+|              0.38093218       -0.08622808        4.80766205 
 |                (phi)_iq 
 |              0.82603290 
 
@@ -389,4 +391,4 @@ $\log\phi$ & $ 6.08741$\phantom{)} & (0.24990) & $ 5.71191$\phantom{)} & (0.2498
  *** Run successfully completed ***
 > proc.time()
    user  system elapsed 
-  6.445   0.075   6.557 
+  5.791   0.713   5.613 

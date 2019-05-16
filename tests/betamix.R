@@ -1,4 +1,5 @@
 options(digits = 4)
+suppressWarnings(RNGversion("3.5.0"))
 
 ## package and data
 library("betareg")

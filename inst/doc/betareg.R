@@ -95,6 +95,7 @@ summary(gy_logit)
 ###################################################
 ### code chunk number 7: GasolineYield-plot (eval = FALSE)
 ###################################################
+## suppressWarnings(RNGversion("3.5.0"))
 ## set.seed(123)
 ## plot(gy_logit, which = 1:4, type = "pearson")
 ## plot(gy_logit, which = 5, type = "deviance", sub.caption = "")
@@ -105,6 +106,7 @@ summary(gy_logit)
 ### code chunk number 8: GasolineYield-plot1
 ###################################################
 par(mfrow = c(3, 2))
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
 plot(gy_logit, which = 1:4, type = "pearson")
 plot(gy_logit, which = 5, type = "deviance", sub.caption = "")
@@ -342,6 +344,7 @@ coeftest(rs_beta)
 ###################################################
 ### code chunk number 36: strucchange-data
 ###################################################
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
 y1 <- c(rbeta(150, 0.3 * 4, 0.7 * 4), rbeta(50, 0.5 * 4, 0.5 * 4))
 y2 <- c(rbeta(100, 0.3 * 4, 0.7 * 4), rbeta(100, 0.3 * 8, 0.7 * 8))

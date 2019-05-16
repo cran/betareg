@@ -111,6 +111,7 @@ pairs(log(pr_phi), panel = function(x, y, ...) {
 ###################################################
 ### code chunk number 8: ReadingSkills-noise
 ###################################################
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(1071)
 n <- nrow(ReadingSkills)
 ReadingSkills$x1 <- rnorm(n)

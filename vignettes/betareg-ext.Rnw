@@ -1010,6 +1010,7 @@ third is a categorical variable which takes two different values with
 equal probability.
 %
 <<ReadingSkills-noise, echo=TRUE>>=
+suppressWarnings(RNGversion("3.5.0"))
 set.seed(1071)
 n <- nrow(ReadingSkills)
 ReadingSkills$x1 <- rnorm(n)

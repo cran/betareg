@@ -80,6 +80,7 @@ Zeileis, A., Hothorn, T., and Hornik K. (2008).
 
 \examples{
 options(digits = 4)
+suppressWarnings(RNGversion("3.5.0"))
 
 ## data with two groups of dyslexic and non-dyslexic children
 data("ReadingSkills", package = "betareg")
