@@ -3,7 +3,7 @@
 ###################################################
 ### code chunk number 1: preliminaries
 ###################################################
-options(width = 70, prompt = "R> ", continue = "+  ")
+options(width = 70, prompt = "R> ", continue = "+  ", useFancyQuotes = FALSE, digits = 5)
 library("betareg")
 
 

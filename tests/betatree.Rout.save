@@ -1,5 +1,5 @@
 
-R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+R version 3.6.2 (2019-12-12) -- "Dark and Stormy Night"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -53,7 +53,8 @@ Number of inner nodes:    1
 Number of terminal nodes: 2
 Number of parameters per node: 4
 Objective function (negative log-likelihood): 66.73
-> summary(rs_tree)
+> ## IGNORE_RDIFF_BEGIN
+> summary(rs_tree) ## possibly small deviations in number of BFGS/Fisher iterations
 $`2`
 
 Call:
@@ -78,7 +79,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 39.4 on 4 Df
 Pseudo R-squared: 0.149
-Number of iterations: 17 (BFGS) + 1 (Fisher scoring) 
+Number of iterations: 17 (BFGS) + 2 (Fisher scoring) 
 
 $`3`
 
@@ -104,13 +105,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 27.3 on 4 Df
 Pseudo R-squared: 0.0391
-Number of iterations: 16 (BFGS) + 2 (Fisher scoring) 
+Number of iterations: 16 (BFGS) + 1 (Fisher scoring) 
 
+> ## IGNORE_RDIFF_END
 > coef(rs_tree)
   (Intercept)       iq (phi)_(Intercept) (phi)_iq
 2      1.6565  1.46571             1.273    2.048
 3      0.3809 -0.08623             4.808    0.826
-> library("strucchange")
+> if(require("strucchange")) sctest(rs_tree)
+Loading required package: strucchange
 Loading required package: zoo
 
 Attaching package: 'zoo'
@@ -120,7 +123,6 @@ The following objects are masked from 'package:base':
     as.Date, as.Date.numeric
 
 Loading required package: sandwich
-> sctest(rs_tree)
 $`1`
            dyslexia     x1     x2     x3
 statistic 2.269e+01 8.5251 5.5699 3.6273
@@ -137,4 +139,4 @@ NULL
 > 
 > proc.time()
    user  system elapsed 
-  1.323   0.300   1.307 
+  1.613   0.352   1.652 

@@ -1,5 +1,6 @@
 
-> options(width = 70, prompt = "R> ", continue = "+  ")
+> options(width = 70, prompt = "R> ", continue = "+  ", 
++     useFancyQuotes = FALSE, digits = 5)
 
 > library("betareg")
 
@@ -89,32 +90,32 @@ Call:
 betareg(formula = yield ~ batch + temp, data = GasolineYield)
 
 Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.8750 -0.8149  0.1601  0.8384  2.0483 
+   Min     1Q Median     3Q    Max 
+-2.875 -0.815  0.160  0.838  2.048 
 
 Coefficients (mean model with logit link):
-              Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -6.1595710  0.1823247 -33.784  < 2e-16 ***
-batch1       1.7277289  0.1012294  17.067  < 2e-16 ***
-batch2       1.3225969  0.1179020  11.218  < 2e-16 ***
-batch3       1.5723099  0.1161045  13.542  < 2e-16 ***
-batch4       1.0597141  0.1023598  10.353  < 2e-16 ***
-batch5       1.1337518  0.1035232  10.952  < 2e-16 ***
-batch6       1.0401618  0.1060365   9.809  < 2e-16 ***
-batch7       0.5436922  0.1091275   4.982 6.29e-07 ***
-batch8       0.4959007  0.1089257   4.553 5.30e-06 ***
-batch9       0.3857930  0.1185933   3.253  0.00114 ** 
-temp         0.0109669  0.0004126  26.577  < 2e-16 ***
+             Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -6.159571   0.182325  -33.78  < 2e-16 ***
+batch1       1.727729   0.101229   17.07  < 2e-16 ***
+batch2       1.322597   0.117902   11.22  < 2e-16 ***
+batch3       1.572310   0.116105   13.54  < 2e-16 ***
+batch4       1.059714   0.102360   10.35  < 2e-16 ***
+batch5       1.133752   0.103523   10.95  < 2e-16 ***
+batch6       1.040162   0.106036    9.81  < 2e-16 ***
+batch7       0.543692   0.109127    4.98  6.3e-07 ***
+batch8       0.495901   0.108926    4.55  5.3e-06 ***
+batch9       0.385793   0.118593    3.25   0.0011 ** 
+temp         0.010967   0.000413   26.58  < 2e-16 ***
 
 Phi coefficients (precision model with identity link):
       Estimate Std. Error z value Pr(>|z|)    
-(phi)    440.3      110.0   4.002 6.29e-05 ***
+(phi)      440        110       4  6.3e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood:  84.8 on 12 Df
-Pseudo R-squared: 0.9617
+Log-likelihood: 84.8 on 12 Df
+Pseudo R-squared: 0.962
 Number of iterations: 51 (BFGS) + 3 (Fisher scoring) 
 
 > par(mfrow = c(3, 2))
@@ -132,12 +133,12 @@ Number of iterations: 51 (BFGS) + 3 (Fisher scoring)
 > gy_logit4 <- update(gy_logit, subset = -4)
 
 > coef(gy_logit, model = "precision")
-   (phi) 
-440.2784 
+ (phi) 
+440.28 
 
 > coef(gy_logit4, model = "precision")
-   (phi) 
-577.7907 
+ (phi) 
+577.79 
 
 > data("FoodExpenditure", package = "betareg")
 
@@ -190,9 +191,9 @@ Number of iterations: 51 (BFGS) + 3 (Fisher scoring)
 > library("lmtest")
 Loading required package: zoo
 
-Attaching package: ‘zoo’
+Attaching package: 'zoo'
 
-The following objects are masked from ‘package:base’:
+The following objects are masked from 'package:base':
 
     as.Date, as.Date.numeric
 
@@ -202,7 +203,7 @@ The following objects are masked from ‘package:base’:
 	studentized Breusch-Pagan test
 
 data:  fe_lm
-BP = 5.9348, df = 2, p-value = 0.05144
+BP = 5.93, df = 2, p-value = 0.051
 
 
 > fe_beta <- betareg(I(food/income) ~ income + persons, 
@@ -214,35 +215,35 @@ Call:
 betareg(formula = I(food/income) ~ income + persons, data = FoodExpenditure)
 
 Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.7818 -0.4445  0.2024  0.6852  1.8755 
+   Min     1Q Median     3Q    Max 
+-2.782 -0.444  0.202  0.685  1.876 
 
 Coefficients (mean model with logit link):
-             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -0.622548   0.223854  -2.781 0.005418 ** 
-income      -0.012299   0.003036  -4.052 5.09e-05 ***
-persons      0.118462   0.035341   3.352 0.000802 ***
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -0.62255    0.22385   -2.78   0.0054 ** 
+income      -0.01230    0.00304   -4.05  5.1e-05 ***
+persons      0.11846    0.03534    3.35   0.0008 ***
 
 Phi coefficients (precision model with identity link):
       Estimate Std. Error z value Pr(>|z|)    
-(phi)    35.61       8.08   4.407 1.05e-05 ***
+(phi)    35.61       8.08    4.41    1e-05 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 45.33 on 4 Df
-Pseudo R-squared: 0.3878
+Log-likelihood: 45.3 on 4 Df
+Pseudo R-squared: 0.388
 Number of iterations: 28 (BFGS) + 4 (Fisher scoring) 
 
 > gy_logit2 <- betareg(yield ~ batch + temp | temp, 
 +     data = GasolineYield)
 
 > printCoefmat(summary(gy_logit2)$coefficients$precision)
-             Estimate Std. Error z value  Pr(>|z|)    
-(Intercept) 1.3640888  1.2257812  1.1128    0.2658    
-temp        0.0145703  0.0036183  4.0269 5.653e-05 ***
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  1.36409    1.22578    1.11     0.27    
+temp         0.01457    0.00362    4.03  5.7e-05 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 > lrtest(gy_logit, gy_logit2)
 Likelihood ratio test
@@ -250,10 +251,10 @@ Likelihood ratio test
 Model 1: yield ~ batch + temp
 Model 2: yield ~ batch + temp | temp
   #Df LogLik Df Chisq Pr(>Chisq)  
-1  12 84.798                      
-2  13 86.977  1 4.359    0.03681 *
+1  12   84.8                      
+2  13   87.0  1  4.36      0.037 *
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 > fe_beta2 <- betareg(I(food/income) ~ income + persons | 
 +     persons, data = FoodExpenditure)
@@ -263,51 +264,51 @@ Likelihood ratio test
 
 Model 1: I(food/income) ~ income + persons
 Model 2: I(food/income) ~ income + persons | persons
-  #Df LogLik Df  Chisq Pr(>Chisq)   
-1   4 45.334                        
-2   5 49.185  1 7.7029   0.005513 **
+  #Df LogLik Df Chisq Pr(>Chisq)   
+1   4   45.3                       
+2   5   49.2  1   7.7     0.0055 **
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 > AIC(fe_beta, fe_beta2, k = log(nrow(FoodExpenditure)))
-         df       AIC
-fe_beta   4 -76.11667
-fe_beta2  5 -80.18198
+         df     AIC
+fe_beta   4 -76.117
+fe_beta2  5 -80.182
 
 > gy_loglog <- betareg(yield ~ batch + temp, data = GasolineYield, 
 +     link = "loglog")
 
 > summary(gy_logit)$pseudo.r.squared
-[1] 0.9617312
+[1] 0.96173
 
 > summary(gy_loglog)$pseudo.r.squared
-[1] 0.9852334
+[1] 0.98523
 
 > AIC(gy_logit, gy_logit2, gy_loglog)
-          df       AIC
-gy_logit  12 -145.5951
-gy_logit2 13 -147.9541
-gy_loglog 12 -168.3101
+          df     AIC
+gy_logit  12 -145.60
+gy_logit2 13 -147.95
+gy_loglog 12 -168.31
 
 > lrtest(gy_logit, . ~ . + I(predict(gy_logit, type = "link")^2))
 Likelihood ratio test
 
 Model 1: yield ~ batch + temp
 Model 2: yield ~ batch + temp + I(predict(gy_logit, type = "link")^2)
-  #Df LogLik Df  Chisq Pr(>Chisq)    
-1  12 84.798                         
-2  13 96.001  1 22.407  2.205e-06 ***
+  #Df LogLik Df Chisq Pr(>Chisq)    
+1  12   84.8                        
+2  13   96.0  1  22.4    2.2e-06 ***
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 > lrtest(gy_loglog, . ~ . + I(predict(gy_loglog, type = "link")^2))
 Likelihood ratio test
 
 Model 1: yield ~ batch + temp
 Model 2: yield ~ batch + temp + I(predict(gy_loglog, type = "link")^2)
-  #Df LogLik Df  Chisq Pr(>Chisq)
-1  12 96.155                     
-2  13 96.989  1 1.6671     0.1966
+  #Df LogLik Df Chisq Pr(>Chisq)
+1  12   96.2                    
+2  13   97.0  1  1.67        0.2
 
 > plot(abs(residuals(gy_loglog, type = "response")), 
 +     abs(residuals(gy_logit, type = "response")))
@@ -322,8 +323,8 @@ Model 2: yield ~ batch + temp + I(predict(gy_loglog, type = "link")^2)
 
 > sapply(c("logit", "probit", "cloglog", "cauchit", 
 +     "loglog"), function(x) logLik(update(fe_beta2, link = x)))
-   logit   probit  cloglog  cauchit   loglog 
-49.18495 49.08044 49.35888 50.01105 48.86718 
+  logit  probit cloglog cauchit  loglog 
+ 49.185  49.080  49.359  50.011  48.867 
 
 > data("ReadingSkills", package = "betareg")
 
@@ -377,13 +378,13 @@ Model 2: yield ~ batch + temp + I(predict(gy_loglog, type = "link")^2)
 
 t test of coefficients:
 
-            Estimate Std. Error t value  Pr(>|t|)    
-(Intercept)  1.60107    0.22586  7.0888 1.411e-08 ***
-dyslexia    -1.20563    0.22586 -5.3380 4.011e-06 ***
-iq           0.35945    0.22548  1.5941   0.11878    
-dyslexia:iq -0.42286    0.22548 -1.8754   0.06805 .  
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    1.601      0.226    7.09  1.4e-08 ***
+dyslexia      -1.206      0.226   -5.34  4.0e-06 ***
+iq             0.359      0.225    1.59    0.119    
+dyslexia:iq   -0.423      0.225   -1.88    0.068 .  
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 > rs_beta <- betareg(accuracy ~ dyslexia * iq | dyslexia + 
@@ -393,16 +394,16 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 
 z test of coefficients:
 
-                  Estimate Std. Error z value  Pr(>|z|)    
-(Intercept)        1.12323    0.15089  7.4441 9.758e-14 ***
-dyslexia          -0.74165    0.15145 -4.8969 9.736e-07 ***
-iq                 0.48637    0.16708  2.9109 0.0036034 ** 
-dyslexia:iq       -0.58126    0.17258 -3.3681 0.0007568 ***
-(phi)_(Intercept)  3.30443    0.22650 14.5890 < 2.2e-16 ***
-(phi)_dyslexia     1.74656    0.29398  5.9410 2.832e-09 ***
-(phi)_iq           1.22907    0.45957  2.6744 0.0074862 ** 
+                  Estimate Std. Error z value Pr(>|z|)    
+(Intercept)          1.123      0.151    7.44  9.8e-14 ***
+dyslexia            -0.742      0.151   -4.90  9.7e-07 ***
+iq                   0.486      0.167    2.91  0.00360 ** 
+dyslexia:iq         -0.581      0.173   -3.37  0.00076 ***
+(phi)_(Intercept)    3.304      0.227   14.59  < 2e-16 ***
+(phi)_dyslexia       1.747      0.294    5.94  2.8e-09 ***
+(phi)_iq             1.229      0.460    2.67  0.00749 ** 
 ---
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 > suppressWarnings(RNGversion("3.5.0"))
@@ -429,4 +430,4 @@ Loading required package: sandwich
  *** Run successfully completed ***
 > proc.time()
    user  system elapsed 
-  2.657   0.680   2.361 
+  3.546   0.698   3.436 

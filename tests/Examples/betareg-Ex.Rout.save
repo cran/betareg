@@ -1,5 +1,5 @@
 
-R version 3.6.0 (2019-04-26) -- "Planting of a Tree"
+R version 3.6.2 (2019-12-12) -- "Dark and Stormy Night"
 Copyright (C) 2019 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu (64-bit)
 
@@ -131,6 +131,7 @@ detaching ‘package:lmtest’, ‘package:zoo’
 > 
 > ### ** Examples
 > 
+> ## IGNORE_RDIFF_BEGIN
 > data("GasolineYield", package = "betareg")
 > 
 > gy1 <- betareg(yield ~ gravity + pressure + temp10 + temp, data = GasolineYield)
@@ -257,6 +258,7 @@ Type of estimator: ML (maximum likelihood)
 Log-likelihood: 86.62 on 12 Df
 Pseudo R-squared: 0.9662
 Number of iterations: 51 (BFGS) + 4 (Fisher scoring) 
+> ## IGNORE_RDIFF_END
 > 
 > 
 > 
@@ -1029,6 +1031,31 @@ Number of iterations: 51 (BFGS) + 3 (Fisher scoring)
   (Intercept)       iq (phi)_(Intercept) (phi)_iq
 2      1.6565  1.46571             1.273    2.048
 3      0.3809 -0.08623             4.808    0.826
+> if(require("strucchange")) sctest(bt)
+Loading required package: strucchange
+Loading required package: zoo
+
+Attaching package: ‘zoo’
+
+The following objects are masked from ‘package:base’:
+
+    as.Date, as.Date.numeric
+
+Loading required package: sandwich
+$`1`
+           dyslexia     x1     x2     x3
+statistic 2.269e+01 8.5251 5.5699 1.0568
+p.value   5.848e-04 0.9095 0.9987 0.9999
+
+$`2`
+          dyslexia     x1     x2     x3
+statistic        0 6.4116 4.5170 4.2308
+p.value         NA 0.8412 0.9752 0.7566
+
+$`3`
+NULL
+
+> ## IGNORE_RDIFF_BEGIN
 > summary(bt, node = 2)
 
 Call:
@@ -1053,7 +1080,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 39.4 on 4 Df
 Pseudo R-squared: 0.149
-Number of iterations: 17 (BFGS) + 1 (Fisher scoring) 
+Number of iterations: 17 (BFGS) + 2 (Fisher scoring) 
 > summary(bt, node = 3)
 
 Call:
@@ -1078,31 +1105,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 27.3 on 4 Df
 Pseudo R-squared: 0.0391
-Number of iterations: 16 (BFGS) + 2 (Fisher scoring) 
-> library("strucchange")
-Loading required package: zoo
-
-Attaching package: ‘zoo’
-
-The following objects are masked from ‘package:base’:
-
-    as.Date, as.Date.numeric
-
-Loading required package: sandwich
-> sctest(bt)
-$`1`
-           dyslexia     x1     x2     x3
-statistic 2.269e+01 8.5251 5.5699 1.0568
-p.value   5.848e-04 0.9095 0.9987 0.9999
-
-$`2`
-          dyslexia     x1     x2     x3
-statistic        0 6.4116 4.5170 4.2308
-p.value         NA 0.8412 0.9752 0.7566
-
-$`3`
-NULL
-
+Number of iterations: 16 (BFGS) + 1 (Fisher scoring) 
+> ## IGNORE_RDIFF_END
 > 
 > ## add a numerical variable with relevant information for splitting
 > ReadingSkills$x4 <- rnorm(nrow(ReadingSkills), c(-1.5, 1.5)[ReadingSkills$dyslexia])
@@ -1116,7 +1120,7 @@ NULL
   (Intercept)     iq (phi)_(Intercept) (phi)_iq
 2       1.460 1.7332            0.6222   2.8365
 3       1.127 0.3416            1.4104  -0.3735
-> sctest(bt2)
+> if(require("strucchange")) sctest(bt2)
 $`1`
               x1     x2     x3       x4
 statistic 8.5251 5.5699 1.0568 19.94405
@@ -1130,6 +1134,7 @@ $`3`
 statistic 6.4811 6.6100 1.9526 17.63629
 p.value   0.9678 0.9625 0.9957  0.05837
 
+> ## IGNORE_RDIFF_BEGIN
 > summary(bt2, node = 2)
 
 Call:
@@ -1180,6 +1185,7 @@ Type of estimator: ML (maximum likelihood)
 Log-likelihood: 15.7 on 4 Df
 Pseudo R-squared: 0.161
 Number of iterations: 16 (BFGS) + 1 (Fisher scoring) 
+> ## IGNORE_RDIFF_END
 > 
 > 
 > 
@@ -1489,7 +1495,7 @@ Number of iterations: 33 (BFGS) + 28 (Fisher scoring)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.131 1.586 10.622 0 0 
+Time elapsed:  10.794 1.584 10.458 0 0 
 > grDevices::dev.off()
 null device 
           1 

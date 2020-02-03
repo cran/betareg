@@ -67,6 +67,7 @@ Prater, N.H. (1956).
 \seealso{\code{\link{betareg}}}
 
 \examples{
+## IGNORE_RDIFF_BEGIN
 data("GasolineYield", package = "betareg")
 
 gy1 <- betareg(yield ~ gravity + pressure + temp10 + temp, data = GasolineYield)
@@ -89,6 +90,7 @@ par(mfrow = c(1, 1))
 gy2a <- update(gy2, subset = -4)
 gy2a
 summary(gy2a)
+## IGNORE_RDIFF_END
 }
 
 \keyword{datasets}

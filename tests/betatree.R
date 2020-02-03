@@ -18,7 +18,8 @@ rs_tree <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
 
 ## methods
 print(rs_tree)
-summary(rs_tree)
+## IGNORE_RDIFF_BEGIN
+summary(rs_tree) ## possibly small deviations in number of BFGS/Fisher iterations
+## IGNORE_RDIFF_END
 coef(rs_tree)
-library("strucchange")
-sctest(rs_tree)
+if(require("strucchange")) sctest(rs_tree)

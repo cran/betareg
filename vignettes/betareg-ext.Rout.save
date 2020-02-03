@@ -1,6 +1,6 @@
 
 > options(width = 70, prompt = "R> ", continue = "+  ", 
-+     useFancyQuotes = FALSE)
++     useFancyQuotes = FALSE, digits = 5)
 
 > library("betareg")
 
@@ -154,9 +154,9 @@ Log-likelihood &  & $66.734$\phantom{)} & $66.334$\phantom{)} & $66.134$\phantom
 > plot(rs_tree)
 
 > coef(rs_tree)
-  (Intercept)          iq (phi)_(Intercept)  (phi)_iq
-2   1.6565251  1.46570750          1.272597 2.0478577
-3   0.3809322 -0.08622808          4.807662 0.8260329
+  (Intercept)        iq (phi)_(Intercept) (phi)_iq
+2     1.65653  1.465708            1.2726  2.04786
+3     0.38093 -0.086228            4.8077  0.82603
 
 > rs_tree
 Beta regression tree
@@ -168,19 +168,19 @@ Fitted party:
 [1] root
 |   [2] dyslexia in no: n = 25
 |             (Intercept)                iq (phi)_(Intercept) 
-|                1.656525          1.465708          1.272597 
+|                  1.6565            1.4657            1.2726 
 |                (phi)_iq 
-|                2.047858 
+|                  2.0479 
 |   [3] dyslexia in yes: n = 19
 |             (Intercept)                iq (phi)_(Intercept) 
-|              0.38093218       -0.08622808        4.80766205 
+|                0.380932         -0.086228          4.807662 
 |                (phi)_iq 
-|              0.82603290 
+|                0.826033 
 
 Number of inner nodes:    1
 Number of terminal nodes: 2
 Number of parameters per node: 4
-Objective function (negative log-likelihood): 66.73409
+Objective function (negative log-likelihood): 66.734
 
 > library("strucchange")
 Loading required package: zoo
@@ -195,14 +195,14 @@ Loading required package: sandwich
 
 > sctest(rs_tree)
 $`1`
-              dyslexia        x1       x2        x3
-statistic 2.268741e+01 8.5250963 5.569861 3.6273300
-p.value   5.847856e-04 0.9094631 0.998710 0.9142006
+            dyslexia      x1      x2     x3
+statistic 2.2687e+01 8.52510 5.56986 3.6273
+p.value   5.8479e-04 0.90946 0.99871 0.9142
 
 $`2`
-          dyslexia        x1        x2        x3
-statistic        0 6.4116323 4.5170190 8.2019125
-p.value         NA 0.8412097 0.9751644 0.2325712
+          dyslexia      x1      x2      x3
+statistic        0 6.41163 4.51702 8.20191
+p.value         NA 0.84121 0.97516 0.23257
 
 $`3`
 NULL
@@ -229,30 +229,30 @@ convergence after 20 iterations
 > summary(rs_mix)
 $Comp.1
 $Comp.1$mean
-             Estimate Std. Error z value  Pr(>|z|)    
-(Intercept)  0.502518   0.082481  6.0925 1.112e-09 ***
-iq          -0.048411   0.112951 -0.4286    0.6682    
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   0.5025     0.0825    6.09  1.1e-09 ***
+iq           -0.0484     0.1130   -0.43     0.67    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 $Comp.1$precision
-            Estimate Std. Error z value  Pr(>|z|)    
-(Intercept)  4.25147    0.74761  5.6868 1.295e-08 ***
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    4.251      0.748    5.69  1.3e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 
 $Comp.2
 $Comp.2$mean
-            Estimate Std. Error z value  Pr(>|z|)    
-(Intercept)  1.40347    0.26337  5.3288 9.886e-08 ***
-iq           0.82503    0.21629  3.8144 0.0001365 ***
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    1.403      0.263    5.33  9.9e-08 ***
+iq             0.825      0.216    3.81  0.00014 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 $Comp.2$precision
-            Estimate Std. Error z value  Pr(>|z|)    
-(Intercept)  2.68533    0.45435  5.9103 3.414e-09 ***
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    2.685      0.454    5.91  3.4e-09 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -346,11 +346,11 @@ $\beta_{11}$ & $  0.01097$\phantom{)} & (0.00041) & $  0.01094$\phantom{)} & (0.
 $\phi$ & $440.27839$\phantom{)} & (110.02562) & $261.20610$\phantom{)} & (65.25866) & $261.03777$\phantom{)} & (65.21640) \\ \hline
 
 > sapply(gy, coef, model = "precision")
-   (phi)    (phi)    (phi) 
-440.2784 261.2061 261.0378 
+ (phi)  (phi)  (phi) 
+440.28 261.21 261.04 
 
 > sapply(gy, logLik)
-[1] 84.79756 82.94707 82.94499
+[1] 84.798 82.947 82.945
 
 > data("GasolineYield", package = "betareg")
 
@@ -358,7 +358,7 @@ $\phi$ & $440.27839$\phantom{)} & (110.02562) & $261.20610$\phantom{)} & (65.258
 +     batch + temp | 1, data = GasolineYield, type = x))
 
 > sapply(gy2, logLik)
-[1] 84.79756 83.79707 83.26777
+[1] 84.798 83.797 83.268
 
 > cf <- matrix(paste("$", format(round(sapply(gy2, coef), 
 +     digits = 5), nsmall = 5), "$\\phantom{)}", sep = ""), ncol = 3)
@@ -391,4 +391,4 @@ $\log\phi$ & $ 6.08741$\phantom{)} & (0.24990) & $ 5.71191$\phantom{)} & (0.2498
  *** Run successfully completed ***
 > proc.time()
    user  system elapsed 
-  5.791   0.713   5.613 
+ 15.109   0.788  15.617 
