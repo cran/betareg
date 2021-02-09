@@ -37,7 +37,7 @@
 \references{
 Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
-  \url{http://www.jstatsoft.org/v34/i02/}.
+  \doi{10.18637/jss.v034.i02}
 
 Espinheira, P.L., Ferrari, S.L.P., and Cribari-Neto, F. (2008).
   On Beta Regression Residuals.

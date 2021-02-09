@@ -1,43 +1,32 @@
-citHeader("To cite betareg in publications use:")
-
-citEntry(entry = "Article",
-  title        = "Beta Regression in {R}",
-  author       = personList(as.person("Francisco Cribari-Neto"),
-                   as.person("Achim Zeileis")),
-  journal      = "Journal of Statistical Software",
-  year         = "2010",
-  volume       = "34",
-  number       = "2",
-  pages        = "1--24",
-  url          = "http://www.jstatsoft.org/v34/i02/",
-
-  textVersion  =
-  paste("Francisco Cribari-Neto, Achim Zeileis (2010).",
-        "Beta Regression in R.",
-        "Journal of Statistical Software 34(2), 1-24.",
-        "URL http://www.jstatsoft.org/v34/i02/."),
-
-  header       = "If you use betareg(), please cite:"
+bibentry("Article",
+         title       = "Beta Regression in {R}",
+         author      = c(person(given = "Francisco", family = "Cribari-Neto"),
+	                 person(given = "Achim", family = "Zeileis",
+                           email = "Achim.Zeileis@R-project.org",
+			   comment = c(ORCID = "0000-0003-0918-3766"))),
+         journal     = "Journal of Statistical Software",
+         year        = "2010",
+         volume      = "34",
+         number      = "2",
+         pages       = "1--24",
+         doi         = "10.18637/jss.v034.i02",
+  
+	 header     = "To cite betareg in publications use:"
 )
 
-citEntry(entry = "Article",
-  title        = "Extended Beta Regression in {R}: Shaken, Stirred, Mixed, and Partitioned",
-  author       = personList(as.person("Bettina Gr\\\"un"),
-                   as.person("Ioannis Kosmidis"),
-                   as.person("Achim Zeileis")),
-  journal      = "Journal of Statistical Software",
-  year         = "2012",
-  volume       = "48",
-  number       = "11",
-  pages        = "1--25",
-  url          = "http://www.jstatsoft.org/v48/i11/",
-
-  textVersion  =
-  paste("Bettina Gruen, Ioannis Kosmidis, Achim Zeileis (2012).",
-        "Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.",
-        "Journal of Statistical Software, 48(11), 1-25.",
-        "URL http://www.jstatsoft.org/v48/i11/."),
-	
-  header       = "If you use betatree(), betamix(), or bias correction/reduction in betareg(), please cite:"
+bibentry("Article",
+         title       = "Extended Beta Regression in {R}: Shaken, Stirred, Mixed, and Partitioned",
+         author      = c(person(given = "Bettina", family = "Gr\\\"un"),
+                         person(given = "Ioannis", family = "Kosmidis"),
+	                 person(given = "Achim", family = "Zeileis",
+                           email = "Achim.Zeileis@R-project.org",
+			   comment = c(ORCID = "0000-0003-0918-3766"))),
+         journal     = "Journal of Statistical Software",
+         year        = "2012",
+         volume      = "48",
+         number      = "11",
+         pages       = "1--25",
+         doi         = "10.18637/jss.v048.i11",
+	 
+         header      = "If you use betatree(), betamix(), or bias correction/reduction in betareg(), please cite:"
 )
-

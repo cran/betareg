@@ -172,7 +172,7 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
 \references{
 Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
-  \url{http://www.jstatsoft.org/v34/i02/}.
+  \doi{10.18637/jss.v034.i02}
 
 Ferrari, S.L.P., and Cribari-Neto, F. (2004).
   Beta Regression for Modeling Rates and Proportions.
@@ -181,7 +181,7 @@ Ferrari, S.L.P., and Cribari-Neto, F. (2004).
 Grün, B., Kosmidis, I., and Zeileis, A. (2012).
   Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
   \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
-  \url{http://www.jstatsoft.org/v48/i11/}.
+  \doi{10.18637/jss.v048.i11}
 
 Kosmidis, I., and Firth, D. (2010).
   A Generic Algorithm for Reducing Bias in Parametric Estimation.

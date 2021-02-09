@@ -63,12 +63,12 @@ betatree(formula, partition,
 \references{
 Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
-  \url{http://www.jstatsoft.org/v34/i02/}.
+  \doi{10.18637/jss.v034.i02}
 
 Grün, B., Kosmidis, I., and Zeileis, A. (2012).
   Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
   \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
-  \url{http://www.jstatsoft.org/v48/i11/}.
+  \doi{10.18637/jss.v048.i11}
 
 Zeileis, A., Hothorn, T., and Hornik K. (2008).
   Model-Based Recursive Partitioning.

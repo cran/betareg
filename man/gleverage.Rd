@@ -35,7 +35,7 @@ Ferrari, S.L.P., and Cribari-Neto, F. (2004).
 Rocha, A.V., and Simas,  A.B. (2011).
   Influence Diagnostics in a General Class of Beta Regression Models.
   \emph{Test}, \bold{20}(1), 95--119.
-  \url{http://dx.doi.org/10.1007/s11749-010-0189-z}
+  \doi{10.1007/s11749-010-0189-z}
 
 Wei, B.-C., and Hu, Y.-Q., and Fung, W.-K. (1998).
   Generalized Leverage and Its Applications.

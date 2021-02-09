@@ -49,7 +49,7 @@ Atkinson, A.C. (1985).
 
 Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
-  \url{http://www.jstatsoft.org/v34/i02/}.
+  \doi{10.18637/jss.v034.i02}
 
 Daniel, C., and Wood, F.S. (1971).
   \emph{Fitting Equations to Data}.
