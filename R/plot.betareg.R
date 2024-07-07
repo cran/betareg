@@ -4,23 +4,33 @@ plot.betareg <- function(x, which = 1:4,
     "Half-normal plot of residuals", "Predicted vs observed values"),
     sub.caption = paste(deparse(x$call), collapse = "\n"), main = "", 
     ask = prod(par("mfcol")) < length(which) && dev.interactive(), 
-    ..., type = "sweighted2", nsim = 100, level = 0.9)
+    ..., type = "quantile", nsim = 100, level = 0.9)
 {
   if(!is.numeric(which) || any(which < 1) || any(which > 6)) 
     stop("`which' must be in 1:6")
-    
-  types <- c("pearson", "deviance", "response", "weighted", "sweighted", "sweighted2")
-  Types <- c("Pearson residuals", "Deviance residuals", "Raw response residuals",
+  if(is.null(x$dist)) x$dist <- "beta"
+  if(x$dist != "beta" && any(2:3 %in% which)) {
+    which <- setdiff(which, 2:3)
+    warning("which = 2 and 3 are not yet available for extended-support beta regression")
+  }
+
+  ## unify list component names
+  if(x$dist == "beta") {
+    for(n in intersect(names(x), fix_names_mu_phi)) names(x[[n]])[1L:2L] <- c("mu", "phi")
+  }
+
+  types <- c("quantile", "pearson", "deviance", "response", "weighted", "sweighted", "sweighted2")
+  Types <- c("Quantile residuals", "Pearson residuals", "Deviance residuals", "Raw response residuals",
     "Weighted residuals", "Standardized weighted residuals", "Standardized weighted residuals 2")
+  if(x$dist != "beta") Types[1L] <- "Randomized quantile residuals"
   type <- match.arg(type, types)
   Type <- Types[type == types]
 
   res <- residuals(x, type = type)
   n <- length(res)
-  k <- length(x$coefficients$mean)
-  show <- rep(FALSE, 6)
+  show <- logical(6L)
   show[which] <- TRUE
-  Main <- rep("", 6)
+  Main <- character(6L)
   Main[which] <- rep(main, length.out = sum(show))
   one.fig <- prod(par("mfcol")) == 1
   if(ask) {
@@ -75,36 +85,34 @@ plot.betareg <- function(x, which = 1:4,
   invisible()
 }
 
-halfnormal.betareg <- function(model, nsim = 100, level = 0.90, type = "sweighted2")
+halfnormal.betareg <- function(model, nsim = 100, level = 0.90, type = "quantile")
 {
   ## extract response y and regressors X
   y <- if(is.null(model$y)) model.response(model.frame(model)) else model$y
-  x <- if(is.null(model$x)) model.matrix(model, model = "mean") else model$x$mean
-  z <- if(is.null(model$x)) model.matrix(model, model = "precision") else model$x$precision
-  if(is.null(model$offset$mean)) model$offset$mean <- rep(0, NROW(x))
-  if(is.null(model$offset$precision)) model$offset$precision <- rep(0, NROW(z))
+  x <- if(is.null(model$x)) model.matrix(model, model = "mean") else model$x$mu
+  z <- if(is.null(model$x)) model.matrix(model, model = "precision") else model$x$phi
+  if(is.null(model$offset$mu)) model$offset$mu <- rep(0, NROW(x))
+  if(is.null(model$offset$phi)) model$offset$phi <- rep(0, NROW(z))
+  res <- residuals(model, type = type)
   wts <- weights(model)
 
   n <- NROW(x)
   alpha <- (1 - level)/2
-  mu <- fitted(model)
-  phi <- predict(model, type = "precision")
-  res <- residuals(model, type = type)
 
   e <- matrix(0, n, nsim)
   e1 <- numeric(n)
   e2 <- numeric(n)
   
   for(i in 1:nsim) {
-    ysim <- rbeta(n, mu * phi, (1 - mu) * phi)
+    ysim <- simulate(model, nsim = 1L)[[1L]]
     ctrl <- model$control
     ctrl$hessian <- FALSE
     ctrl$start <- model$coefficients
     fit <- suppressWarnings(betareg.fit(x, ysim, z, weights = wts, offset = model$offset,
-      link = model$link$mean$name, link.phi = model$link$precision$name,
+      link = model$link$mu$name, link.phi = model$link$phi$name,
         control = ctrl))
     fit$y <- ysim
-    fit$x <- list(mean = x, precision = z)
+    fit$x <- list(mu = x, phi = z)    
     class(fit) <- "betareg"
     e[,i] <- sort(abs(residuals(fit, type = type)))
   }

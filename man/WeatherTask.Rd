@@ -8,7 +8,7 @@
   In this study participants were asked to judge how likely Sunday is to
   be the hottest day of the week.
 }
-\usage{data(WeatherTask)}
+\usage{data("WeatherTask", package = "betareg")}
 \format{
   A data frame with 345 observations on the following 3 variables.
   \describe{

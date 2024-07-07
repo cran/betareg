@@ -1,7 +1,7 @@
 
-R version 3.6.2 (2019-12-12) -- "Dark and Stormy Night"
-Copyright (C) 2019 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R version 4.4.1 (2024-06-14) -- "Race for Your Life"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -25,6 +25,149 @@ Type 'q()' to quit R.
 > base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
 > base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
 > cleanEx()
+> nameEx("Beta01")
+> ### * Beta01
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Beta01
+> ### Title: Create a Zero- and/or One-Inflated Beta Distribution
+> ### Aliases: Beta01 mean.Beta01 variance.Beta01 skewness.Beta01
+> ###   kurtosis.Beta01 pdf.Beta01 log_pdf.Beta01 cdf.Beta01 quantile.Beta01
+> ###   random.Beta01 support.Beta01 is_discrete.Beta01 is_continuous.Beta01
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+>  if(!requireNamespace("distributions3")) {
++   if(interactive() || is.na(Sys.getenv("_R_CHECK_PACKAGE_NAME_", NA))) {
++     stop("not all packages required for the example are installed")
++   } else q() }
+Loading required namespace: distributions3
+> ## End(Don't show)
+> ## package and random seed
+> library("distributions3")
+
+Attaching package: ‘distributions3’
+
+The following object is masked from ‘package:stats’:
+
+    Gamma
+
+The following object is masked from ‘package:grDevices’:
+
+    pdf
+
+> set.seed(6020)
+> 
+> ## three beta distributions
+> X <- Beta01(
++   mu  = c(0.25, 0.50, 0.75),
++   phi = c(1, 1, 2),
++   p0 = c(0.1, 0, 0),
++   p1 = c(0, 0, 0.3)
++ )
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:distributions3’
+
+> nameEx("Beta4")
+> ### * Beta4
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: Beta4
+> ### Title: Create a 4-Parameter Beta Distribution
+> ### Aliases: Beta4 mean.Beta4 variance.Beta4 skewness.Beta4 kurtosis.Beta4
+> ###   pdf.Beta4 log_pdf.Beta4 cdf.Beta4 quantile.Beta4 random.Beta4
+> ###   support.Beta4 is_discrete.Beta4 is_continuous.Beta4
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+>  if(!requireNamespace("distributions3")) {
++   if(interactive() || is.na(Sys.getenv("_R_CHECK_PACKAGE_NAME_", NA))) {
++     stop("not all packages required for the example are installed")
++   } else q() }
+> ## End(Don't show)
+> ## package and random seed
+> library("distributions3")
+
+Attaching package: ‘distributions3’
+
+The following object is masked from ‘package:stats’:
+
+    Gamma
+
+The following object is masked from ‘package:grDevices’:
+
+    pdf
+
+> set.seed(6020)
+> 
+> ## three beta distributions
+> X <- Beta4(
++   mu  = c(0.25, 0.50, 0.75),
++   phi = c(1, 1, 2),
++   theta1 = c(0, -0.1, -0.1),
++   theta2 = c(1, 1.1, 1.5)
++ )
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:distributions3’
+
+> nameEx("BetaR")
+> ### * BetaR
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: BetaR
+> ### Title: Create a Beta Regression Distribution
+> ### Aliases: BetaR mean.BetaR variance.BetaR skewness.BetaR kurtosis.BetaR
+> ###   pdf.BetaR log_pdf.BetaR cdf.BetaR quantile.BetaR random.BetaR
+> ###   support.BetaR is_discrete.BetaR is_continuous.BetaR
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+>  if(!requireNamespace("distributions3")) {
++   if(interactive() || is.na(Sys.getenv("_R_CHECK_PACKAGE_NAME_", NA))) {
++     stop("not all packages required for the example are installed")
++   } else q() }
+> ## End(Don't show)
+> ## package and random seed
+> library("distributions3")
+
+Attaching package: ‘distributions3’
+
+The following object is masked from ‘package:stats’:
+
+    Gamma
+
+The following object is masked from ‘package:grDevices’:
+
+    pdf
+
+> set.seed(6020)
+> 
+> ## three beta distributions
+> X <- BetaR(
++   mu  = c(0.25, 0.50, 0.75),
++   phi = c(1, 1, 2)
++ )
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:distributions3’
+
 > nameEx("CarTask")
 > ### * CarTask
 > 
@@ -92,9 +235,9 @@ BP = 5.9348, df = 2, p-value = 0.05144
 Call:
 betareg(formula = I(food/income) ~ income + persons, data = FoodExpenditure)
 
-Standardized weighted residuals 2:
+Quantile residuals:
     Min      1Q  Median      3Q     Max 
--2.7818 -0.4445  0.2024  0.6852  1.8755 
+-2.5328 -0.4599  0.1698  0.6416  1.7733 
 
 Coefficients (mean model with logit link):
              Estimate Std. Error z value Pr(>|z|)    
@@ -140,9 +283,9 @@ detaching ‘package:lmtest’, ‘package:zoo’
 Call:
 betareg(formula = yield ~ gravity + pressure + temp10 + temp, data = GasolineYield)
 
-Standardized weighted residuals 2:
+Quantile residuals:
     Min      1Q  Median      3Q     Max 
--2.1189 -0.6985 -0.0088  0.6306  2.1572 
+-1.9010 -0.6829 -0.0385  0.5531  2.1314 
 
 Coefficients (mean model with logit link):
               Estimate Std. Error z value Pr(>|z|)    
@@ -171,9 +314,9 @@ Number of iterations: 147 (BFGS) + 4 (Fisher scoring)
 Call:
 betareg(formula = yield ~ batch + temp, data = GasolineYield)
 
-Standardized weighted residuals 2:
+Quantile residuals:
     Min      1Q  Median      3Q     Max 
--2.8750 -0.8149  0.1601  0.8384  2.0483 
+-2.1396 -0.5698  0.1202  0.7040  1.7506 
 
 Coefficients (mean model with logit link):
               Estimate Std. Error z value Pr(>|z|)    
@@ -230,9 +373,9 @@ Phi coefficients (precision model with identity link):
 Call:
 betareg(formula = yield ~ batch + temp, data = GasolineYield, subset = -4)
 
-Standardized weighted residuals 2:
+Quantile residuals:
     Min      1Q  Median      3Q     Max 
--2.3747 -1.0482  0.1391  0.8703  2.4165 
+-2.0153 -0.8176  0.0897  0.6948  2.0746 
 
 Coefficients (mean model with logit link):
               Estimate Std. Error z value Pr(>|z|)    
@@ -290,6 +433,58 @@ Loading required package: lattice
 
 detaching ‘package:flexmix’, ‘package:lattice’
 
+> nameEx("LossAversion")
+> ### * LossAversion
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: LossAversion
+> ### Title: (No) Myopic Loss Aversion in Adolescents
+> ### Aliases: LossAversion
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> options(digits = 4)
+> 
+> ## data and add ad-hoc scaling (a la Smithson & Verkuilen)
+> data("LossAversion", package = "betareg")
+> LossAversion <- transform(LossAversion,
++   invests = (invest * (nrow(LossAversion) - 1) + 0.5)/nrow(LossAversion))
+> 
+> 
+> ## models: normal (with constant variance), beta, extended-support beta mixture
+> la_n <- lm(invest ~ grade * (arrangement + age) + male, data = LossAversion)
+> summary(la_n)
+
+Call:
+lm(formula = invest ~ grade * (arrangement + age) + male, data = LossAversion)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.7735 -0.1967  0.0024  0.1916  0.5724 
+
+Coefficients:
+                           Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                  0.2844     0.1575    1.81  0.07136 .  
+grade10-12                  -0.8437     0.2815   -3.00  0.00284 ** 
+arrangementteam              0.0628     0.0302    2.08  0.03788 *  
+age                          0.0115     0.0124    0.93  0.35041    
+maleyes                      0.1035     0.0232    4.46  9.9e-06 ***
+grade10-12:arrangementteam   0.1507     0.0455    3.32  0.00097 ***
+grade10-12:age               0.0458     0.0185    2.47  0.01380 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.247 on 563 degrees of freedom
+Multiple R-squared:  0.158,	Adjusted R-squared:  0.149 
+F-statistic: 17.7 on 6 and 563 DF,  p-value: <2e-16
+
+> 
+> 
+> 
+> 
+> cleanEx()
 > nameEx("MockJurors")
 > ### * MockJurors
 > 
@@ -325,29 +520,29 @@ Call:
 betareg(formula = confidence ~ verdict * conflict | verdict * conflict, 
     data = MockJurors, hessian = TRUE)
 
-Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.4668 -0.6877 -0.1770  0.4669  3.4217 
+Quantile residuals:
+   Min     1Q Median     3Q    Max 
+-2.476 -0.665 -0.099  0.600  2.644 
 
 Coefficients (mean model with logit link):
                  Estimate Std. Error z value Pr(>|z|)    
-(Intercept)      0.912404   0.103979   8.775  < 2e-16 ***
-verdict          0.005035   0.103979   0.048  0.96138    
-conflict         0.168573   0.103979   1.621  0.10497    
-verdict:conflict 0.280010   0.103979   2.693  0.00708 ** 
+(Intercept)       0.91240    0.10398    8.77   <2e-16 ***
+verdict           0.00504    0.10398    0.05   0.9614    
+conflict          0.16857    0.10398    1.62   0.1050    
+verdict:conflict  0.28001    0.10398    2.69   0.0071 ** 
 
 Phi coefficients (precision model with log link):
                  Estimate Std. Error z value Pr(>|z|)    
-(Intercept)        1.1733     0.1278   9.180  < 2e-16 ***
-verdict           -0.3299     0.1278  -2.581  0.00985 ** 
-conflict           0.2196     0.1278   1.718  0.08576 .  
-verdict:conflict   0.3163     0.1278   2.475  0.01334 *  
+(Intercept)         1.173      0.128    9.18   <2e-16 ***
+verdict            -0.330      0.128   -2.58   0.0099 ** 
+conflict            0.220      0.128    1.72   0.0858 .  
+verdict:conflict    0.316      0.128    2.47   0.0133 *  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 40.12 on 8 Df
-Pseudo R-squared: 0.03885
+Log-likelihood: 40.1 on 8 Df
+Pseudo R-squared: 0.0389
 Number of iterations in BFGS optimization: 19 
 > 
 > ## model selection for beta regression: null model, fixed dispersion model (p. 61)
@@ -358,22 +553,22 @@ Likelihood ratio test
 
 Model 1: confidence ~ 1 | 1
 Model 2: confidence ~ verdict * conflict | 1
-  #Df LogLik Df  Chisq Pr(>Chisq)
-1   2 28.226                     
-2   5 30.580  3 4.7086     0.1944
+  #Df LogLik Df Chisq Pr(>Chisq)
+1   2   28.2                    
+2   5   30.6  3  4.71       0.19
 > lrtest(mj_null, mj_vd)
 Likelihood ratio test
 
 Model 1: confidence ~ 1 | 1
 Model 2: confidence ~ verdict * conflict | verdict * conflict
-  #Df LogLik Df  Chisq Pr(>Chisq)    
-1   2 28.226                         
-2   8 40.117  6 23.782  0.0005728 ***
+  #Df LogLik Df Chisq Pr(>Chisq)    
+1   2   28.2                        
+2   8   40.1  6  23.8    0.00057 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 > ## McFadden's pseudo-R-squared
 > 1 - as.vector(logLik(mj_null)/logLik(mj_vd))
-[1] 0.296407
+[1] 0.2964
 > 
 > ## visualization
 > if(require("lattice")) {
@@ -402,6 +597,7 @@ detaching ‘package:lattice’, ‘package:lmtest’, ‘package:zoo’
 > 
 > ### ** Examples
 > 
+> options(digits = 4)
 > data("ReadingSkills", package = "betareg")
 > 
 > ## Smithson & Verkuilen (2006, Table 5)
@@ -414,21 +610,21 @@ Call:
 lm(formula = qlogis(accuracy) ~ dyslexia * iq, data = ReadingSkills)
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--2.66405 -0.37966  0.03687  0.40887  2.50345 
+    Min      1Q  Median      3Q     Max 
+-2.6640 -0.3797  0.0369  0.4089  2.5035 
 
 Coefficients:
             Estimate Std. Error t value Pr(>|t|)    
-(Intercept)   1.6011     0.2259   7.089 1.41e-08 ***
-dyslexia     -1.2056     0.2259  -5.338 4.01e-06 ***
-iq            0.3594     0.2255   1.594   0.1188    
-dyslexia:iq  -0.4229     0.2255  -1.875   0.0681 .  
+(Intercept)    1.601      0.226    7.09  1.4e-08 ***
+dyslexia      -1.206      0.226   -5.34  4.0e-06 ***
+iq             0.359      0.225    1.59    0.119    
+dyslexia:iq   -0.423      0.225   -1.88    0.068 .  
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 Residual standard error: 1.2 on 40 degrees of freedom
-Multiple R-squared:  0.6151,	Adjusted R-squared:  0.5862 
-F-statistic: 21.31 on 3 and 40 DF,  p-value: 2.083e-08
+Multiple R-squared:  0.615,	Adjusted R-squared:  0.586 
+F-statistic: 21.3 on 3 and 40 DF,  p-value: 2.08e-08
 
 > ## Beta regression (with numerical rather than analytic standard errors)
 > ## (Note: Smithson & Verkuilen erroneously compute one-sided p-values)
@@ -440,40 +636,92 @@ Call:
 betareg(formula = accuracy ~ dyslexia * iq | dyslexia + iq, data = ReadingSkills, 
     hessian = TRUE)
 
-Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.3900 -0.6416  0.1572  0.8524  1.6446 
+Quantile residuals:
+   Min     1Q Median     3Q    Max 
+-2.362 -0.587  0.303  0.942  1.587 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)   1.1232     0.1509   7.444 9.76e-14 ***
-dyslexia     -0.7416     0.1515  -4.897 9.74e-07 ***
-iq            0.4864     0.1671   2.911 0.003603 ** 
-dyslexia:iq  -0.5813     0.1726  -3.368 0.000757 ***
+(Intercept)    1.123      0.151    7.44  9.8e-14 ***
+dyslexia      -0.742      0.151   -4.90  9.7e-07 ***
+iq             0.486      0.167    2.91  0.00360 ** 
+dyslexia:iq   -0.581      0.173   -3.37  0.00076 ***
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)   3.3044     0.2265  14.589  < 2e-16 ***
-dyslexia      1.7466     0.2940   5.941 2.83e-09 ***
-iq            1.2291     0.4596   2.674  0.00749 ** 
+(Intercept)    3.304      0.227   14.59  < 2e-16 ***
+dyslexia       1.747      0.294    5.94  2.8e-09 ***
+iq             1.229      0.460    2.67   0.0075 ** 
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood:  65.9 on 7 Df
-Pseudo R-squared: 0.5756
+Log-likelihood: 65.9 on 7 Df
+Pseudo R-squared: 0.576
 Number of iterations in BFGS optimization: 25 
 > 
-> ## visualization
-> plot(accuracy ~ iq, data = ReadingSkills, col = as.numeric(dyslexia), pch = 19)
-> nd <- data.frame(dyslexia = "no", iq = -30:30/10)
-> lines(nd$iq, predict(rs_beta, nd))
-> lines(nd$iq, plogis(predict(rs_ols, nd)), lty = 2)
-> nd <- data.frame(dyslexia = "yes", iq = -30:30/10)
-> lines(nd$iq, predict(rs_beta, nd), col = 2)
-> lines(nd$iq, plogis(predict(rs_ols, nd)), col = 2, lty = 2)
+> ## Extended-support beta mixture regression (Kosmidis & Zeileis 2024)
+> rs_xbx <- betareg(accuracy1 ~ dyslexia * iq | dyslexia + iq, data = ReadingSkills)
+Loading required namespace: numDeriv
+> summary(rs_xbx)
+
+Call:
+betareg(formula = accuracy1 ~ dyslexia * iq | dyslexia + iq, data = ReadingSkills)
+
+Randomized quantile residuals:
+   Min     1Q Median     3Q    Max 
+-2.418 -0.598  0.010  0.805  1.721 
+
+Coefficients (mu model with logit link):
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    0.903      0.217    4.17  3.1e-05 ***
+dyslexia      -0.606      0.182   -3.34  0.00084 ***
+iq             0.329      0.188    1.75  0.07989 .  
+dyslexia:iq   -0.388      0.199   -1.94  0.05205 .  
+
+Phi coefficients (phi model with log link):
+            Estimate Std. Error z value Pr(>|z|)    
+(Intercept)    3.499      0.530    6.60  4.1e-11 ***
+dyslexia       1.736      0.449    3.86  0.00011 ***
+iq             0.697      0.571    1.22  0.22243    
+
+Exceedence parameter (extended-support xbetax model):
+        Estimate Std. Error z value Pr(>|z|)  
+Log(nu)   -1.790      0.854    -2.1    0.036 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+
+Exceedence parameter nu: 0.167
+Type of estimator: ML (maximum likelihood)
+Log-likelihood: 18.5 on 8 Df
+Number of iterations in BFGS optimization: 29 
 > 
-> ## see demo("SmithsonVerkuilen2006", package = "betareg") for more details
+> ## Coefficients in XBX are typically somewhat shrunken compared to beta
+> cbind(XBX = coef(rs_xbx), Beta = c(coef(rs_beta), NA))
+                      XBX    Beta
+(Intercept)        0.9030  1.1232
+dyslexia          -0.6065 -0.7416
+iq                 0.3288  0.4864
+dyslexia:iq       -0.3875 -0.5813
+(phi)_(Intercept)  3.4990  3.3044
+(phi)_dyslexia     1.7360  1.7466
+(phi)_iq           0.6965  1.2291
+Log(nu)           -1.7905      NA
+> 
+> ## Visualization
+> plot(accuracy1 ~ iq, data = ReadingSkills, col = c(4, 2)[dyslexia], pch = 19)
+> nd <- data.frame(dyslexia = "no", iq = -30:30/10)
+> lines(nd$iq, predict(rs_xbx, nd), col = 4)
+> lines(nd$iq, predict(rs_beta, nd), col = 4, lty = 5)
+> lines(nd$iq, plogis(predict(rs_ols, nd)), col = 4, lty = 3)
+> nd <- data.frame(dyslexia = "yes", iq = -30:30/10)
+> lines(nd$iq, predict(rs_xbx, nd), col = 2)
+> lines(nd$iq, predict(rs_beta, nd), col = 2, lty = 5)
+> lines(nd$iq, plogis(predict(rs_ols, nd)), col = 2, lty = 3)
+> legend("topleft", c("Dyslexia: no", "Dyslexia: yes", "OLS", "XBX", "Beta"),
++   lty = c(0, 0, 3, 1, 5), pch = c(19, 19, NA, NA, NA), col = c(4, 2, 1, 1, 1), bty = "n")
+> 
+> ## see demo("SmithsonVerkuilen2006", package = "betareg") for further details
 > 
 > 
 > 
@@ -503,13 +751,13 @@ Number of iterations in BFGS optimization: 25
 Call:
 betareg(formula = anxiety ~ 1 | 1, data = StressAnxiety, hessian = TRUE)
 
-Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--0.6806 -0.6806 -0.2705  0.6581  2.0002 
+Quantile residuals:
+   Min     1Q Median     3Q    Max 
+-0.838 -0.838 -0.447  0.622  3.240 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -2.24396    0.09879  -22.71   <2e-16 ***
+(Intercept)  -2.2440     0.0988   -22.7   <2e-16 ***
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
@@ -518,39 +766,39 @@ Phi coefficients (precision model with log link):
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 239.4 on 2 Df
+Log-likelihood:  239 on 2 Df
 Number of iterations in BFGS optimization: 9 
 > summary(sa_stress)
 
 Call:
 betareg(formula = anxiety ~ stress | stress, data = StressAnxiety, hessian = TRUE)
 
-Standardized weighted residuals 2:
-    Min      1Q  Median      3Q     Max 
--2.3686 -0.6704 -0.0024  0.6213  2.0510 
+Quantile residuals:
+   Min     1Q Median     3Q    Max 
+-2.012 -0.795 -0.183  0.566  3.114 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  -4.0237     0.1442  -27.90   <2e-16 ***
-stress        4.9414     0.4409   11.21   <2e-16 ***
+(Intercept)   -4.024      0.144   -27.9   <2e-16 ***
+stress         4.941      0.441    11.2   <2e-16 ***
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)   3.9608     0.2511  15.776  < 2e-16 ***
-stress       -4.2733     0.7532  -5.674  1.4e-08 ***
+(Intercept)    3.961      0.251   15.78  < 2e-16 ***
+stress        -4.273      0.753   -5.67  1.4e-08 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood:   302 on 4 Df
-Pseudo R-squared: 0.4748
+Log-likelihood:  302 on 4 Df
+Pseudo R-squared: 0.475
 Number of iterations in BFGS optimization: 16 
 > AIC(sa_null, sa_stress)
-          df       AIC
-sa_null    2 -474.8960
-sa_stress  4 -595.9202
+          df    AIC
+sa_null    2 -474.9
+sa_stress  4 -595.9
 > 1 - as.vector(logLik(sa_null)/logLik(sa_stress))
-[1] 0.207021
+[1] 0.207
 > 
 > ## visualization
 > attach(StressAnxiety)
@@ -595,6 +843,100 @@ Loading required package: lattice
 
 detaching ‘package:flexmix’, ‘package:lattice’
 
+> nameEx("XBeta")
+> ### * XBeta
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: XBeta
+> ### Title: Create an Extended-Support Beta Distribution
+> ### Aliases: XBeta mean.XBeta variance.XBeta skewness.XBeta kurtosis.XBeta
+> ###   pdf.XBeta log_pdf.XBeta cdf.XBeta quantile.XBeta random.XBeta
+> ###   support.XBeta is_discrete.XBeta is_continuous.XBeta
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+>  if(!requireNamespace("distributions3")) {
++   if(interactive() || is.na(Sys.getenv("_R_CHECK_PACKAGE_NAME_", NA))) {
++     stop("not all packages required for the example are installed")
++   } else q() }
+> ## End(Don't show)
+> ## package and random seed
+> library("distributions3")
+
+Attaching package: ‘distributions3’
+
+The following object is masked from ‘package:stats’:
+
+    Gamma
+
+The following object is masked from ‘package:grDevices’:
+
+    pdf
+
+> set.seed(6020)
+> 
+> ## three beta distributions
+> X <- XBeta(
++   mu  = c(0.25, 0.50, 0.75),
++   phi = c(1, 1, 2),
++   nu = c(0, 0.1, 0.2)
++ )
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:distributions3’
+
+> nameEx("XBetaX")
+> ### * XBetaX
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: XBetaX
+> ### Title: Create an Extended-Support Beta Mixture Distribution
+> ### Aliases: XBetaX mean.XBetaX variance.XBetaX skewness.XBetaX
+> ###   kurtosis.XBetaX pdf.XBetaX log_pdf.XBetaX cdf.XBetaX quantile.XBetaX
+> ###   random.XBetaX support.XBetaX is_discrete.XBetaX is_continuous.XBetaX
+> 
+> ### ** Examples
+> 
+> ## Don't show: 
+>  if(!requireNamespace("distributions3")) {
++   if(interactive() || is.na(Sys.getenv("_R_CHECK_PACKAGE_NAME_", NA))) {
++     stop("not all packages required for the example are installed")
++   } else q() }
+> ## End(Don't show)
+> ## package and random seed
+> library("distributions3")
+
+Attaching package: ‘distributions3’
+
+The following object is masked from ‘package:stats’:
+
+    Gamma
+
+The following object is masked from ‘package:grDevices’:
+
+    pdf
+
+> set.seed(6020)
+> 
+> ## three beta distributions
+> X <- XBetaX(
++   mu  = c(0.25, 0.50, 0.75),
++   phi = c(1, 1, 2),
++   nu = c(0, 0.1, 0.2)
++ )
+> 
+> 
+> 
+> cleanEx()
+
+detaching ‘package:distributions3’
+
 > nameEx("betamix")
 > ### * betamix
 > 
@@ -611,11 +953,11 @@ detaching ‘package:flexmix’, ‘package:lattice’
 > ### ** Examples
 > 
 > options(digits = 4)
-> suppressWarnings(RNGversion("3.5.0"))
 > 
 > ## data with two groups of dyslexic and non-dyslexic children
 > data("ReadingSkills", package = "betareg")
 > 
+> suppressWarnings(RNGversion("3.5.0"))
 > set.seed(4040)
 > ## try to capture accuracy ~ iq relationship (without using dyslexia
 > ## information) using two beta regression components and one additional
@@ -646,8 +988,10 @@ detaching ‘package:flexmix’, ‘package:lattice’
 +    lines(iq, plogis(cf[i, 1] + cf[i, 2] * iq), lwd = 2,
 +          col = col0[i])
 > 
-> ## refit the model including a concomitant variable model
-> ## using the dyslexia information
+> ## refit the model including a concomitant variable model using the
+> ## dyslexia information with some noise to avoid complete separation
+> ## between concomitant variable and component memberships
+> set.seed(4040)
 > w <- rnorm(nrow(ReadingSkills), 
 +            c(-1, 1)[as.integer(ReadingSkills$dyslexia)])
 > 
@@ -663,22 +1007,22 @@ Loading required package: lattice
 +   coef = 0.99, delta = 0.01), cluster = posterior(rs_mix),
 +   FLXconcomitant = FLXPmultinom(~w))
 > coef(rs_mix2, which = "concomitant")
-  (Intercept)     w
-1       0.000 0.000
-2       2.799 2.825
-3       1.950 1.033
+  (Intercept)       w
+1      0.0000  0.0000
+2      0.8114  1.0778
+3     -0.1195 -0.3488
 > summary(rs_mix2, which = "concomitant")
 $Comp.2
-            Estimate Std. Error z value Pr(>|z|)   
-(Intercept)    2.813      1.590    1.77   0.0769 . 
-w              2.827      0.894    3.16   0.0016 **
+            Estimate Std. Error z value Pr(>|z|)  
+(Intercept)    0.821      0.882    0.93     0.35  
+w              1.078      0.497    2.17     0.03 *
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 $Comp.3
             Estimate Std. Error z value Pr(>|z|)
-(Intercept)    1.961      1.473    1.33     0.18
-w              1.037      0.759    1.37     0.17
+(Intercept)   -0.113      0.812   -0.14     0.89
+w             -0.346      0.452   -0.77     0.44
 
 > 
 > 
@@ -712,9 +1056,9 @@ detaching ‘package:flexmix’, ‘package:lattice’
 Call:
 betareg(formula = yield ~ batch + temp, data = GasolineYield)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--2.875 -0.815  0.160  0.838  2.048 
+-2.140 -0.570  0.120  0.704  1.751 
 
 Coefficients (mean model with logit link):
              Estimate Std. Error z value Pr(>|z|)    
@@ -765,9 +1109,9 @@ BP = 5.9, df = 2, p-value = 0.05
 Call:
 betareg(formula = I(food/income) ~ income + persons, data = FoodExpenditure)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--2.782 -0.444  0.202  0.685  1.876 
+-2.533 -0.460  0.170  0.642  1.773 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
@@ -821,9 +1165,9 @@ Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’
 Call:
 betareg(formula = yield ~ batch + temp | temp, data = GasolineYield)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--2.540 -0.779 -0.117  0.862  2.942 
+-2.104 -0.585 -0.143  0.690  2.520 
 
 Coefficients (mean model with logit link):
              Estimate Std. Error z value Pr(>|z|)    
@@ -933,9 +1277,9 @@ Coefficients (mean model with logit link):
 Call:
 betareg(formula = yield ~ batch + temp, data = GasolineYield)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--2.875 -0.815  0.160  0.838  2.048 
+-2.140 -0.570  0.120  0.704  1.751 
 
 Coefficients (mean model with logit link):
              Estimate Std. Error z value Pr(>|z|)    
@@ -966,9 +1310,9 @@ Number of iterations: 51 (BFGS) + 3 (Fisher scoring)
 Call:
 betareg(formula = yield ~ batch + temp, data = GasolineYield, phi = FALSE)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--2.875 -0.815  0.160  0.838  2.048 
+-2.140 -0.570  0.120  0.704  1.751 
 
 Coefficients (mean model with logit link):
              Estimate Std. Error z value Pr(>|z|)    
@@ -1061,9 +1405,9 @@ NULL
 Call:
 betatree(formula = accuracy ~ iq | iq, data = ReadingSkills)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--1.821 -0.521  0.061  0.849  1.063 
+-2.495 -0.437  0.210  0.953  1.090 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
@@ -1086,9 +1430,9 @@ Number of iterations: 17 (BFGS) + 2 (Fisher scoring)
 Call:
 betatree(formula = accuracy ~ iq | iq, data = ReadingSkills)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--2.455 -0.659 -0.079  0.813  1.610 
+-2.426 -0.631 -0.067  0.778  1.555 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
@@ -1105,7 +1449,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 Type of estimator: ML (maximum likelihood)
 Log-likelihood: 27.3 on 4 Df
 Pseudo R-squared: 0.0391
-Number of iterations: 16 (BFGS) + 1 (Fisher scoring) 
+Number of iterations: 16 (BFGS) + 2 (Fisher scoring) 
 > ## IGNORE_RDIFF_END
 > 
 > ## add a numerical variable with relevant information for splitting
@@ -1117,9 +1461,9 @@ Number of iterations: 16 (BFGS) + 1 (Fisher scoring)
 > 
 > ## inspect result
 > coef(bt2)
-  (Intercept)     iq (phi)_(Intercept) (phi)_iq
-2       1.460 1.7332            0.6222   2.8365
-3       1.127 0.3416            1.4104  -0.3735
+  (Intercept)      iq (phi)_(Intercept) (phi)_iq
+2      1.7060 1.47402             1.293   2.0841
+3      0.5048 0.03391             3.131  -0.7684
 > if(require("strucchange")) sctest(bt2)
 $`1`
               x1     x2     x3       x4
@@ -1127,12 +1471,14 @@ statistic 8.5251 5.5699 1.0568 19.94405
 p.value   0.9095 0.9987 0.9999  0.03485
 
 $`2`
-NULL
+              x1     x2     x3     x4
+statistic 8.9467 3.5888 3.5677 4.7049
+p.value   0.5964 0.9985 0.9197 0.9848
 
 $`3`
-              x1     x2     x3       x4
-statistic 6.4811 6.6100 1.9526 17.63629
-p.value   0.9678 0.9625 0.9957  0.05837
+              x1     x2     x3     x4
+statistic 5.5413 1.2373 4.8649 4.9921
+p.value   0.6595 0.9997 0.7619 0.7432
 
 > ## IGNORE_RDIFF_BEGIN
 > summary(bt2, node = 2)
@@ -1140,50 +1486,50 @@ p.value   0.9678 0.9625 0.9957  0.05837
 Call:
 betatree(formula = accuracy ~ iq | iq, data = ReadingSkills)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--1.718 -0.482 -0.034  0.885  0.944 
+-2.583 -0.393  0.177  0.923  1.054 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)    1.460      0.486    3.00   0.0027 ** 
-iq             1.733      0.369    4.69  2.7e-06 ***
+(Intercept)    1.706      0.292    5.85  4.9e-09 ***
+iq             1.474      0.248    5.95  2.7e-09 ***
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)    0.622      0.506    1.23     0.22    
-iq             2.836      0.503    5.64  1.7e-08 ***
+(Intercept)    1.293      0.312    4.14  3.4e-05 ***
+iq             2.084      0.333    6.25  4.0e-10 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 23.5 on 4 Df
-Pseudo R-squared: 0.348
-Number of iterations: 16 (BFGS) + 1 (Fisher scoring) 
+Log-likelihood: 38.6 on 4 Df
+Pseudo R-squared: 0.163
+Number of iterations: 17 (BFGS) + 1 (Fisher scoring) 
 > summary(bt2, node = 3)
 
 Call:
 betatree(formula = accuracy ~ iq | iq, data = ReadingSkills)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--1.173 -0.622 -0.406  0.141  3.619 
+-2.070 -0.584 -0.156  0.639  2.188 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)    1.127      0.209    5.39  7.2e-08 ***
-iq             0.342      0.198    1.73    0.084 .  
+(Intercept)   0.5048     0.1245    4.05    5e-05 ***
+iq            0.0339     0.0998    0.34     0.73    
 
 Phi coefficients (precision model with log link):
             Estimate Std. Error z value Pr(>|z|)    
-(Intercept)    1.410      0.262    5.38  7.4e-08 ***
-iq            -0.373      0.264   -1.42     0.16    
+(Intercept)    3.131      0.370    8.45   <2e-16 ***
+iq            -0.768      0.359   -2.14    0.032 *  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 
 Type of estimator: ML (maximum likelihood)
-Log-likelihood: 15.7 on 4 Df
-Pseudo R-squared: 0.161
+Log-likelihood: 22.4 on 4 Df
+Pseudo R-squared: 0.0378
 Number of iterations: 16 (BFGS) + 1 (Fisher scoring) 
 > ## IGNORE_RDIFF_END
 > 
@@ -1250,7 +1596,7 @@ detaching ‘package:strucchange’, ‘package:sandwich’, ‘package:zoo’
 > 
 > ### Name: predict.betareg
 > ### Title: Prediction Method for betareg Objects
-> ### Aliases: predict.betareg
+> ### Aliases: predict.betareg pit.betareg rootogram.betareg
 > ### Keywords: regression
 > 
 > ### ** Examples
@@ -1302,6 +1648,33 @@ detaching ‘package:strucchange’, ‘package:sandwich’, ‘package:zoo’
 31 0.11952 -1.9970  978.71 1.074e-04 0.11239 0.11926 0.12637
 32 0.18402 -1.4894 1998.57 7.509e-05 0.17811 0.18391 0.18980
 > 
+> ## evaluate cumulative _p_robabilities for (small) new data set
+> gyd <- GasolineYield[c(1, 5, 10), ]
+> ## CDF at 0.1 for each observation
+> predict(gy2, newdata = gyd, type = "probability", at = 0.1)
+Warning: contrasts dropped from factor batch
+        1         5        10 
+5.407e-01 7.165e-01 6.053e-40 
+> ## CDF at each combination of 0.1/0.2 and observations
+> predict(gy2, newdata = gyd, type = "probability", at = c(0.1, 0.2))
+Warning: contrasts dropped from factor batch
+       p_0.1     p_0.2
+1  5.407e-01 9.933e-01
+5  7.165e-01 9.991e-01
+10 6.053e-40 5.828e-09
+> ## CDF at pairwise combinations of 0.1/0.2/0.3 and observations
+> predict(gy2, newdata = gyd, type = "probability", at = c(0.1, 0.2, 0.3))
+Warning: contrasts dropped from factor batch
+     1      5     10 
+0.5407 0.9991 0.4549 
+> ## CDF at all combinations of 0.1/0.2/0.3 and observations
+> predict(gy2, newdata = gyd, type = "probability", at = rbind(c(0.1, 0.2, 0.3)))
+Warning: contrasts dropped from factor batch
+       p_0.1     p_0.2  p_0.3
+1  5.407e-01 9.933e-01 1.0000
+5  7.165e-01 9.991e-01 1.0000
+10 6.053e-40 5.828e-09 0.4549
+> 
 > 
 > 
 > cleanEx()
@@ -1324,16 +1697,25 @@ detaching ‘package:strucchange’, ‘package:sandwich’, ‘package:zoo’
 > gy <- betareg(yield ~ gravity + pressure + temp10 + temp, data = GasolineYield)
 > 
 > gy_res <- cbind(
-+   residuals(gy, type = "pearson"),
-+   residuals(gy, type = "deviance"),
-+   residuals(gy, type = "response"),
-+   residuals(gy, type = "weighted"),
-+   residuals(gy, type = "sweighted"),
-+   residuals(gy, type = "sweighted2")
++   "quantile"   = residuals(gy, type = "quantile"),
++   "pearson"    = residuals(gy, type = "pearson"),
++   "deviance"   = residuals(gy, type = "deviance"),
++   "response"   = residuals(gy, type = "response"),
++   "weighted"   = residuals(gy, type = "weighted"),
++   "sweighted"  = residuals(gy, type = "sweighted"),
++   "sweighted2" = residuals(gy, type = "sweighted2")
 + )
-> colnames(gy_res) <- c("pearson", "deviance", "response",
-+   "weighted", "sweighted", "sweighted2")
 > pairs(gy_res)
+> 
+> cor(gy_res)
+           quantile pearson deviance response weighted sweighted sweighted2
+quantile     1.0000  0.9980   0.9997   0.9659   0.9995    0.9995     0.9980
+pearson      0.9980  1.0000   0.9984   0.9739   0.9956    0.9956     0.9941
+deviance     0.9997  0.9984   1.0000   0.9682   0.9989    0.9989     0.9976
+response     0.9659  0.9739   0.9682   1.0000   0.9609    0.9609     0.9652
+weighted     0.9995  0.9956   0.9989   0.9609   1.0000    1.0000     0.9985
+sweighted    0.9995  0.9956   0.9989   0.9609   1.0000    1.0000     0.9985
+sweighted2   0.9980  0.9941   0.9976   0.9652   0.9985    0.9985     1.0000
 > 
 > 
 > 
@@ -1364,9 +1746,9 @@ detaching ‘package:strucchange’, ‘package:sandwich’, ‘package:zoo’
 Call:
 betareg(formula = yield ~ batch + temp | temp, data = GasolineYield)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--2.540 -0.779 -0.117  0.862  2.942 
+-2.104 -0.585 -0.143  0.690  2.520 
 
 Coefficients (mean model with logit link):
              Estimate Std. Error z value Pr(>|z|)    
@@ -1463,9 +1845,9 @@ temp               1.902e-07         4.666e-05 -1.175e-07
 Call:
 betareg(formula = yield ~ batch + temp | temp, data = GasolineYield)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--2.540 -0.779 -0.117  0.862  2.942 
+-2.104 -0.585 -0.143  0.690  2.520 
 
 Coefficients (mean model with logit link):
              Estimate Std. Error z value Pr(>|z|)    
@@ -1495,7 +1877,7 @@ Number of iterations: 33 (BFGS) + 28 (Fisher scoring)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  10.794 1.584 10.458 0 0 
+Time elapsed:  11.325 0.123 11.459 0 0 
 > grDevices::dev.off()
 null device 
           1 

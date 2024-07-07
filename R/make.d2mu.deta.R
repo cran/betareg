@@ -1,4 +1,4 @@
-make.dmu.deta <- function(linkstr) switch(linkstr,
+make.d2mu.deta <- function(linkstr) switch(linkstr,
   "logit" = {
     logit_link <- make.link("logit")
     function(eta) logit_link$mu.eta(eta) * (1 - 2 * logit_link$linkinv(eta))

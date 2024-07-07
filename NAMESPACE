@@ -1,3 +1,5 @@
+useDynLib("betareg", .registration = TRUE)
+
 import("graphics", "stats", "Formula")
 
 importFrom("grDevices",
@@ -65,14 +67,48 @@ export(
   "betareg.control",
   "betareg.fit",
   "gleverage",
-  
+
   ## beta regression trees
   "betatree",
-  "sctest.betatree",
 
   ## beta mixture models
   "betamix",
-  "extraComponent"
+  "extraComponent",
+
+  ## beta distribution in regression parameterization
+  "dbetar",
+  "pbetar",
+  "qbetar",
+  "rbetar",
+  "BetaR",
+
+  ## zero- and/or one-inflated beta distribution in regression parameterization
+  "dbeta01",
+  "pbeta01",
+  "qbeta01",
+  "rbeta01",
+  "Beta01",
+
+  ## 4-parameter beta distribution in regression parameterization
+  "dbeta4",
+  "pbeta4",
+  "qbeta4",
+  "rbeta4",
+  "Beta4",
+
+  ## extended-support beta distribution
+  "dxbeta",
+  "pxbeta",
+  "qxbeta",
+  "rxbeta",
+  "XBeta",
+
+  ## extended-support beta mixture distribution
+  "dxbetax",
+  "pxbetax",
+  "qxbetax",
+  "rxbetax",
+  "XBetaX"
 )
 
 ## methods for class betareg
@@ -89,17 +125,20 @@ S3method("model.matrix", "betareg")
 S3method("plot", "betareg")
 S3method("predict", "betareg")
 S3method("print", "betareg")
+S3method(distributions3::prodist, "betareg")
 S3method("residuals", "betareg")
 S3method("summary", "betareg")
 S3method("terms", "betareg")
 S3method("print", "summary.betareg")
 S3method("update", "betareg")
 S3method("vcov", "betareg")
+S3method("simulate", "betareg")
 
 ## methods for class betatree
 S3method("plot", "betatree")
 S3method("print", "betatree")
 S3method("predict", "betatree")
+S3method(strucchange::sctest, "betatree")
 
 ## methods for class betamix
 S3method("coef", "betamix")
@@ -111,7 +150,72 @@ exportMethods("posterior")
 exportMethods("clusters")
 exportMethods("predict")
 
-## conditional registration of strucchange methods
-if(getRversion() >= "3.6.0") {
-  S3method(strucchange::sctest, "betatree")
-}
+## methods for BetaR
+S3method("mean", "BetaR")
+S3method("quantile", "BetaR")
+S3method(distributions3::variance, "BetaR")
+S3method(distributions3::skewness, "BetaR")
+S3method(distributions3::kurtosis, "BetaR")
+S3method(distributions3::random, "BetaR")
+S3method(distributions3::pdf, "BetaR")
+S3method(distributions3::log_pdf, "BetaR")
+S3method(distributions3::cdf, "BetaR")
+S3method(distributions3::support, "BetaR")
+S3method(distributions3::is_discrete, "BetaR")
+S3method(distributions3::is_continuous, "BetaR")
+
+## methods for Beta01
+S3method("mean", "Beta01")
+S3method("quantile", "Beta01")
+S3method(distributions3::variance, "Beta01")
+S3method(distributions3::skewness, "Beta01")
+S3method(distributions3::kurtosis, "Beta01")
+S3method(distributions3::random, "Beta01")
+S3method(distributions3::pdf, "Beta01")
+S3method(distributions3::log_pdf, "Beta01")
+S3method(distributions3::cdf, "Beta01")
+S3method(distributions3::support, "Beta01")
+S3method(distributions3::is_discrete, "Beta01")
+S3method(distributions3::is_continuous, "Beta01")
+
+## methods for Beta4
+S3method("mean", "Beta4")
+S3method("quantile", "Beta4")
+S3method(distributions3::variance, "Beta4")
+S3method(distributions3::skewness, "Beta4")
+S3method(distributions3::kurtosis, "Beta4")
+S3method(distributions3::random, "Beta4")
+S3method(distributions3::pdf, "Beta4")
+S3method(distributions3::log_pdf, "Beta4")
+S3method(distributions3::cdf, "Beta4")
+S3method(distributions3::support, "Beta4")
+S3method(distributions3::is_discrete, "Beta4")
+S3method(distributions3::is_continuous, "Beta4")
+
+## methods for XBeta
+S3method("mean", "XBeta")
+S3method("quantile", "XBeta")
+S3method(distributions3::variance, "XBeta")
+S3method(distributions3::skewness, "XBeta")
+S3method(distributions3::kurtosis, "XBeta")
+S3method(distributions3::random, "XBeta")
+S3method(distributions3::pdf, "XBeta")
+S3method(distributions3::log_pdf, "XBeta")
+S3method(distributions3::cdf, "XBeta")
+S3method(distributions3::support, "XBeta")
+S3method(distributions3::is_discrete, "XBeta")
+S3method(distributions3::is_continuous, "XBeta")
+
+## methods for XBetaX
+S3method("mean", "XBetaX")
+S3method("quantile", "XBetaX")
+S3method(distributions3::variance, "XBetaX")
+S3method(distributions3::skewness, "XBetaX")
+S3method(distributions3::kurtosis, "XBetaX")
+S3method(distributions3::random, "XBetaX")
+S3method(distributions3::pdf, "XBetaX")
+S3method(distributions3::log_pdf, "XBetaX")
+S3method(distributions3::cdf, "XBetaX")
+S3method(distributions3::support, "XBetaX")
+S3method(distributions3::is_discrete, "XBetaX")
+S3method(distributions3::is_continuous, "XBetaX")

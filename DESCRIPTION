@@ -1,30 +1,40 @@
 Package: betareg
-Version: 3.1-4
-Date: 2021-02-09
+Version: 3.2-0
+Date: 2024-07-05
 Title: Beta Regression
-Authors@R: c(person(given = "Achim", family = "Zeileis", role = c("aut", "cre"), email = "Achim.Zeileis@R-project.org"),
-             person(given = "Francisco", family = "Cribari-Neto", role = "aut", email = "cribari@ufpe.br"),
-             person(given = "Bettina", family = "Gruen", role = "aut", email = "Bettina.Gruen@jku.at"),
-             person(given = "Ioannis", family = "Kosmidis", role = "aut", email = "ioannis@stats.ucl.ac.uk"),
+Authors@R: c(person(given = "Achim", family = "Zeileis", role = c("aut", "cre"), email = "Achim.Zeileis@R-project.org",
+             comment = c(ORCID = "0000-0003-0918-3766")),
+             person(given = "Francisco", family = "Cribari-Neto", role = "aut", email = "cribari@ufpe.br",
+             comment = c(ORCID = "0000-0002-5909-6698")),
+             person(given = "Bettina", family = "Grün", role = "aut", email = "Bettina.Gruen@wu.ac.at",
+             comment = c(ORCID = "0000-0001-7265-4773")),
+             person(given = "Ioannis", family = "Kosmidis", role = "aut", email = "ioannis.kosmidis@warwick.ac.uk",
+             comment = c(ORCID = "0000-0003-1556-0302")),
              person(given = c("Alexandre", "B."), family = "Simas", role = "ctb", comment = "earlier version by"),
              person(given = c("Andrea", "V."), family = "Rocha", role = "ctb", comment = "earlier version by"))
-Description: Beta regression for modeling beta-distributed dependent variables, e.g., rates and proportions.
-  In addition to maximum likelihood regression (for both mean and precision of a beta-distributed
-  response), bias-corrected and bias-reduced estimation as well as finite mixture models and
-  recursive partitioning for beta regressions are provided.
-Depends: R (>= 3.0.0)
+Description: Beta regression for modeling beta-distributed dependent variables on the open unit interval (0, 1),
+  e.g., rates and proportions, see Cribari-Neto and Zeileis (2010) <doi:10.18637/jss.v034.i02>.
+  Moreover, extended-support beta regression models can accommodate dependent variables with
+  boundary observations at 0 and/or 1. For the classical beta regression model, alternative specifications are
+  provided: Bias-corrected and bias-reduced estimation, finite mixture models, and recursive partitioning for
+  beta regression, see Grün, Kosmidis, and Zeileis (2012) <doi:10.18637/jss.v048.i11>.
+Depends: R (>= 3.6.0)
 Imports: graphics, grDevices, methods, stats, flexmix, Formula, lmtest,
         modeltools, sandwich
-Suggests: car, lattice, partykit, strucchange
+Suggests: car, distributions3 (>= 0.2.1), lattice, numDeriv, partykit,
+        statmod, strucchange
 License: GPL-2 | GPL-3
-NeedsCompilation: no
-Packaged: 2021-02-09 14:41:53 UTC; zeileis
-Author: Achim Zeileis [aut, cre],
-  Francisco Cribari-Neto [aut],
-  Bettina Gruen [aut],
-  Ioannis Kosmidis [aut],
+URL: https://betareg.R-Forge.R-project.org/
+BugReports: https://betareg.R-Forge.R-project.org/contact.html
+Encoding: UTF-8
+NeedsCompilation: yes
+Packaged: 2024-07-07 08:53:53 UTC; zeileis
+Author: Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>),
+  Francisco Cribari-Neto [aut] (<https://orcid.org/0000-0002-5909-6698>),
+  Bettina Grün [aut] (<https://orcid.org/0000-0001-7265-4773>),
+  Ioannis Kosmidis [aut] (<https://orcid.org/0000-0003-1556-0302>),
   Alexandre B. Simas [ctb] (earlier version by),
   Andrea V. Rocha [ctb] (earlier version by)
 Maintainer: Achim Zeileis <Achim.Zeileis@R-project.org>
 Repository: CRAN
-Date/Publication: 2021-02-09 19:20:11 UTC
+Date/Publication: 2024-07-07 10:20:03 UTC

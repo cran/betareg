@@ -8,7 +8,7 @@
   In this study participants were asked to estimate upper and lower
   probabilities for event to occur and not to occur.
 }
-\usage{data(ImpreciseTask)}
+\usage{data("ImpreciseTask", package = "betareg")}
 \format{
   A data frame with 242 observations on the following 3 variables.
   \describe{

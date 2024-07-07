@@ -1,9 +1,7 @@
 bibentry("Article",
          title       = "Beta Regression in {R}",
-         author      = c(person(given = "Francisco", family = "Cribari-Neto"),
-	                 person(given = "Achim", family = "Zeileis",
-                           email = "Achim.Zeileis@R-project.org",
-			   comment = c(ORCID = "0000-0003-0918-3766"))),
+         author      = c(person(given = "Francisco", family = "Cribari-Neto", email = "cribari@ufpe.br", comment = c(ORCID = "0000-0002-5909-6698")),
+	                 person(given = "Achim", family = "Zeileis", email = "Achim.Zeileis@R-project.org", comment = c(ORCID = "0000-0003-0918-3766"))),
          journal     = "Journal of Statistical Software",
          year        = "2010",
          volume      = "34",
@@ -16,11 +14,9 @@ bibentry("Article",
 
 bibentry("Article",
          title       = "Extended Beta Regression in {R}: Shaken, Stirred, Mixed, and Partitioned",
-         author      = c(person(given = "Bettina", family = "Gr\\\"un"),
-                         person(given = "Ioannis", family = "Kosmidis"),
-	                 person(given = "Achim", family = "Zeileis",
-                           email = "Achim.Zeileis@R-project.org",
-			   comment = c(ORCID = "0000-0003-0918-3766"))),
+         author      = c(person(given = "Bettina", family = "Gr\\\"un", email = "Bettina.Gruen@wu.ac.at", comment = c(ORCID = "0000-0001-7265-4773")),
+                         person(given = "Ioannis", family = "Kosmidis", email = "ioannis.kosmidis@warwick.ac.uk", comment = c(ORCID = "0000-0003-1556-0302")),
+	                 person(given = "Achim", family = "Zeileis", email = "Achim.Zeileis@R-project.org", comment = c(ORCID = "0000-0003-0918-3766"))),
          journal     = "Journal of Statistical Software",
          year        = "2012",
          volume      = "48",
@@ -29,4 +25,14 @@ bibentry("Article",
          doi         = "10.18637/jss.v048.i11",
 	 
          header      = "If you use betatree(), betamix(), or bias correction/reduction in betareg(), please cite:"
+)
+
+bibentry("Misc",
+         title       = "Extended-Support Beta Regression for [0, 1] Responses",
+         author      = c(person(given = "Ioannis", family = "Kosmidis", email = "ioannis.kosmidis@warwick.ac.uk", comment = c(ORCID = "0000-0003-1556-0302")),
+	                 person(given = "Achim", family = "Zeileis", email = "Achim.Zeileis@R-project.org", comment = c(ORCID = "0000-0003-0918-3766"))),
+         year        = "2024",
+         note        = "Unpublished Manuscript",
+	 
+         header      = "If you use betareg() for response variables with 0 and/or 1, please cite:"
 )

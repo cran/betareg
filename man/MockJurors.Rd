@@ -11,7 +11,7 @@ three-option verdict setup (the third option was the Scottish
 testimonial evidence.
 }
 
-\usage{data("MockJurors")}
+\usage{data("MockJurors", package = "betareg")}
 
 \format{
 A data frame containing 104 observations on 3 variables.

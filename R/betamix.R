@@ -25,7 +25,7 @@ betamix <- function(formula, data, k, subset, na.action, weights, offset,
     mf$formula <- as.Formula(formula(mf$formula), fixed)
   if (!missing(FLXconcomitant) & is(FLXconcomitant, "FLXP"))
     mf$formula <- as.Formula(formula(mf$formula), FLXconcomitant@formula)
-  mf[[1]] <- as.name("get_all_vars")
+  mf[[1]] <- quote(stats::get_all_vars)
   mf <- na.omit(eval(mf, parent.frame()))
   if (!missing(cluster)) {
     if (is(attr(mf, "na.action"), "omit")) {
@@ -207,7 +207,7 @@ FLXMRbeta <- function(formula = .~., precision = ~ 1, offset = NULL,
 
   object@defineComponent <- expression({
     predict <- function(x, z, ...) {
-      dotarg = list(...)
+      dotarg <- list(...)
       if("offset" %in% names(dotarg))
         offset <- dotarg$offset
       p <- x%*%coef$mean

@@ -7,7 +7,7 @@
   Data on proportion of income spent on food for a random sample of 38 households in a large US city.
 }
 
-\usage{data("FoodExpenditure")}
+\usage{data("FoodExpenditure", package = "betareg")}
 
 \format{
 A data frame containing 38 observations on 3 variables.

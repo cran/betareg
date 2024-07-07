@@ -7,7 +7,7 @@
 Stress and anxiety among nonclinical women in Townsville, Queensland, Australia.
 }
 
-\usage{data("StressAnxiety")}
+\usage{data("StressAnxiety", package = "betareg")}
 
 \format{
 A data frame containing 166 observations on 2 variables.

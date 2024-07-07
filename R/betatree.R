@@ -51,7 +51,7 @@ betatree <- function(formula, partition, data, subset = NULL, na.action = na.omi
     args$control <- do.call("betareg.control", ctrl)
   
     ## extract response and regressors
-    mf <- cbind(y, x)
+    mf <- if(!is.null(x)) cbind(y, x) else y
     attr(mf, "terms") <- ft
     y <- y[[1L]]
     xx <- model.matrix(xt, mf)
@@ -64,7 +64,7 @@ betatree <- function(formula, partition, data, subset = NULL, na.action = na.omi
     ## list structure
     rval <- list(
       coefficients = coef.betareg(obj),
-      objfun = obj$loglik,
+      objfun = -obj$loglik,
       estfun = NULL,
       object = NULL
     )

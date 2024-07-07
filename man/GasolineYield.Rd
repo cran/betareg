@@ -8,7 +8,7 @@ Operational data of the proportion of crude oil converted to gasoline after
 distillation and fractionation.
 }
 
-\usage{data("GasolineYield")}
+\usage{data("GasolineYield", package = "betareg")}
 
 \format{
 A data frame containing 32 observations on 6 variables.

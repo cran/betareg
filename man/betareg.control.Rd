@@ -9,8 +9,8 @@
 
 \usage{
 betareg.control(phi = TRUE, method = "BFGS", maxit = 5000,
-  hessian = FALSE, trace = FALSE, start = NULL,
-  fsmaxit = 200, fstol = 1e-8, \dots)
+  gradient = NULL, hessian = FALSE, trace = FALSE, start = NULL,
+  fsmaxit = 200, fstol = 1e-8, quad = 20, \dots)
 }
 
 \arguments{
@@ -18,11 +18,17 @@ betareg.control(phi = TRUE, method = "BFGS", maxit = 5000,
     phi should be treated as a full model parameter (\code{TRUE}, default)
     or as a nuisance parameter.}
   \item{method}{characters string specifying the \code{method} argument
-    passed to \code{\link[stats]{optim}}.}
+    passed to \code{\link[stats]{optim}}. Additionally, \code{method = "nlminb"}
+    can be used to employ \code{\link[stats]{nlminb}}, instead.}
   \item{maxit}{integer specifying the \code{maxit} argument (maximal number
     of iterations) passed to \code{\link[stats]{optim}}.}
   \item{trace}{logical or integer controlling whether tracing information on  
     the progress of the optimization should be produced (passed to \code{\link[stats]{optim}}).}
+  \item{gradient}{logical. Should the analytical gradient be used for optimizing
+    the log-likelihood? If set to \code{FALSE} a finite-difference approximation
+    is used instead. The default of \code{NULL} signals that analytical gradients
+    are only used for the classical \code{"beta"} distribution but not for
+    \code{"xbetax"} or \code{"xbeta"}.}
   \item{hessian}{logical. Should the numerical Hessian matrix from the \code{optim} output
     be used for estimation of the covariance matrix? By default the analytical solution is employed.
     For details see below.}
@@ -31,6 +37,8 @@ betareg.control(phi = TRUE, method = "BFGS", maxit = 5000,
     iterations. For details see below.}
   \item{fstol}{numeric tolerance for convergence in (quasi) Fisher scoring.
     For details see below.}
+  \item{quad}{numeric. The number of quadrature points for numeric
+    integration in case of \code{dist = "xbetax"} is used in the beta regression.}
   \item{\dots}{arguments passed to \code{\link[stats]{optim}}.}
 }
 

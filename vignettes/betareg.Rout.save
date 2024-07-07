@@ -89,9 +89,9 @@
 Call:
 betareg(formula = yield ~ batch + temp, data = GasolineYield)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--2.875 -0.815  0.160  0.838  2.048 
+-2.140 -0.570  0.120  0.704  1.751 
 
 Coefficients (mean model with logit link):
              Estimate Std. Error z value Pr(>|z|)    
@@ -214,9 +214,9 @@ BP = 5.93, df = 2, p-value = 0.051
 Call:
 betareg(formula = I(food/income) ~ income + persons, data = FoodExpenditure)
 
-Standardized weighted residuals 2:
+Quantile residuals:
    Min     1Q Median     3Q    Max 
--2.782 -0.444  0.202  0.685  1.876 
+-2.533 -0.460  0.170  0.642  1.773 
 
 Coefficients (mean model with logit link):
             Estimate Std. Error z value Pr(>|z|)    
@@ -430,4 +430,4 @@ Loading required package: sandwich
  *** Run successfully completed ***
 > proc.time()
    user  system elapsed 
-  3.546   0.698   3.436 
+  2.681   0.035   2.712 

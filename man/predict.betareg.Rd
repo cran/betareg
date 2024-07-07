@@ -1,5 +1,7 @@
 \name{predict.betareg}
 \alias{predict.betareg}
+\alias{pit.betareg}
+\alias{rootogram.betareg}
 
 \title{Prediction Method for betareg Objects}
 
@@ -11,7 +13,8 @@
 
 \usage{
 \method{predict}{betareg}(object, newdata = NULL,
-  type = c("response", "link", "precision", "variance", "quantile"),
+  type = c("response", "link", "precision", "variance", "parameters",
+    "density", "probability", "quantile"),
   na.action = na.pass, at = 0.5, \dots)
 }
 
@@ -31,6 +34,12 @@
   \item{\dots}{currently not used.}
 }
 
+\details{
+  FIXME: Update to extended type and at processing.
+  
+  FIXME: Add comments about pit and rootogram.
+}
+
 \examples{
 options(digits = 4)
 
@@ -45,6 +54,17 @@ cbind(
   predict(gy2, type = "variance"),
   predict(gy2, type = "quantile", at = c(0.25, 0.5, 0.75))
 )
+
+## evaluate cumulative _p_robabilities for (small) new data set
+gyd <- GasolineYield[c(1, 5, 10), ]
+## CDF at 0.1 for each observation
+predict(gy2, newdata = gyd, type = "probability", at = 0.1)
+## CDF at each combination of 0.1/0.2 and observations
+predict(gy2, newdata = gyd, type = "probability", at = c(0.1, 0.2))
+## CDF at pairwise combinations of 0.1/0.2/0.3 and observations
+predict(gy2, newdata = gyd, type = "probability", at = c(0.1, 0.2, 0.3))
+## CDF at all combinations of 0.1/0.2/0.3 and observations
+predict(gy2, newdata = gyd, type = "probability", at = rbind(c(0.1, 0.2, 0.3)))
 }
 
 \keyword{regression}

@@ -1,5 +1,5 @@
 \name{betareg}
-\encoding{latin1}
+\encoding{utf8}
 
 \alias{betareg}
 \alias{betareg.fit}
@@ -15,17 +15,19 @@
 \usage{
 betareg(formula, data, subset, na.action, weights, offset,
   link = c("logit", "probit", "cloglog", "cauchit", "log", "loglog"),
-  link.phi = NULL, type = c("ML", "BC", "BR"),
+  link.phi = NULL, type = c("ML", "BC", "BR"), dist = NULL, nu = NULL,
   control = betareg.control(\dots), model = TRUE,
   y = TRUE, x = FALSE, \dots)
 
 betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
-  link = "logit", link.phi = "log", type = "ML", control = betareg.control())
+  link = "logit", link.phi = "log", type = "ML", control = betareg.control(),
+  dist = NULL, nu = NULL)
 }
 
 \arguments{
-  \item{formula}{symbolic description of the model (of type \code{y ~ x}
-    or \code{y ~ x | z}; for details see below).}
+  \item{formula}{symbolic description of the model, either of type \code{y ~ x}
+    (mean submodel, constant precision) or \code{y ~ x | z} (submodels for both
+    mean and precision); for details see below.}
   \item{data, subset, na.action}{arguments controlling formula processing
     via \code{\link[stats]{model.frame}}.}
   \item{weights}{optional numeric vector of case weights.}
@@ -46,6 +48,18 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
   \item{type}{character specification of the type of estimator. Currently,
     maximum likelihood (\code{"ML"}), ML with bias correction (\code{"BC"}),
     and ML with bias reduction (\code{"BR"}) are supported.}
+  \item{dist}{character specification of the response distribution.
+    Usually, this does not have to be set by the user because by default
+    the classical \code{"beta"} distribution is used when all observations
+    for the dependent variable are in (0, 1). In the presence of boundary
+    observations (0 or 1, which cannot be accomodated by \code{"beta"}) the
+    extended-support beta mixture distribution (\code{"xbetax"}) is used.
+    Additionally, \code{dist = "xbeta"} can be used with fixed exceedence
+    parameter \code{nu}, mostly for testing and debugging purposes.}
+  \item{nu}{numeric. The fixed value of the expected exceedence parameter \code{nu} 
+    in case the extended-support beta mixture distribution is used. By default,
+    \code{nu} does not need to be specified and is estimated if needed. So
+    setting \code{nu} is mostly for profiling and debugging.}
   \item{control}{a list of control arguments specified via
     \code{\link{betareg.control}}.}
   \item{model, y, x}{logicals. If \code{TRUE} the corresponding components
@@ -62,20 +76,21 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
   by Simas, Barreto-Souza, and Rocha (2010) is implemented in \code{betareg}.
   It is useful in situations where the dependent variable is continuous and restricted to
   the unit interval (0, 1), e.g., resulting from rates or proportions. It is modeled to be
-  beta-distributed with parametrization using mean and precision parameter (called phi).
-  The mean is linked, as in generalized linear models (GLMs), to the responses through a link
-  function and a linear predictor. Additionally, the precision parameter phi can be linked
-  to another (potentially overlapping) set of regressors through a second link function,
-  resulting in a model with variable dispersion.  
-  Estimation is performed by maximum likelihood (ML) via \code{\link[stats]{optim}} using
-  analytical gradients and (by default) starting values from an auxiliary linear regression
+  beta-distributed with parametrization using mean and precision parameter (called mu and
+  phi, respectively). The mean mu is linked, as in generalized linear models (GLMs), to the
+  explanatory variables through a link function and a linear predictor. Additionally, the
+  precision parameter phi can be linked to another (potentially overlapping) set of
+  regressors through a second link function, resulting in a model with variable dispersion
+  (see Cribari-Neto and Zeileis 2010).
+  Estimation is performed by default using maximum likelihood (ML) via \code{\link[stats]{optim}} with
+  analytical gradients and starting values from an auxiliary linear regression
   of the transformed response. Subsequently, the \code{optim} result may be enhanced
   by an additional Fisher scoring iteration using analytical gradients and expected information.
-  This slightly improves the optimization by moving the gradients even closer to zero
-  (for \code{type = "ML"} and \code{"BC"}) or solving the bias-adjusted estimating equations
-  (for \code{type = "BR"}). For the former two estimators, the optional Fisher scoring
-  can be disabled by setting \code{fsmaxit = 0} in the control arguments. See
-  Cribari-Neto and Zeileis (2010) and Grün et al. (2012) for details.
+  Alternative estimation methods are bias-corrected (BC) or bias-reduced (BR)
+  maximum likelihood (see GrÃ¼n, Kosmidis, and Zeileis 2012). For ML and BC the Fisher
+  scoring is just a refinement to move the gradients even closer to zero and can be
+  disabled by setting \code{fsmaxit = 0} in the control arguments. For BR the Fisher scoring
+  is needed to solve the bias-adjusted estimating equations.
 
   In the beta regression as introduced by Ferrari and Cribari-Neto (2004), the mean of
   the response is linked to a linear predictor described by \code{y ~ x1 + x2} using
@@ -89,23 +104,18 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
   \code{y ~ x1 + x2}), the \code{"identity"} link is used by default for backward
   compatibility.
   
-  Simas et al. (2009) also suggest further extensions (non-linear specificiations,
-  bias correction) which are not yet implemented in \code{betareg}. However,
-  Kosmidis and Firth (2010) discuss general algorithms for bias correction/reduction,
-  both of which are available in \code{betareg} by setting the \code{type} argument
-  accordingly. (Technical note: In case, either bias correction or reduction is requested,
-  the second derivative of the inverse link function is required for \code{link} and
-  \code{link.phi}. If the two links are specified by their names (as done by default
-  in \code{betareg}), then the \code{"link-glm"} objects are enhanced automatically
-  by the required additional \code{dmu.deta} function. However, if a \code{"link-glm"}
-  object is supplied directly by the user, it needs to have the \code{dmu.deta}
-  function.)
-
-  The main parameters of interest are the coefficients in the linear predictor of the mean
-  model. The additional parameters in the precision model (phi) can either
-  be treated as full model parameters (default) or as nuisance parameters. In the latter case
-  the estimation does not change, only the reported information in output from \code{print},
-  \code{summary}, or \code{coef} (among others) will be different. See also \code{\link{betareg.control}}.
+  Kosmidis and Zeileis (2024) introduce a generalization of the classic beta regression
+  model with extended support [0, 1].
+  Specifically, the extended-support beta distribution (\code{"xbeta"}) leverages an underlying
+  symmetric four-parameter beta distribution with exceedence parameter nu
+  to obtain support [-nu, 1 + nu] that is subsequently censored to [0, 1] in order
+  to obtain point masses at the boundary values 0 and 1. The extended-support
+  beta mixture distribution (\code{"xbetax"}) is a continuous mixture of extended-support
+  beta distributions where the exceedence parameter follows an exponential distribution
+  with mean nu (rather than a fixed value of nu). The latter \code{"xbetax"}
+  specification is used by default in case of boundary observations at 0 and/or 1.
+  The \code{"xbeta"} specification with fixed nu is mostly for testing and
+  debugging purposes.
 
   A set of standard extractor functions for fitted model objects is available for
   objects of class \code{"betareg"}, including methods to the generic functions
@@ -121,15 +131,38 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
   See \code{\link{predict.betareg}}, \code{\link{residuals.betareg}}, \code{\link{plot.betareg}},
   and \code{\link{summary.betareg}} for more details on all methods.
 
+  The main parameters of interest are the coefficients in the linear predictor of the mean
+  model. The additional parameters in the precision model (phi) can either
+  be treated as full model parameters (default) or as nuisance parameters. In the latter case
+  the estimation does not change, only the reported information in output from \code{print},
+  \code{summary}, or \code{coef} (among others) will be different. See also \code{\link{betareg.control}}.
+
+  The implemented algorithms for bias correction/reduction follow Kosmidis and Firth (2010).
+  Technical note: In case, either bias correction or reduction is requested,
+  the second derivative of the inverse link function is required for \code{link} and
+  \code{link.phi}. If the two links are specified by their names (as done by default
+  in \code{betareg}), then the \code{"link-glm"} objects are enhanced automatically
+  by the required additional \code{d2mu.deta} function. However, if a \code{"link-glm"}
+  object is supplied directly by the user, it needs to have the \code{d2mu.deta}
+  function or, for backward compatibility, \code{dmu.deta}.
+
   The original version of the package was written by Alexandre B. Simas and Andrea V. Rocha
   (up to version 1.2). Starting from version 2.0-0 the code was rewritten by Achim Zeileis.
 }
 
 \value{
   \code{betareg} returns an object of class \code{"betareg"}, i.e., a list with components as follows.
+  For classic beta regressions (\code{dist = "beta"}) several elements are lists with the names \code{"mean"}
+  and \code{"precision"} for the information from the respective submodels. For extended-support
+  beta regressions (\code{dist = "xbetax"} or \code{"xbeta"}), the corresponding names are
+  \code{"mu"} and \code{"phi"} because they are not exactly the mean and precision due to the
+  censoring in the response variable.
+  
   \code{betareg.fit} returns an unclassed list with components up to \code{converged}.
-  \item{coefficients}{a list with elements \code{"mean"} and \code{"precision"}
-    containing the coefficients from the respective models,}
+  
+  \item{coefficients}{a list with elements \code{"mean"} (or \code{"mu"}) and \code{"precision"} (or \code{"phi"})
+    containing the coefficients from the respective submodels and for extended-support beta regressions
+    an additional element \code{"nu"},}
   \item{residuals}{a vector of raw residuals (observed - fitted),}
   \item{fitted.values}{a vector of fitted means,}
   \item{optim}{output from the \code{optim} call for maximizing the log-likelihood(s),}
@@ -150,44 +183,48 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
   \item{vcov}{covariance matrix of all parameters in the model,}
   \item{pseudo.r.squared}{pseudo R-squared value (squared correlation of linear predictor
     and link-transformed response),}
-  \item{link}{a list with elements \code{"mean"} and \code{"precision"}
-    containing the link objects for the respective models,}
+  \item{link}{a list with elements \code{"mean"} (or \code{"mu"}) and \code{"precision"} (or \code{"phi"})
+    containing the link objects for the respective submodels,}
   \item{converged}{logical indicating successful convergence of \code{optim},}
   \item{call}{the original function call,}
   \item{formula}{the original formula,}  
-  \item{terms}{a list with elements \code{"mean"}, \code{"precision"} and
+  \item{terms}{a list with elements \code{"mean"} (or \code{"mu"}), \code{"precision"} (or \code{"phi"}) and
     \code{"full"} containing the terms objects for the respective models,}
-  \item{levels}{a list with elements \code{"mean"}, \code{"precision"} and
+  \item{levels}{a list with elements \code{"mean"} (or \code{"mu"}), \code{"precision"} (or \code{"phi"}) and
     \code{"full"} containing the levels of the categorical regressors,}
-  \item{contrasts}{a list with elements \code{"mean"} and \code{"precision"}
+  \item{contrasts}{a list with elements \code{"mean"} (or \code{"mu"}) and \code{"precision"} (or \code{"phi"})
     containing the contrasts corresponding to \code{levels} from the
     respective models,}
   \item{model}{the full model frame (if \code{model = TRUE}),}
   \item{y}{the response proportion vector (if \code{y = TRUE}),}
-  \item{x}{a list with elements \code{"mean"} and \code{"precision"}
+  \item{x}{a list with elements \code{"mean"} (or \code{"mu"}) and \code{"precision"} (or \code{"phi"})
     containing the model matrices from the respective models
     (if \code{x = TRUE}).}
 }
 
 \references{
-Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
+Cribari-Neto F, Zeileis A (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \doi{10.18637/jss.v034.i02}
 
-Ferrari, S.L.P., and Cribari-Neto, F. (2004).
+Ferrari SLP, Cribari-Neto F (2004).
   Beta Regression for Modeling Rates and Proportions.
   \emph{Journal of Applied Statistics}, \bold{31}(7), 799--815.
 
-Grün, B., Kosmidis, I., and Zeileis, A. (2012).
+GrÃ¼n B, Kosmidis I, Zeileis A (2012).
   Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
   \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
   \doi{10.18637/jss.v048.i11}
 
-Kosmidis, I., and Firth, D. (2010).
+Kosmidis I, Firth D (2010).
   A Generic Algorithm for Reducing Bias in Parametric Estimation.
   \emph{Electronic Journal of Statistics}, \bold{4}, 1097--1112.
 
-Simas, A.B., Barreto-Souza, W., and Rocha, A.V. (2010).
+Kosmidis I, Zeileis A (2024).
+  Extended-Support Beta Regression for [0, 1] Responses.
+  \emph{Unpublished manuscript}.
+
+Simas AB, Barreto-Souza W, Rocha AV (2010).
   Improved Estimators for a General Class of Beta Regression Models.
   \emph{Computational Statistics & Data Analysis}, \bold{54}(2), 348--366.
 }

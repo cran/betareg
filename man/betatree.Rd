@@ -1,5 +1,5 @@
 \name{betatree}
-\encoding{latin1}
+\encoding{utf8}
 
 \alias{betatree}
 \alias{plot.betatree}
@@ -47,7 +47,7 @@ betatree(formula, partition,
   Beta regression trees are an application of model-based recursive partitioning
   (implemented in \code{\link[partykit]{mob}}, see Zeileis et al. 2008) to
   beta regression (implemented in \code{\link{betareg}}, see Cribari-Neto
-  and Zeileis 2010). See also Grün at al. (2012) for more details.
+  and Zeileis 2010). See also GrÃ¼n at al. (2012) for more details.
 
   Various methods are provided for \code{"betatree"} objects, most of them
   inherit their behavior from \code{"mob"} objects (e.g., \code{print}, \code{summary},
@@ -65,7 +65,7 @@ Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \doi{10.18637/jss.v034.i02}
 
-Grün, B., Kosmidis, I., and Zeileis, A. (2012).
+GrÃ¼n, B., Kosmidis, I., and Zeileis, A. (2012).
   Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
   \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
   \doi{10.18637/jss.v048.i11}

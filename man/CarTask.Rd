@@ -9,7 +9,7 @@
   customer trades in a coupe or that a customer buys a car form a
   specific salesperson out of four possible salespersons.
 }
-\usage{data(CarTask)}
+\usage{data("CarTask", package = "betareg")}
 \format{
   A data frame with 155 observations on the following 3 variables.
   \describe{

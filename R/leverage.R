@@ -9,36 +9,43 @@ gleverage <- function(model, ...) {
 
 gleverage.betareg <- function(model, ...)
 {
+  ## unify list component names
+  if(is.null(model$dist) || (model$dist == "beta")) {
+    for(n in intersect(names(model), fix_names_mu_phi)) names(model[[n]])[1L:2L] <- c("mu", "phi")
+  } else {
+    stop("not yet implemented for extended-support beta regression")
+  }
+
   ## extract response y and regressors X
   y <- if(is.null(model$y)) model.response(model.frame(model)) else model$y
-  x <- if(is.null(model$x)) model.matrix(model, model = "mean") else model$x$mean
-  z <- if(is.null(model$x)) model.matrix(model, model = "precision") else model$x$precision
+  x <- if(is.null(model$x)) model.matrix(model, model = "mu") else model$x$mu
+  z <- if(is.null(model$x)) model.matrix(model, model = "phi") else model$x$phi
   if(NCOL(x) < 1L) return(structure(rep.int(0, NROW(x)), .Names = rownames(x)))
 
-  if(is.null(model$offset$mean)) model$offset$mean <- rep(0, NROW(x))
-  if(is.null(model$offset$precision)) model$offset$precision <- rep(0, NROW(z))
+  if(is.null(model$offset$mu)) model$offset$mu <- rep(0, NROW(x))
+  if(is.null(model$offset$phi)) model$offset$phi <- rep(0, NROW(z))
   wts <- weights(model)
   if(is.null(wts)) wts <- 1
   ystar <- qlogis(y)
   
   ## extract coefficients
-  beta <- model$coefficients$mean
-  gamma <- model$coefficients$precision
+  beta <- model$coefficients$mu
+  gamma <- model$coefficients$phi
 
   ## compute different types of "fitted" values
   eta <- as.vector(x %*% beta + model$offset[[1L]])
   phi_eta <- as.vector(z %*% gamma + model$offset[[2L]])
-  mu <- model$link$mean$linkinv(eta)
-  phi <- model$link$precision$linkinv(phi_eta)
+  mu <- model$link$mu$linkinv(eta)
+  phi <- model$link$phi$linkinv(phi_eta)
   psi1 <- trigamma(mu * phi)
   psi2 <- trigamma((1 - mu) * phi)
   mustar <- digamma(mu * phi) - digamma((1 - mu) * phi)
 
   ## compute first and second derivatives
-  dmu <- as.vector(model$link$mean$mu.eta(eta))
-  dphi <- as.vector(model$link$precision$mu.eta(phi_eta))
+  dmu <- as.vector(model$link$mu$mu.eta(eta))
+  dphi <- as.vector(model$link$phi$mu.eta(phi_eta))
 
-  d2mu <- switch(model$link$mean$name,
+  d2mu <- switch(model$link$mu$name,
     "logit" = { dlogis(eta) * (1 - 2 * exp(eta)/(1 + exp(eta))) },
     "probit" = { -dnorm(eta) * eta },
     "cloglog" = { exp(-exp(eta)) * exp(eta) * (1 - exp(eta)) },
@@ -46,7 +53,7 @@ gleverage.betareg <- function(model, ...)
     "log" = { mu },
     "loglog" = { exp(-exp(-eta)) * exp(-eta) * (exp(-eta) - 1) }
   )
-  d2phi <- switch(model$link$precision$name,
+  d2phi <- switch(model$link$phi$name,
     "identity" = 0,
     "log" = phi,
     "sqrt" = 2
@@ -80,31 +87,38 @@ gleverage.betareg <- function(model, ...)
 
 hatvalues.betareg <- function(model, ...)
 {
+  ## unify list component names
+  if(is.null(model$dist) || (model$dist == "beta")) {
+    for(n in intersect(names(model), fix_names_mu_phi)) names(model[[n]])[1L:2L] <- c("mu", "phi")
+  } else {
+    stop("not yet implemented for extended-support beta regression")
+  }
+
   ## extract response y and regressors X and Z
   y <- if(is.null(model$y)) model.response(model.frame(model)) else model$y
-  x <- if(is.null(model$x)) model.matrix(model, model = "mean") else model$x$mean
-  z <- if(is.null(model$x)) model.matrix(model, model = "precision") else model$x$precision
+  x <- if(is.null(model$x)) model.matrix(model, model = "mu") else model$x$mu
+  z <- if(is.null(model$x)) model.matrix(model, model = "phi") else model$x$phi
   if(NCOL(x) < 1L) return(structure(rep.int(0, NROW(x)), .Names = rownames(x)))
   
-  if(is.null(model$offset$mean)) model$offset$mean <- rep(0, NROW(x))
-  if(is.null(model$offset$precision)) model$offset$precision <- rep(0, NROW(z))
+  if(is.null(model$offset$mu)) model$offset$mu <- rep(0, NROW(x))
+  if(is.null(model$offset$phi)) model$offset$phi <- rep(0, NROW(z))
   wts <- weights(model)
   if(is.null(wts)) wts <- 1
   
   ## extract coefficients
-  beta <- model$coefficients$mean
-  gamma <- model$coefficients$precision
+  beta <- model$coefficients$mu
+  gamma <- model$coefficients$phi
 
   ## compute different types of "fitted" values
   eta <- as.vector(x %*% beta + model$offset[[1L]])
   phi_eta <- as.vector(z %*% gamma + model$offset[[2L]])
-  mu <- model$link$mean$linkinv(eta)
-  phi <- model$link$precision$linkinv(phi_eta)
+  mu <- model$link$mu$linkinv(eta)
+  phi <- model$link$phi$linkinv(phi_eta)
   psi1 <- trigamma(mu * phi)
   psi2 <- trigamma((1 - mu) * phi)
 
   ## compute w
-  w <- wts * phi * (psi1 + psi2) * as.vector(model$link$mean$mu.eta(eta))^2
+  w <- wts * phi * (psi1 + psi2) * as.vector(model$link$mu$mu.eta(eta))^2
 
   ## compute (X'W X)^(-1)
   xwx1 <- chol2inv(qr.R(qr(sqrt(w) * x)))

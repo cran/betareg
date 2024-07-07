@@ -180,7 +180,7 @@ Fitted party:
 Number of inner nodes:    1
 Number of terminal nodes: 2
 Number of parameters per node: 4
-Objective function (negative log-likelihood): 66.734
+Objective function (negative log-likelihood): -66.734
 
 > library("strucchange")
 Loading required package: zoo
@@ -391,4 +391,4 @@ $\log\phi$ & $ 6.08741$\phantom{)} & (0.24990) & $ 5.71191$\phantom{)} & (0.2498
  *** Run successfully completed ***
 > proc.time()
    user  system elapsed 
- 15.109   0.788  15.617 
+  5.059   0.083   5.143 
