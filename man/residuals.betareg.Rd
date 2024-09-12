@@ -25,7 +25,7 @@
 \details{
   The default residuals (starting from version 3.2-0) are quantile residuals
   as proposed by Dunn and Smyth (1996) and explored in the context of beta
-  regression by Pereira (2017). In case of extended support beta regression
+  regression by Pereira (2017). In case of extended-support beta regression
   with boundary observations at 0 and/or 1, the quantile residuals for the
   boundary observations are randomized.
 
@@ -38,32 +38,37 @@
   the default prior to version 3.2-0. However, these are rather burdensome to
   compute because they require operations of \eqn{O(n^2)} and hence are typically
   prohibitively costly in large sample. Also they are not available for
-  extended support beta regression. Finally, Pereira (2017) found quantile
+  extended-support beta regression. Finally, Pereira (2017) found quantile
   residuals to have better distributional properties.
 }
 
 \references{
-Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
+Cribari-Neto F, Zeileis A (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \doi{10.18637/jss.v034.i02}
 
-Dunn, P.K., and Smyth, G.K. (1996). Randomized Quantile Residuals.
+Dunn PK, Smyth GK (1996). Randomized Quantile Residuals.
   \emph{Journal of Computational and Graphical Statistics}, \bold{5}(3), 236--244.
   \doi{10.2307/1390802}
 
-Espinheira, P.L., Ferrari, S.L.P., and Cribari-Neto, F. (2008).
+Espinheira PL, Ferrari SLP, Cribari-Neto F (2008).
   On Beta Regression Residuals.
   \emph{Journal of Applied Statistics}, \bold{35}(4), 407--419.
   \doi{10.1080/02664760701834931}
 
-Ferrari, S.L.P., and Cribari-Neto, F. (2004).
+Ferrari SLP, Cribari-Neto F (2004).
   Beta Regression for Modeling Rates and Proportions.
   \emph{Journal of Applied Statistics}, \bold{31}(7), 799--815.
   \doi{10.1080/0266476042000214501}
 
-Pereira, G.H.A. (2017). On Quantile Residuals in Beta Regression.
+Pereira GHA (2017). On Quantile Residuals in Beta Regression.
   \emph{Communications in Statistics -- Simulation and Computation}, \bold{48}(1), 302--316.
   \doi{10.1080/03610918.2017.1381740}
+
+Kosmidis I, Zeileis A (2024).
+  Extended-Support Beta Regression for [0, 1] Responses.
+  2409.07233, \emph{arXiv.org E-Print Archive}.
+  \doi{10.48550/arXiv.2409.07233}
 }
 
 \seealso{\code{\link{betareg}}}

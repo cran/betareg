@@ -1,3 +1,20 @@
+# betareg 3.2-1
+
+* New working paper "Extended-Support Beta Regression for [0, 1] Responses"
+  by Ioannis Kosmidis and Achim Zeileis in the _arXiv.org E-Print Archive_,
+  [doi:10.48550/arXiv.2409.07233](https://doi.org/10.48550/arXiv.2409.07233).
+
+* New package web page (via `altdoc`/`quarto`) at
+  <https://topmodels.R-Forge.R-project.org/betareg/>
+
+* Extended functionality of `predict()` method for `betareg` objects and
+  enhanced the corresponding documentation, see `?predict.betareg`.
+
+* Turned `vignette("betareg", package = "betareg")` and
+  `vignette("betareg-ext", package = "betareg")` from Sweave into Quarto
+  vignettes. Some improvements/updates in the text.
+
+
 # betareg 3.2-0
 
 * Major extension in `betareg()`: In addition to classic beta regression for

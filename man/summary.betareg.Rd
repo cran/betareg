@@ -62,15 +62,15 @@
 }
 
 \references{
-Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
+Cribari-Neto F, Zeileis A (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \doi{10.18637/jss.v034.i02}
 
-Ferrari, S.L.P., and Cribari-Neto, F. (2004).
+Ferrari SLP, Cribari-Neto F (2004).
   Beta Regression for Modeling Rates and Proportions.
   \emph{Journal of Applied Statistics}, \bold{31}(7), 799--815.
 
-Simas, A.B., and Barreto-Souza, W., and Rocha, A.V. (2010).
+Simas AB, Barreto-Souza W, Rocha AV (2010).
   Improved Estimators for a General Class of Beta Regression Models.
   \emph{Computational Statistics & Data Analysis}, \bold{54}(2), 348--366.
 }

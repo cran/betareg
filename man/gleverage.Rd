@@ -28,16 +28,16 @@ storage of order \eqn{n \times n}{n x n}.
 }
 
 \references{
-Ferrari, S.L.P., and Cribari-Neto, F. (2004).
+Ferrari SLP, Cribari-Neto F (2004).
   Beta Regression for Modeling Rates and Proportions.
   \emph{Journal of Applied Statistics}, \bold{31}(7), 799--815.
 
-Rocha, A.V., and Simas,  A.B. (2011).
+Rocha AV, Simas  AB (2011).
   Influence Diagnostics in a General Class of Beta Regression Models.
   \emph{Test}, \bold{20}(1), 95--119.
   \doi{10.1007/s11749-010-0189-z}
 
-Wei, B.-C., and Hu, Y.-Q., and Fung, W.-K. (1998).
+Wei BC, Hu, YQ, Fung WK (1998).
   Generalized Leverage and Its Applications.
   \emph{Scandinavian Journal of Statistics}, \bold{25}, 25--37.
 }

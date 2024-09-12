@@ -44,25 +44,26 @@ Example 3 from Smithson and Verkuilen (2006) supplements.
 }
 
 \references{
-Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
+Cribari-Neto F, Zeileis A (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \doi{10.18637/jss.v034.i02}
 
-Grün, B., Kosmidis, I., and Zeileis, A. (2012).
+Grün B, Kosmidis I, Zeileis A (2012).
   Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
   \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
   \doi{10.18637/jss.v048.i11}
 
 Kosmidis I, Zeileis A (2024).
   Extended-Support Beta Regression for [0, 1] Responses.
-  \emph{Unpublished manuscript}.
+  2409.07233, \emph{arXiv.org E-Print Archive}.
+  \doi{10.48550/arXiv.2409.07233}
 
-Pammer, K., and Kevan, A. (2004).
+Pammer K, Kevan A (2004).
   The Contribution of Visual Sensitivity, Phonological Processing
   and Non-Verbal IQ to Children's Reading.
   \emph{Unpublished manuscript}, The Australian National University, Canberra.
 
-Smithson, M., and Verkuilen, J. (2006).
+Smithson M, Verkuilen J (2006).
   A Better Lemon Squeezer? Maximum-Likelihood Regression with
   Beta-Distributed Dependent Variables.
   \emph{Psychological Methods}, \bold{11}(7), 54--71.

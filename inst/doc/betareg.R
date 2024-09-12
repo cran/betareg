@@ -1,15 +1,30 @@
-### R code from vignette source 'betareg.Rnw'
-
-###################################################
-### code chunk number 1: preliminaries
-###################################################
-options(width = 70, prompt = "R> ", continue = "+  ", useFancyQuotes = FALSE, digits = 5)
+## ----preliminaries, include = FALSE-------------------------------------------
 library("betareg")
+data("GasolineYield", package = "betareg")
+data("FoodExpenditure", package = "betareg")
+gy_loglog <- betareg(yield ~ batch + temp, data = GasolineYield,
+  link = "loglog")
+fe_beta2 <- betareg(I(food/income) ~ income + persons | persons,
+  data = FoodExpenditure)
+
+knitr::opts_chunk$set(
+  engine = "R",
+  collapse = TRUE,
+  comment = "##",
+  message = FALSE,
+  warning = FALSE,
+  echo = TRUE
+)
+options(width = 70, prompt = "R> ", continue = "+  ", useFancyQuotes = FALSE, digits = 5)
 
 
-###################################################
-### code chunk number 2: beta-distributions
-###################################################
+## ----beta-distributions-------------------------------------------------------
+#| echo: false
+#| fig-width: 8.5
+#| fig-height: 4.5
+#| out-width: 100%
+#| label: fig-beta-distributions
+#| fig-cap: "Probability density functions for beta distributions with varying parameters $\\mu = 0.10, 0.25, 0.50, 0.75, 0.90$ and $\\phi = 5$ (left) and $\\phi = 100$ (right)."
 par(mfrow = c(1, 2), mar = c(4.1, 4.1, 4.1, 0.1))
 dbeta2 <- function(x, mu, phi = 1) dbeta(x, mu * phi, (1 - mu) * phi)
 x <- seq(from = 0.01, to = 0.99, length = 200)
@@ -46,23 +61,25 @@ text(0.75,  9.8, "0.75")
 text(0.50,  8.6, "0.50")
 
 
-###################################################
-### code chunk number 3: GasolineYield-betareg
-###################################################
+## ----eval=FALSE---------------------------------------------------------------
+## betareg(formula, data, subset, na.action, weights, offset,
+##   link = "logit", link.phi = NULL, control = betareg.control(...),
+##   model = TRUE, y = TRUE, x = FALSE, ...)
+
+
+## ----GasolineYield-betareg----------------------------------------------------
 data("GasolineYield", package = "betareg")
 gy_logit <- betareg(yield ~ batch + temp, data = GasolineYield)
+summary(gy_logit)
 
 
-###################################################
-### code chunk number 4: GasolineYield-loglog
-###################################################
-gy_loglog <- betareg(yield ~ batch + temp, data = GasolineYield,
-  link = "loglog")
-
-
-###################################################
-### code chunk number 5: GasolineYield-visualization
-###################################################
+## ----GasolineYield-visualization----------------------------------------------
+#| echo: false
+#| fig-width: 6
+#| fig-height: 5.5
+#| out-width: 100%
+#| label: fig-GasolineYield
+#| fig-cap: "Gasoline yield data from @betareg:Prater:1956: Proportion of crude oil converted to gasoline explained by temperature (in degrees Fahrenheit) at which all gasoline has vaporized and given batch (indicated by gray level). Fitted curves correspond to beta regressions `gy_loglog` with log-log link (solid, red) and `gy_logit` with logit link (dashed, blue). Both curves were evaluated at varying temperature with the intercept for batch 6 (i.e., roughly the average intercept)."
 redblue <- hcl(c(0, 260), 90, 40)
 plot(yield ~ temp, data = GasolineYield, type = "n",
   ylab = "Proportion of crude oil converted to gasoline",
@@ -84,27 +101,12 @@ legend("bottomright", c("log-log", "logit"),
   col = redblue, lty = 1:2, lwd = 2, bty = "n")
 
 
-###################################################
-### code chunk number 6: GasolineYield-betareg1
-###################################################
-data("GasolineYield", package = "betareg")
-gy_logit <- betareg(yield ~ batch + temp, data = GasolineYield)
-summary(gy_logit)
-
-
-###################################################
-### code chunk number 7: GasolineYield-plot (eval = FALSE)
-###################################################
-## suppressWarnings(RNGversion("3.5.0"))
-## set.seed(123)
-## plot(gy_logit, which = 1:4, type = "pearson")
-## plot(gy_logit, which = 5, type = "deviance", sub.caption = "")
-## plot(gy_logit, which = 1, type = "deviance", sub.caption = "")
-
-
-###################################################
-### code chunk number 8: GasolineYield-plot1
-###################################################
+## ----GasolineYield-plot-------------------------------------------------------
+#| fig-width: 8.5
+#| fig-height: 10
+#| out-width: 100%
+#| label: fig-GasolineYield-plot
+#| fig-cap: "Diagnostic plots for beta regression model `gy_logit`."
 par(mfrow = c(3, 2))
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
@@ -113,38 +115,35 @@ plot(gy_logit, which = 5, type = "deviance", sub.caption = "")
 plot(gy_logit, which = 1, type = "deviance", sub.caption = "")
 
 
-###################################################
-### code chunk number 9: GasolineYield-update
-###################################################
+## ----GasolineYield-update-----------------------------------------------------
 gy_logit4 <- update(gy_logit, subset = -4)
 coef(gy_logit, model = "precision")
 coef(gy_logit4, model = "precision")
 
 
-###################################################
-### code chunk number 10: FoodExpenditure-lm
-###################################################
+## ----FoodExpenditure-lm-------------------------------------------------------
 data("FoodExpenditure", package = "betareg")
 fe_lm <- lm(I(food/income) ~ income + persons, data = FoodExpenditure)
 
 
-###################################################
-### code chunk number 11: FoodExpenditure-betareg
-###################################################
+## ----FoodExpenditure-bptest---------------------------------------------------
+library("lmtest")
+bptest(fe_lm)
+
+
+## ----FoodExpenditure-betareg--------------------------------------------------
 fe_beta <- betareg(I(food/income) ~ income + persons,
   data = FoodExpenditure)
+summary(fe_beta)
 
 
-###################################################
-### code chunk number 12: FoodExpenditure-betareg2
-###################################################
-fe_beta2 <- betareg(I(food/income) ~ income + persons | persons,
-  data = FoodExpenditure)
-
-
-###################################################
-### code chunk number 13: FoodExpenditure-visualization
-###################################################
+## ----FoodExpenditure-visualization--------------------------------------------
+#| echo: false
+#| fig-width: 6
+#| fig-height: 5.5
+#| out-width: 100%
+#| label: fig-FoodExpenditure
+#| fig-cap: "Household food expenditure data from @betareg:Griffiths+Hill+Judge:1993: Proportion of household income spent on food explained by household income and number of persons in household (indicated by gray level). Fitted curves correspond to beta regressions `fe_beta` with fixed dispersion (long-dashed, blue), `fe_beta2` with variable dispersion (solid, red), and the linear regression `fe_lin` (dashed, black). All curves were evaluated at varying income with the intercept for mean number of persons ($ = `r round(mean(FoodExpenditure$persons), digits = 2)`$)."
 redblueblack <- hcl(c(0, 260, 0), c(90, 90, 0), c(40, 40, 0))
 plot(I(food/income) ~ income, data = FoodExpenditure,
   xlab = "Household income", ylab = "Proportion of food expenditures",
@@ -169,141 +168,93 @@ legend("topright", c("logit, var. disp.", "logit, fix. disp.", "lm"),
   col = redblueblack, lty = c(1, 5, 2), lwd = 2, bty = "n")
 
 
-###################################################
-### code chunk number 14: FoodExpenditure-lm1
-###################################################
-data("FoodExpenditure", package = "betareg")
-fe_lm <- lm(I(food/income) ~ income + persons, data = FoodExpenditure)
-
-
-###################################################
-### code chunk number 15: FoodExpenditure-bptest
-###################################################
-library("lmtest")
-bptest(fe_lm)
-
-
-###################################################
-### code chunk number 16: FoodExpenditure-betareg1
-###################################################
-fe_beta <- betareg(I(food/income) ~ income + persons,
-  data = FoodExpenditure)
-summary(fe_beta)
-
-
-###################################################
-### code chunk number 17: GasolineYield-phireg
-###################################################
+## ----GasolineYield-phireg-----------------------------------------------------
 gy_logit2 <- betareg(yield ~ batch + temp | temp, data = GasolineYield)
 
 
-###################################################
-### code chunk number 18: GasolineYield-phireg-coef
-###################################################
+## ----GasolineYield-phireg-coef, echo=FALSE------------------------------------
 printCoefmat(summary(gy_logit2)$coefficients$precision)
 
 
-###################################################
-### code chunk number 19: GasolineYield-lrtest
-###################################################
+## ----GasolineYield-lrtest-----------------------------------------------------
 lrtest(gy_logit, gy_logit2)
 
 
-###################################################
-### code chunk number 20: FoodExpenditure-betareg2a
-###################################################
+## ----FoodExpenditure-betareg2-------------------------------------------------
 fe_beta2 <- betareg(I(food/income) ~ income + persons | persons,
   data = FoodExpenditure)
 
 
-###################################################
-### code chunk number 21: FoodExpenditure-comparison
-###################################################
+## ----FoodExpenditure-comparison-----------------------------------------------
 lrtest(fe_beta, fe_beta2)
 AIC(fe_beta, fe_beta2, k = log(nrow(FoodExpenditure)))
 
 
-###################################################
-### code chunk number 22: GasolineYield-loglog1
-###################################################
+## ----GasolineYield-loglog-----------------------------------------------------
 gy_loglog <- betareg(yield ~ batch + temp, data = GasolineYield,
   link = "loglog")
 
 
-###################################################
-### code chunk number 23: GasolineYield-Rsquared
-###################################################
+## ----GasolineYield-Rsquared---------------------------------------------------
 summary(gy_logit)$pseudo.r.squared
 summary(gy_loglog)$pseudo.r.squared
 
 
-###################################################
-### code chunk number 24: GasolineYield-AIC
-###################################################
+## ----GasolineYield-AIC--------------------------------------------------------
 AIC(gy_logit, gy_logit2, gy_loglog)
 
 
-###################################################
-### code chunk number 25: GasolineYield-reset
-###################################################
+## ----GasolineYield-reset------------------------------------------------------
 lrtest(gy_logit, . ~ . + I(predict(gy_logit, type = "link")^2))
 lrtest(gy_loglog, . ~ . + I(predict(gy_loglog, type = "link")^2))
 
 
-###################################################
-### code chunk number 26: GasolineYield-diagnostics
-###################################################
+## ----GasolineYield-diagnostics------------------------------------------------
+#| echo: false
+#| fig-width: 6
+#| fig-height: 5.5
+#| out-width: 100%
+#| label: fig-GasolineYield-diagnostics
+#| fig-cap: "Scatterplot comparing the absolute raw residuals from beta regression modes with log-log link (x-axis) and logit link (y-axis)."
 plot(abs(residuals(gy_loglog, type = "response")),
   abs(residuals(gy_logit, type = "response")))
 abline(0, 1, lty = 2)
 
 
-###################################################
-### code chunk number 27: GasolineYield-diagnostics1 (eval = FALSE)
-###################################################
-## plot(abs(residuals(gy_loglog, type = "response")),
-##   abs(residuals(gy_logit, type = "response")))
-## abline(0, 1, lty = 2)
-
-
-###################################################
-### code chunk number 28: GasolineYield-loglog
-###################################################
+## ----GasolineYield-loglog2----------------------------------------------------
 gy_loglog2 <- update(gy_loglog, link.phi = "log")
 summary(gy_loglog2)$iterations
 
 
-###################################################
-### code chunk number 29: FoodExpenditure-links
-###################################################
+## ----FoodExpenditure-links----------------------------------------------------
 sapply(c("logit", "probit", "cloglog", "cauchit", "loglog"),
   function(x) logLik(update(fe_beta2, link = x)))
 
 
-###################################################
-### code chunk number 30: ReadingSkills-eda
-###################################################
+## ----ReadingSkills-eda, echo=FALSE, results='hide'----------------------------
 data("ReadingSkills", package = "betareg")
 rs_accuracy <- format(round(with(ReadingSkills, tapply(accuracy, dyslexia, mean)), digits = 3))
 
 
-###################################################
-### code chunk number 31: ReadingSkills-ols
-###################################################
+## ----ReadingSkills-ols--------------------------------------------------------
 data("ReadingSkills", package = "betareg")
 rs_ols <- lm(qlogis(accuracy) ~ dyslexia * iq, data = ReadingSkills)
+coeftest(rs_ols)
 
 
-###################################################
-### code chunk number 32: ReadingSkills-beta
-###################################################
+## ----ReadingSkills-beta-------------------------------------------------------
 rs_beta <- betareg(accuracy ~ dyslexia * iq | dyslexia + iq,
   data = ReadingSkills, hessian = TRUE)
+coeftest(rs_beta)
 
 
-###################################################
-### code chunk number 33: ReadingSkills-visualization
-###################################################
+## ----ReadingSkills-visualization----------------------------------------------
+#| echo: false
+#| fig-width: 6
+#| fig.height: 5.5
+#| out-width: 100%
+#| label: fig-ReadingSkills
+#| fig-cap: "Reading skills data from @betareg:Smithson+Verkuilen:2006 : Linearly transformed reading accuracy by IQ score and dyslexia status (control, blue vs. dyslexic, red). Fitted curves correspond to beta regression `rs_beta` (solid) and OLS regression with logit-transformed dependent variable `rs_ols` (dashed)."
 cl1 <- hcl(c(260, 0), 90, 40)
 cl2 <- hcl(c(260, 0), 10, 95)
 plot(accuracy ~ iq, data = ReadingSkills, col = cl2[as.numeric(dyslexia)],
@@ -325,67 +276,31 @@ legend("topleft", c("control", "dyslexic", "betareg", "lm"),
   col = c(cl1, NA, NA), bty = "n")
 
 
-###################################################
-### code chunk number 34: ReadingSkills-ols1
-###################################################
-data("ReadingSkills", package = "betareg")
-rs_ols <- lm(qlogis(accuracy) ~ dyslexia * iq, data = ReadingSkills)
-coeftest(rs_ols)
-
-
-###################################################
-### code chunk number 35: ReadingSkills-beta1
-###################################################
-rs_beta <- betareg(accuracy ~ dyslexia * iq | dyslexia + iq,
-  data = ReadingSkills, hessian = TRUE)
-coeftest(rs_beta)
-
-
-###################################################
-### code chunk number 36: strucchange-data
-###################################################
+## ----strucchange-data---------------------------------------------------------
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
 y1 <- c(rbeta(150, 0.3 * 4, 0.7 * 4), rbeta(50, 0.5 * 4, 0.5 * 4))
 y2 <- c(rbeta(100, 0.3 * 4, 0.7 * 4), rbeta(100, 0.3 * 8, 0.7 * 8))
 
 
-###################################################
-### code chunk number 37: strucchange-gefp
-###################################################
+## ----strucchange-gefp---------------------------------------------------------
 library("strucchange")
 y1_gefp <- gefp(y1 ~ 1, fit = betareg)
 y2_gefp <- gefp(y2 ~ 1, fit = betareg)
 
 
-###################################################
-### code chunk number 38: strucchange-plot1 (eval = FALSE)
-###################################################
-## plot(y1_gefp, aggregate = FALSE)
-
-
-###################################################
-### code chunk number 39: strucchange-plot2 (eval = FALSE)
-###################################################
-## plot(y2_gefp, aggregate = FALSE)
-
-
-###################################################
-### code chunk number 40: strucchange-plot (eval = FALSE)
-###################################################
-## plot(y1_gefp, aggregate = FALSE)
-## plot(y2_gefp, aggregate = FALSE)
-
-
-###################################################
-### code chunk number 41: strucchange-plot1a
-###################################################
+## ----strucchange-plot1--------------------------------------------------------
+#| fig-width: 6.5
+#| fig-height: 6
+#| label: fig-strucchange1
+#| fig-cap: "Structural change tests for artificial data `y1` with change in $\\mu$."
 plot(y1_gefp, aggregate = FALSE)
 
 
-###################################################
-### code chunk number 42: strucchange-plot2a
-###################################################
+## ----strucchange-plot2--------------------------------------------------------
+#| fig-width: 6.5
+#| fig-height: 6
+#| label: fig-strucchange2
+#| fig-cap: "Structural change tests for artificial data `y2` with change in $\\phi$."
 plot(y2_gefp, aggregate = FALSE)
-
 

@@ -114,21 +114,21 @@ extraComponent(type = c("uniform", "betareg"), coef, delta,
 }
 
 \references{
-Cribari-Neto, F., and Zeileis, A. (2010). Beta Regression in R.
+Cribari-Neto F, Zeileis A (2010). Beta Regression in R.
   \emph{Journal of Statistical Software}, \bold{34}(2), 1--24.
   \doi{10.18637/jss.v034.i02}
 
-Grün, B., Kosmidis, I., and Zeileis, A. (2012).
+Grün B, Kosmidis I, Zeileis A (2012).
   Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned.
   \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
   \doi{10.18637/jss.v048.i11}
 
-Grün, B., and Leisch, F. (2008). FlexMix Version 2: Finite Mixtures
+Grün B, Leisch F (2008). FlexMix Version 2: Finite Mixtures
   with Concomitant Variables and Varying and Constant Parameters.
   \emph{Journal of Statistical Software}, \bold{28}(4), 1--35.
   \doi{10.18637/jss.v028.i04}
 
-Leisch, F. (2004). FlexMix: A General Framework for Finite Mixture
+Leisch F (2004). FlexMix: A General Framework for Finite Mixture
   Models and Latent Class Regression in R.
   \emph{Journal of Statistical Software}, \bold{11}(8), 1--18.
   \doi{10.18637/jss.v011.i08}

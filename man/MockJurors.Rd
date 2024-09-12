@@ -43,11 +43,11 @@ Example 1 from Smithson and Verkuilen (2006) supplements.
 }
 
 \references{
-Deady, S. (2004).
+Deady S (2004).
   The Psychological Third Verdict: 'Not Proven' or 'Not Willing to Make a Decision'?
   \emph{Unpublished honors thesis}, The Australian National University, Canberra.
 
-Smithson, M., and Verkuilen, J. (2006).
+Smithson M, Verkuilen J (2006).
   A Better Lemon Squeezer? Maximum-Likelihood Regression with
   Beta-Distributed Dependent Variables.
   \emph{Psychological Methods}, \bold{11}(7), 54--71.

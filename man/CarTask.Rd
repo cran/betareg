@@ -1,9 +1,8 @@
 \name{CarTask}
 \alias{CarTask}
 
-\title{
-  Partition-primed Probability Judgement Task for Car Dealership
-}
+\title{Partition-Primed Probability Judgement Task for Car Dealership}
+
 \description{
   In this study participants were asked to judge how likely it is that a
   customer trades in a coupe or that a customer buys a car form a

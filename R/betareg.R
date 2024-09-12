@@ -942,19 +942,30 @@ print.summary.betareg <- function(x, digits = max(3, getOption("digits") - 3), .
 }
 
 predict.betareg <- function(object, newdata = NULL,
-                            type = c("response", "link", "precision", "variance", "parameters", "density", "probability", "quantile"),
-                            na.action = na.pass, at = 0.5, ...)
+                            type = c("response", "link", "precision", "variance", "parameters", "distribution", "density", "probability", "quantile"),
+                            na.action = na.pass, at = 0.5, elementwise = NULL, ...)
 {
+    ## types of predictions
+    type <- match.arg(type[1L], c(
+        "response", "mean",
+        "link",
+        "precision",
+        "variance",
+        "density", "pdf",
+        "probability", "cdf",
+        "quantile",
+        "distribution",
+        "parameters"))
+    if(type == "mean") type <- "response"
+    if(type == "cdf") type <- "probability"
+    if(type == "pdf") type <- "density"
+
     ## unify list component names
     if(is.null(object$dist)) object$dist <- "beta"
     if(object$dist == "beta") {
         for(n in intersect(names(object), fix_names_mu_phi)) names(object[[n]])[1L:2L] <- c("mu", "phi")
     }
     if(is.null(object$nu)) object$nu <- NA_real_
-
-    ## types of predictions
-    type <- match.arg(type, c("response", "link", "precision", "variance", "parameters", "density", "probability", "quantile"))
-    attype <- if(is.character(at)) match.arg(at, c("function", "list")) else "numeric"
 
     ## set up function that computes prediction from model parameters
     linkfun <- object$link$mu$linkfun
@@ -964,7 +975,8 @@ predict.betareg <- function(object, newdata = NULL,
                       "link" = function(pars) linkfun(pars$mu),
                       "precision" = function(pars) pars$phi,
                       "variance" = function(pars) pars$mu * (1 - pars$mu)/(1 + pars$phi),
-                      "parameters" = function(pars) pars,
+                      "parameters" = function(pars) {pars$nu <- NULL; pars},
+                      "distribution" = function(pars) BetaR(mu = pars$mu, phi = pars$phi),
                       "density" = function(x, pars, ...) dbetar(x, mu = pars$mu, phi = pars$phi, ...),
                       "probability" = function(q, pars, ...) pbetar(q, mu = pars$mu, phi = pars$phi, ...),
                       "quantile" = function(p, pars, ...) qbetar(p, mu = pars$mu, phi = pars$phi, ...)
@@ -976,6 +988,7 @@ predict.betareg <- function(object, newdata = NULL,
                       "precision" = function(pars) pars$phi,
                       "variance" = function(pars) apply(pars, 1, function(x) var_xbeta(x["mu"], x["phi"], x["nu"])),
                       "parameters" = function(pars) pars,
+                      "distribution" = function(pars) XBeta(mu = pars$mu, phi = pars$phi, nu = pars$nu),
                       "density" = function(x, pars, ...) dxbeta(x, mu = pars$mu, phi = pars$phi, nu = pars$nu, ...),
                       "probability" = function(q, pars, ...) pxbeta(q, mu = pars$mu, phi = pars$phi, nu = pars$nu, ...),
                       "quantile" = function(p, pars, ...) qxbeta(p, mu = pars$mu, phi = pars$phi, nu = pars$nu, ...)
@@ -987,6 +1000,7 @@ predict.betareg <- function(object, newdata = NULL,
                       "precision" = function(pars) pars$phi,
                       "variance" = function(pars) apply(pars, 1, function(x) var_xbetax(x["mu"], x["phi"], x["nu"], object$control$quad)),
                       "parameters" = function(pars) pars,
+                      "distribution" = function(pars) XBetaX(mu = pars$mu, phi = pars$phi, nu = pars$nu),
                       "density" = function(x, pars, ...) dxbetax(x, mu = pars$mu, phi = pars$phi, nu = pars$nu, ...),
                       "probability" = function(q, pars, ...) pxbetax(q, mu = pars$mu, phi = pars$phi, nu = pars$nu, ...),
                       "quantile" = function(p, pars, ...) qxbetax(p, mu = pars$mu, phi = pars$phi, nu = pars$nu, ...)
@@ -1039,42 +1053,39 @@ predict.betareg <- function(object, newdata = NULL,
         }
     }
 
-    if(type %in% c("response", "link", "precision", "variance", "parameters")) {
+    if(type %in% c("response", "link", "precision", "variance", "parameters", "distribution")) {
         ## prediction is just a transformation of the parameters
         rval <- fun(pars, ...)
-        if(object$dist == "beta" && type == "parameters") rval$nu <- NULL
-        if(is.null(dim(rval))) names(rval) <- rownames(pars)
-    } else {
-        ## prediction is a list of functions with predicted parameters as default
-        if(attype == "list") {
-            rval <- lapply(1L:nrow(pars), function(i) {
-                function(at, mu = pars[i, "mu"], phi = pars[i, "phi"], nu = pars[i, "nu"], ...) {
-                    fun(at, data.frame(mu = mu, phi = phi, nu = nu), ...)
-                }
-            })
+        if(is.null(dim(rval))) {
+          names(rval) <- rownames(pars)
         } else {
-            ## prediction requires a function that suitably expands 'at'
-            ## and then evaluates fun() with predicted parameters as default
-            FUN <- function(at, mu = pars$mu, phi = pars$phi, nu = pars$nu, ...) {
-                n <- length(mu)
-                if(length(at) == 1L) at <- rep.int(as.vector(at), n)
-                if(length(at) != n) at <- rbind(at)
-                if(is.matrix(at) && NROW(at) == 1L) {
-                    at <- matrix(rep(at, each = n), nrow = n)
-                    rv <- fun(as.vector(at), pars = data.frame(mu = rep.int(mu, ncol(at)),
-                                                               phi = rep.int(phi, ncol(at)), nu = rep.int(nu, ncol(at))), ...)
-                    rv <- matrix(rv, nrow = n)
-                    rownames(rv) <- rownames(pars)
-                    colnames(rv) <- paste(substr(type, 1L, 1L),
-                                          round(at[1L, ], digits = pmax(3L, getOption("digits") - 3L)), sep = "_")
-                } else {
-                    rv <- fun(at, pars = data.frame(mu = mu, phi = phi, nu = nu))
-                    names(rv) <- rownames(pars)
-                }
-                return(rv)
-            }
-            rval <- if(attype == "function") FUN else FUN(at, ...)
+          rownames(rval) <- rownames(pars)
         }
+    } else {
+        ## prediction requires a function that suitably expands 'at'
+        ## and then evaluates fun() with predicted parameters as default
+        FUN <- function(at, mu = pars$mu, phi = pars$phi, nu = pars$nu, elementwise = NULL, ...) {
+            n <- length(mu)
+            if(is.null(elementwise)) {
+                elementwise <- !( all(length(at) != c(1L, n)) || (is.matrix(at) && NROW(at) == 1L) )
+            }
+            if(elementwise) {
+                if(length(at) == 1L) at <- rep.int(as.vector(at), n)
+                if(length(at) != n) stop("for 'elementwise = TRUE' the argument 'at' must either have length 1 or the same as the number of observations in 'newdata'")
+                rv <- fun(at, pars = data.frame(mu = mu, phi = phi, nu = nu))
+                names(rv) <- rownames(pars)
+            } else {
+                at <- matrix(rep(at, each = n), nrow = n)
+                rv <- fun(as.vector(at), pars = data.frame(mu = rep.int(mu, ncol(at)),
+                                                           phi = rep.int(phi, ncol(at)), nu = rep.int(nu, ncol(at))), ...)
+                rv <- matrix(rv, nrow = n)
+                rownames(rv) <- rownames(pars)
+                colnames(rv) <- paste(substr(type, 1L, 1L),
+                                      round(at[1L, ], digits = pmax(3L, getOption("digits") - 3L)), sep = "_")
+            }
+            return(rv)
+        }
+        rval <- FUN(at, elementwise = elementwise, ...)
     }
 
     return(rval)
@@ -1459,10 +1470,5 @@ simulate.betareg <- function(object, nsim = 1, seed = NULL, ...) {
 
 prodist.betareg <- function(object, newdata = NULL, na.action = na.pass, ...) {
   if(is.null(object$dist)) object$dist <- "beta"
-  pars <- predict(object, newdata = newdata, na.action = na.action, type = "parameters", ...)
-  pars$mu <- setNames(pars$mu, rownames(pars))
-  switch(object$dist,
-    "beta"   = do.call("BetaR",  pars),
-    "xbeta"  = do.call("XBeta",  pars),
-    "xbetax" = do.call("XBetaX", pars))
+  predict(object, newdata = newdata, na.action = na.action, type = "distribution", ...)
 }

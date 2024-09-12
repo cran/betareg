@@ -1,8 +1,21 @@
 
+> library("betareg")
+
+> data("GasolineYield", package = "betareg")
+
+> data("FoodExpenditure", package = "betareg")
+
+> gy_loglog <- betareg(yield ~ batch + temp, data = GasolineYield, 
++     link = "loglog")
+
+> fe_beta2 <- betareg(I(food/income) ~ income + persons | 
++     persons, data = FoodExpenditure)
+
+> knitr::opts_chunk$set(engine = "R", collapse = TRUE, 
++     comment = "##", message = FALSE, warning = FALSE, echo = TRUE)
+
 > options(width = 70, prompt = "R> ", continue = "+  ", 
 +     useFancyQuotes = FALSE, digits = 5)
-
-> library("betareg")
 
 > par(mfrow = c(1, 2), mar = c(4.1, 4.1, 4.1, 0.1))
 
@@ -52,38 +65,6 @@
 
 > gy_logit <- betareg(yield ~ batch + temp, data = GasolineYield)
 
-> gy_loglog <- betareg(yield ~ batch + temp, data = GasolineYield, 
-+     link = "loglog")
-
-> redblue <- hcl(c(0, 260), 90, 40)
-
-> plot(yield ~ temp, data = GasolineYield, type = "n", 
-+     ylab = "Proportion of crude oil converted to gasoline", xlab = "Temperature at which all ..." ... [TRUNCATED] 
-
-> points(yield ~ temp, data = GasolineYield, cex = 1.75, 
-+     pch = 19, col = rev(gray.colors(10))[as.numeric(batch)])
-
-> points(yield ~ temp, data = GasolineYield, cex = 1.75)
-
-> legend("topleft", as.character(1:10), title = "Batch", 
-+     col = rev(gray.colors(10)), pch = 19, bty = "n")
-
-> legend("topleft", as.character(1:10), title = "Batch", 
-+     pch = 1, bty = "n")
-
-> lines(150:500, predict(gy_logit, newdata = data.frame(temp = 150:500, 
-+     batch = "6")), col = redblue[2], lwd = 2, lty = 2)
-
-> lines(150:500, predict(gy_loglog, newdata = data.frame(temp = 150:500, 
-+     batch = "6")), col = redblue[1], lwd = 2)
-
-> legend("bottomright", c("log-log", "logit"), col = redblue, 
-+     lty = 1:2, lwd = 2, bty = "n")
-
-> data("GasolineYield", package = "betareg")
-
-> gy_logit <- betareg(yield ~ batch + temp, data = GasolineYield)
-
 > summary(gy_logit)
 
 Call:
@@ -118,6 +99,31 @@ Log-likelihood: 84.8 on 12 Df
 Pseudo R-squared: 0.962
 Number of iterations: 51 (BFGS) + 3 (Fisher scoring) 
 
+> redblue <- hcl(c(0, 260), 90, 40)
+
+> plot(yield ~ temp, data = GasolineYield, type = "n", 
++     ylab = "Proportion of crude oil converted to gasoline", xlab = "Temperature at which all ..." ... [TRUNCATED] 
+
+> points(yield ~ temp, data = GasolineYield, cex = 1.75, 
++     pch = 19, col = rev(gray.colors(10))[as.numeric(batch)])
+
+> points(yield ~ temp, data = GasolineYield, cex = 1.75)
+
+> legend("topleft", as.character(1:10), title = "Batch", 
++     col = rev(gray.colors(10)), pch = 19, bty = "n")
+
+> legend("topleft", as.character(1:10), title = "Batch", 
++     pch = 1, bty = "n")
+
+> lines(150:500, predict(gy_logit, newdata = data.frame(temp = 150:500, 
++     batch = "6")), col = redblue[2], lwd = 2, lty = 2)
+
+> lines(150:500, predict(gy_loglog, newdata = data.frame(temp = 150:500, 
++     batch = "6")), col = redblue[1], lwd = 2)
+
+> legend("bottomright", c("log-log", "logit"), col = redblue, 
++     lty = 1:2, lwd = 2, bty = "n")
+
 > par(mfrow = c(3, 2))
 
 > suppressWarnings(RNGversion("3.5.0"))
@@ -139,50 +145,6 @@ Number of iterations: 51 (BFGS) + 3 (Fisher scoring)
 > coef(gy_logit4, model = "precision")
  (phi) 
 577.79 
-
-> data("FoodExpenditure", package = "betareg")
-
-> fe_lm <- lm(I(food/income) ~ income + persons, data = FoodExpenditure)
-
-> fe_beta <- betareg(I(food/income) ~ income + persons, 
-+     data = FoodExpenditure)
-
-> fe_beta2 <- betareg(I(food/income) ~ income + persons | 
-+     persons, data = FoodExpenditure)
-
-> redblueblack <- hcl(c(0, 260, 0), c(90, 90, 0), c(40, 
-+     40, 0))
-
-> plot(I(food/income) ~ income, data = FoodExpenditure, 
-+     xlab = "Household income", ylab = "Proportion of food expenditures", 
-+     main = "Foo ..." ... [TRUNCATED] 
-
-> points(I(food/income) ~ income, data = FoodExpenditure, 
-+     cex = 1.75, pch = 19, col = rev(gray.colors(7))[persons])
-
-> points(I(food/income) ~ income, data = FoodExpenditure, 
-+     cex = 1.75)
-
-> legend("bottomleft", rev(as.character(sort(unique(FoodExpenditure$persons)))), 
-+     title = "Persons", col = gray.colors(7), pch = 19, bty = "n")
-
-> legend("bottomleft", rev(as.character(sort(unique(FoodExpenditure$persons)))), 
-+     title = "Persons", pch = 1, bty = "n")
-
-> lines(10:100, predict(fe_lm, newdata = data.frame(income = 10:100, 
-+     persons = mean(FoodExpenditure$persons))), col = redblueblack[3], 
-+     l .... [TRUNCATED] 
-
-> lines(10:100, predict(fe_beta, newdata = data.frame(income = 10:100, 
-+     persons = mean(FoodExpenditure$persons))), col = redblueblack[2], 
-+     .... [TRUNCATED] 
-
-> lines(10:100, predict(fe_beta2, newdata = data.frame(income = 10:100, 
-+     persons = mean(FoodExpenditure$persons))), col = redblueblack[1], 
-+    .... [TRUNCATED] 
-
-> legend("topright", c("logit, var. disp.", "logit, fix. disp.", 
-+     "lm"), col = redblueblack, lty = c(1, 5, 2), lwd = 2, bty = "n")
 
 > data("FoodExpenditure", package = "betareg")
 
@@ -234,6 +196,40 @@ Type of estimator: ML (maximum likelihood)
 Log-likelihood: 45.3 on 4 Df
 Pseudo R-squared: 0.388
 Number of iterations: 28 (BFGS) + 4 (Fisher scoring) 
+
+> redblueblack <- hcl(c(0, 260, 0), c(90, 90, 0), c(40, 
++     40, 0))
+
+> plot(I(food/income) ~ income, data = FoodExpenditure, 
++     xlab = "Household income", ylab = "Proportion of food expenditures", 
++     main = "Foo ..." ... [TRUNCATED] 
+
+> points(I(food/income) ~ income, data = FoodExpenditure, 
++     cex = 1.75, pch = 19, col = rev(gray.colors(7))[persons])
+
+> points(I(food/income) ~ income, data = FoodExpenditure, 
++     cex = 1.75)
+
+> legend("bottomleft", rev(as.character(sort(unique(FoodExpenditure$persons)))), 
++     title = "Persons", col = gray.colors(7), pch = 19, bty = "n")
+
+> legend("bottomleft", rev(as.character(sort(unique(FoodExpenditure$persons)))), 
++     title = "Persons", pch = 1, bty = "n")
+
+> lines(10:100, predict(fe_lm, newdata = data.frame(income = 10:100, 
++     persons = mean(FoodExpenditure$persons))), col = redblueblack[3], 
++     l .... [TRUNCATED] 
+
+> lines(10:100, predict(fe_beta, newdata = data.frame(income = 10:100, 
++     persons = mean(FoodExpenditure$persons))), col = redblueblack[2], 
++     .... [TRUNCATED] 
+
+> lines(10:100, predict(fe_beta2, newdata = data.frame(income = 10:100, 
++     persons = mean(FoodExpenditure$persons))), col = redblueblack[1], 
++    .... [TRUNCATED] 
+
+> legend("topright", c("logit, var. disp.", "logit, fix. disp.", 
++     "lm"), col = redblueblack, lty = c(1, 5, 2), lwd = 2, bty = "n")
 
 > gy_logit2 <- betareg(yield ~ batch + temp | temp, 
 +     data = GasolineYield)
@@ -335,8 +331,37 @@ Model 2: yield ~ batch + temp + I(predict(gy_loglog, type = "link")^2)
 
 > rs_ols <- lm(qlogis(accuracy) ~ dyslexia * iq, data = ReadingSkills)
 
+> coeftest(rs_ols)
+
+t test of coefficients:
+
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)    1.601      0.226    7.09  1.4e-08 ***
+dyslexia      -1.206      0.226   -5.34  4.0e-06 ***
+iq             0.359      0.225    1.59    0.119    
+dyslexia:iq   -0.423      0.225   -1.88    0.068 .  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
 > rs_beta <- betareg(accuracy ~ dyslexia * iq | dyslexia + 
 +     iq, data = ReadingSkills, hessian = TRUE)
+
+> coeftest(rs_beta)
+
+z test of coefficients:
+
+                  Estimate Std. Error z value Pr(>|z|)    
+(Intercept)          1.123      0.151    7.44  9.8e-14 ***
+dyslexia            -0.742      0.151   -4.90  9.7e-07 ***
+iq                   0.486      0.167    2.91  0.00360 ** 
+dyslexia:iq         -0.581      0.173   -3.37  0.00076 ***
+(phi)_(Intercept)    3.304      0.227   14.59  < 2e-16 ***
+(phi)_dyslexia       1.747      0.294    5.94  2.8e-09 ***
+(phi)_iq             1.229      0.460    2.67  0.00749 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
 
 > cl1 <- hcl(c(260, 0), 90, 40)
 
@@ -370,42 +395,6 @@ Model 2: yield ~ batch + temp + I(predict(gy_loglog, type = "link")^2)
 +     "lm"), lty = c(NA, NA, 1:2), pch = c(1, 2, NA, NA), col = c(cl1, 
 +     NA, NA), bty =  .... [TRUNCATED] 
 
-> data("ReadingSkills", package = "betareg")
-
-> rs_ols <- lm(qlogis(accuracy) ~ dyslexia * iq, data = ReadingSkills)
-
-> coeftest(rs_ols)
-
-t test of coefficients:
-
-            Estimate Std. Error t value Pr(>|t|)    
-(Intercept)    1.601      0.226    7.09  1.4e-08 ***
-dyslexia      -1.206      0.226   -5.34  4.0e-06 ***
-iq             0.359      0.225    1.59    0.119    
-dyslexia:iq   -0.423      0.225   -1.88    0.068 .  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-
-> rs_beta <- betareg(accuracy ~ dyslexia * iq | dyslexia + 
-+     iq, data = ReadingSkills, hessian = TRUE)
-
-> coeftest(rs_beta)
-
-z test of coefficients:
-
-                  Estimate Std. Error z value Pr(>|z|)    
-(Intercept)          1.123      0.151    7.44  9.8e-14 ***
-dyslexia            -0.742      0.151   -4.90  9.7e-07 ***
-iq                   0.486      0.167    2.91  0.00360 ** 
-dyslexia:iq         -0.581      0.173   -3.37  0.00076 ***
-(phi)_(Intercept)    3.304      0.227   14.59  < 2e-16 ***
-(phi)_dyslexia       1.747      0.294    5.94  2.8e-09 ***
-(phi)_iq             1.229      0.460    2.67  0.00749 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-
 > suppressWarnings(RNGversion("3.5.0"))
 
 > set.seed(123)
@@ -430,4 +419,4 @@ Loading required package: sandwich
  *** Run successfully completed ***
 > proc.time()
    user  system elapsed 
-  2.681   0.035   2.712 
+  2.975   0.068   3.038 

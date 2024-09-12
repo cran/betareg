@@ -1,9 +1,8 @@
 \name{WeatherTask}
 \alias{WeatherTask}
-\docType{data}
-\title{
-  Weather Task With Priming and Precise and Imprecise Probabilities 
-}
+
+\title{Weather Task with Priming and Precise and Imprecise Probabilities}
+
 \description{
   In this study participants were asked to judge how likely Sunday is to
   be the hottest day of the week.
@@ -47,12 +46,12 @@
 }
 
 \references{
-  Smithson, M., Merkle, E.C., and Verkuilen, J. (2011). Beta
+  Smithson M, Merkle EC, Verkuilen J (2011). Beta
   Regression Finite Mixture Models of Polarization and Priming.
   \emph{Journal of Educational and Behavioral Statistics}, \bold{36}(6), 804--831.
   \doi{10.3102/1076998610396893}
 
-  Smithson, M., and Segale, C. (2009). Partition Priming in Judgments of
+  Smithson M, Segale C (2009). Partition Priming in Judgments of
   Imprecise Probabilities. \emph{Journal of Statistical Theory and
   Practice}, \bold{3}(1), 169--181.
 }

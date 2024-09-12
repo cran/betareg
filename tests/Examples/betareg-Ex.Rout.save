@@ -174,7 +174,7 @@ detaching ‘package:distributions3’
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: CarTask
-> ### Title: Partition-primed Probability Judgement Task for Car Dealership
+> ### Title: Partition-Primed Probability Judgement Task for Car Dealership
 > ### Aliases: CarTask
 > ### Keywords: datasets
 > 
@@ -822,7 +822,7 @@ sa_stress  4 -595.9
 > flush(stderr()); flush(stdout())
 > 
 > ### Name: WeatherTask
-> ### Title: Weather Task With Priming and Precise and Imprecise
+> ### Title: Weather Task with Priming and Precise and Imprecise
 > ###   Probabilities
 > ### Aliases: WeatherTask
 > ### Keywords: datasets
@@ -1650,11 +1650,13 @@ detaching ‘package:strucchange’, ‘package:sandwich’, ‘package:zoo’
 > 
 > ## evaluate cumulative _p_robabilities for (small) new data set
 > gyd <- GasolineYield[c(1, 5, 10), ]
+> 
 > ## CDF at 0.1 for each observation
 > predict(gy2, newdata = gyd, type = "probability", at = 0.1)
 Warning: contrasts dropped from factor batch
         1         5        10 
 5.407e-01 7.165e-01 6.053e-40 
+> 
 > ## CDF at each combination of 0.1/0.2 and observations
 > predict(gy2, newdata = gyd, type = "probability", at = c(0.1, 0.2))
 Warning: contrasts dropped from factor batch
@@ -1662,13 +1664,19 @@ Warning: contrasts dropped from factor batch
 1  5.407e-01 9.933e-01
 5  7.165e-01 9.991e-01
 10 6.053e-40 5.828e-09
-> ## CDF at pairwise combinations of 0.1/0.2/0.3 and observations
+> 
+> ## CDF at elementwise combinations of 0.1/0.2/0.3 and observations
 > predict(gy2, newdata = gyd, type = "probability", at = c(0.1, 0.2, 0.3))
 Warning: contrasts dropped from factor batch
      1      5     10 
 0.5407 0.9991 0.4549 
+> predict(gy2, newdata = gyd, type = "probability", at = c(0.1, 0.2, 0.3), elementwise = TRUE)
+Warning: contrasts dropped from factor batch
+     1      5     10 
+0.5407 0.9991 0.4549 
+> 
 > ## CDF at all combinations of 0.1/0.2/0.3 and observations
-> predict(gy2, newdata = gyd, type = "probability", at = rbind(c(0.1, 0.2, 0.3)))
+> predict(gy2, newdata = gyd, type = "probability", at = c(0.1, 0.2, 0.3), elementwise = FALSE)
 Warning: contrasts dropped from factor batch
        p_0.1     p_0.2  p_0.3
 1  5.407e-01 9.933e-01 1.0000
@@ -1877,7 +1885,7 @@ Number of iterations: 33 (BFGS) + 28 (Fisher scoring)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  11.325 0.123 11.459 0 0 
+Time elapsed:  11.985 0.072 12.064 0 0 
 > grDevices::dev.off()
 null device 
           1 

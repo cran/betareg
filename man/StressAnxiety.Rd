@@ -30,7 +30,7 @@ Example 2 from Smithson and Verkuilen (2006) supplements.
 }
 
 \references{
-Smithson, M., and Verkuilen, J. (2006).
+Smithson M, Verkuilen J (2006).
   A Better Lemon Squeezer? Maximum-Likelihood Regression with
   Beta-Distributed Dependent Variables.
   \emph{Psychological Methods}, \bold{11}(7), 54--71.

@@ -1,8 +1,11 @@
 
+> library("betareg")
+
+> knitr::opts_chunk$set(engine = "R", collapse = TRUE, 
++     comment = "##", message = FALSE, warning = FALSE, echo = TRUE)
+
 > options(width = 70, prompt = "R> ", continue = "+  ", 
 +     useFancyQuotes = FALSE, digits = 5)
-
-> library("betareg")
 
 > combine <- function(x, sep, width) {
 +     cs <- cumsum(nchar(x))
@@ -19,14 +22,9 @@
 > enumerate <- function(x) paste(paste(x[-length(x)], 
 +     collapse = ", "), x[length(x)], sep = " and ")
 
-> betamix_methods <- enumerate(paste("\\\\fct{", gsub("\\.betamix", 
-+     "", as.character(methods(class = "betamix"))), "}", sep = ""))
+> betamix_methods <- enumerate(paste("`", gsub("\\.betamix", 
++     "", as.character(methods(class = "betamix"))), "`", sep = ""))
 
-> cat(prettyPrint(prompt(extraComponent, filename = NA)$usage[[2]], 
-+     sep = ", ", linebreak = paste("\n", paste(rep(" ", 2), collapse = ""), 
-+   .... [TRUNCATED] 
-extraComponent(type = c("uniform", "betareg"), coef, delta,  
-  link = "logit", link.phi = "log")
 > data("ReadingSkills", package = "betareg")
 
 > mean_accuracy <- format(round(with(ReadingSkills, 
@@ -86,42 +84,47 @@ extraComponent(type = c("uniform", "betareg"), coef, delta,
 
 > rs_list <- list(rs_ml, rs_bc, rs_br)
 
-> cf <- paste("$", format(round(sapply(rs_list, coef), 
-+     digits = 3), nsmall = 3), "$\\phantom{)}", sep = "")
+> cf <- paste("$", sapply(round(sapply(rs_list, coef), 
++     digits = 3), format, nsmall = 3), "$", sep = "")
 
-> se <- paste("(", format(round(sapply(rs_list, function(x) sqrt(diag(vcov(x)))), 
-+     digits = 3), nsmall = 3), ")", sep = "")
+> se <- paste("$", format(round(sapply(rs_list, function(x) sqrt(diag(vcov(x)))), 
++     digits = 3), nsmall = 3), "$", sep = "")
 
 > ll <- paste("$", format(round(sapply(rs_list, logLik), 
-+     digits = 3), nsmall = 3), "$\\phantom{)}", sep = "")
++     digits = 3), nsmall = 3), "$", sep = "")
 
 > cfse <- matrix(as.vector(rbind(cf, se)), ncol = 3)
 
 > cfse <- cbind(c("Mean", rep("", 7), "Precision", rep("", 
-+     7)), rep(as.vector(rbind(c("(Intercept)", "\\code{dyslexia}", 
-+     "\\code{iq}", " ..." ... [TRUNCATED] 
++     7)), rep(as.vector(rbind(c("(Intercept)", "`dyslexia`", "`iq`", 
++     "`dyslexia:iq ..." ... [TRUNCATED] 
 
-> cfse <- rbind(cfse, c("Log-likelihood", "", ll[1:2], 
-+     paste(ll[3], "\\\\ \\hline")))
+> cfse <- rbind(cfse, c("Log-likelihood", "", ll))
 
-> writeLines(apply(cfse, 1, paste, collapse = " & "))
-Mean & (Intercept) & $ 1.019$\phantom{)} & $ 0.990$\phantom{)} & $ 0.985$\phantom{)} \\
- &  & (0.145) & (0.150) & (0.150) \\
- & \code{dyslexia} & $-0.638$\phantom{)} & $-0.610$\phantom{)} & $-0.603$\phantom{)} \\
- &  & (0.145) & (0.150) & (0.150) \\
- & \code{iq} & $ 0.690$\phantom{)} & $ 0.700$\phantom{)} & $ 0.707$\phantom{)} \\
- &  & (0.127) & (0.133) & (0.133) \\
- & \code{dyslexia:iq} & $-0.776$\phantom{)} & $-0.786$\phantom{)} & $-0.784$\phantom{)} \\
- &  & (0.127) & (0.133) & (0.133) \\ \hline
-Precision & (Intercept) & $ 3.040$\phantom{)} & $ 2.811$\phantom{)} & $ 2.721$\phantom{)} \\
- &  & (0.258) & (0.257) & (0.256) \\
- & \code{dyslexia} & $ 1.768$\phantom{)} & $ 1.705$\phantom{)} & $ 1.634$\phantom{)} \\
- &  & (0.258) & (0.257) & (0.256) \\
- & \code{iq} & $ 1.437$\phantom{)} & $ 1.370$\phantom{)} & $ 1.281$\phantom{)} \\
- &  & (0.257) & (0.257) & (0.257) \\
- & \code{dyslexia:iq} & $-0.611$\phantom{)} & $-0.668$\phantom{)} & $-0.759$\phantom{)} \\
- &  & (0.257) & (0.257) & (0.257) \\ \hline
-Log-likelihood &  & $66.734$\phantom{)} & $66.334$\phantom{)} & $66.134$\phantom{)} \\ \hline
+> knitr::kable(cfse, align = c("l", "l", "r", "r", "r"), 
++     col.names = c("", "", "Maximum likelihood", "Bias correction", 
++         "Bias reduct ..." ... [TRUNCATED] 
+
+
+|               |              | Maximum likelihood| Bias correction| Bias reduction|
+|:--------------|:-------------|------------------:|---------------:|--------------:|
+|Mean           |(Intercept)   |            $1.019$|         $0.990$|        $0.985$|
+|               |              |            $0.145$|         $0.150$|        $0.150$|
+|               |`dyslexia`    |           $-0.638$|        $-0.610$|       $-0.603$|
+|               |              |            $0.145$|         $0.150$|        $0.150$|
+|               |`iq`          |            $0.690$|         $0.700$|        $0.707$|
+|               |              |            $0.127$|         $0.133$|        $0.133$|
+|               |`dyslexia:iq` |           $-0.776$|        $-0.786$|       $-0.784$|
+|               |              |            $0.127$|         $0.133$|        $0.133$|
+|Precision      |(Intercept)   |            $3.040$|         $2.811$|        $2.721$|
+|               |              |            $0.258$|         $0.257$|        $0.256$|
+|               |`dyslexia`    |            $1.768$|         $1.705$|        $1.634$|
+|               |              |            $0.258$|         $0.257$|        $0.256$|
+|               |`iq`          |            $1.437$|         $1.370$|        $1.281$|
+|               |              |            $0.257$|         $0.257$|        $0.257$|
+|               |`dyslexia:iq` |           $-0.611$|        $-0.668$|       $-0.759$|
+|               |              |            $0.257$|         $0.257$|        $0.257$|
+|Log-likelihood |              |           $66.734$|        $66.334$|       $66.134$|
 
 > pr_phi <- sapply(list(`Maximum likelihood` = rs_ml, 
 +     `Bias correction` = rs_bc, `Bias reduction` = rs_br), predict, 
@@ -144,12 +147,8 @@ Log-likelihood &  & $66.734$\phantom{)} & $66.334$\phantom{)} & $66.134$\phantom
 
 > ReadingSkills$x3 <- factor(sample(0:1, n, replace = TRUE))
 
-> if (cache & file.exists("betareg-ext-betatree.rda")) {
-+     load("betareg-ext-betatree.rda")
-+ } else {
-+     rs_tree <- betatree(accuracy ~ iq | i .... [TRUNCATED] 
-
-> plot(rs_tree)
+> rs_tree <- betatree(accuracy ~ iq | iq, ~dyslexia + 
++     x1 + x2 + x3, data = ReadingSkills, minsize = 10)
 
 > plot(rs_tree)
 
@@ -208,10 +207,9 @@ $`3`
 NULL
 
 
-> if (cache & file.exists("betareg-ext-betamix.rda")) {
-+     load("betareg-ext-betamix.rda")
-+ } else {
-+     rs_mix <- betamix(accuracy ~ iq, data = .... [TRUNCATED] 
+> rs_mix <- betamix(accuracy ~ iq, data = ReadingSkills, 
++     k = 3, extra_components = extraComponent(type = "uniform", 
++         coef = 0.99, del .... [TRUNCATED] 
 
 > rs_mix
 
@@ -317,33 +315,36 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 > gy <- lapply(c("ML", "BC", "BR"), function(x) betareg(yield ~ 
 +     batch + temp, data = GasolineYield, type = x))
 
-> cf <- matrix(paste("$", format(round(sapply(gy, coef), 
-+     digits = 5), nsmall = 5), "$\\phantom{)}", sep = ""), ncol = 3)
+> cf <- matrix(paste("$", sapply(round(sapply(gy, coef), 
++     digits = 5), format, nsmall = 5), "$", sep = ""), ncol = 3)
 
-> se <- matrix(gsub(" ", "", paste("(", format(round(sapply(gy, 
+> se <- matrix(gsub(" ", "", paste("$", format(round(sapply(gy, 
 +     function(x) sqrt(diag(vcov(x)))), digits = 5), nsmall = 5), 
-+     ")", sep = " ..." ... [TRUNCATED] 
-
-> cfse <- cbind(cf[, 1], se[, 1], cf[, 2], se[, 2], 
-+     cf[, 3], se[, 3])
++     "$", sep = " ..." ... [TRUNCATED] 
 
 > cfse <- cbind(c(paste("$\\beta_{", 1:11, "}$", sep = ""), 
-+     "$\\phi$"), cfse[, 1:5], paste(cfse[, 6], c(rep("\\\\", 11), 
-+     "\\\\ \\hline") .... [TRUNCATED] 
++     "$\\phi$"), cf[, 1], se[, 1], cf[, 2], se[, 2], cf[, 3], 
++     se[, 3])
 
-> writeLines(apply(cfse, 1, paste, collapse = " & "))
-$\beta_{1}$ & $ -6.15957$\phantom{)} & (0.18232) & $ -6.14837$\phantom{)} & (0.23595) & $ -6.14171$\phantom{)} & (0.23588) \\
-$\beta_{2}$ & $  1.72773$\phantom{)} & (0.10123) & $  1.72484$\phantom{)} & (0.13107) & $  1.72325$\phantom{)} & (0.13106) \\
-$\beta_{3}$ & $  1.32260$\phantom{)} & (0.11790) & $  1.32009$\phantom{)} & (0.15260) & $  1.31860$\phantom{)} & (0.15257) \\
-$\beta_{4}$ & $  1.57231$\phantom{)} & (0.11610) & $  1.56928$\phantom{)} & (0.15030) & $  1.56734$\phantom{)} & (0.15028) \\
-$\beta_{5}$ & $  1.05971$\phantom{)} & (0.10236) & $  1.05788$\phantom{)} & (0.13251) & $  1.05677$\phantom{)} & (0.13249) \\
-$\beta_{6}$ & $  1.13375$\phantom{)} & (0.10352) & $  1.13165$\phantom{)} & (0.13404) & $  1.13024$\phantom{)} & (0.13403) \\
-$\beta_{7}$ & $  1.04016$\phantom{)} & (0.10604) & $  1.03829$\phantom{)} & (0.13729) & $  1.03714$\phantom{)} & (0.13727) \\
-$\beta_{8}$ & $  0.54369$\phantom{)} & (0.10913) & $  0.54309$\phantom{)} & (0.14119) & $  0.54242$\phantom{)} & (0.14116) \\
-$\beta_{9}$ & $  0.49590$\phantom{)} & (0.10893) & $  0.49518$\phantom{)} & (0.14099) & $  0.49446$\phantom{)} & (0.14096) \\
-$\beta_{10}$ & $  0.38579$\phantom{)} & (0.11859) & $  0.38502$\phantom{)} & (0.15353) & $  0.38459$\phantom{)} & (0.15351) \\
-$\beta_{11}$ & $  0.01097$\phantom{)} & (0.00041) & $  0.01094$\phantom{)} & (0.00053) & $  0.01093$\phantom{)} & (0.00053) \\
-$\phi$ & $440.27839$\phantom{)} & (110.02562) & $261.20610$\phantom{)} & (65.25866) & $261.03777$\phantom{)} & (65.21640) \\ \hline
+> knitr::kable(cfse, align = c("l", rep("r", 6)), col.names = c("", 
++     "Maximum likelihood", "", "Bias correction", "", "Bias reduction", 
++     " ..." ... [TRUNCATED] 
+
+
+|             | Maximum likelihood|            | Bias correction|           | Bias reduction|           |
+|:------------|------------------:|-----------:|---------------:|----------:|--------------:|----------:|
+|$\beta_{1}$  |         $-6.15957$|   $0.18232$|      $-6.14837$|  $0.23595$|     $-6.14171$|  $0.23588$|
+|$\beta_{2}$  |          $1.72773$|   $0.10123$|       $1.72484$|  $0.13107$|      $1.72325$|  $0.13106$|
+|$\beta_{3}$  |          $1.32260$|   $0.11790$|       $1.32009$|  $0.15260$|      $1.31860$|  $0.15257$|
+|$\beta_{4}$  |          $1.57231$|   $0.11610$|       $1.56928$|  $0.15030$|      $1.56734$|  $0.15028$|
+|$\beta_{5}$  |          $1.05971$|   $0.10236$|       $1.05788$|  $0.13251$|      $1.05677$|  $0.13249$|
+|$\beta_{6}$  |          $1.13375$|   $0.10352$|       $1.13165$|  $0.13404$|      $1.13024$|  $0.13403$|
+|$\beta_{7}$  |          $1.04016$|   $0.10604$|       $1.03829$|  $0.13729$|      $1.03714$|  $0.13727$|
+|$\beta_{8}$  |          $0.54369$|   $0.10913$|       $0.54309$|  $0.14119$|      $0.54242$|  $0.14116$|
+|$\beta_{9}$  |          $0.49590$|   $0.10893$|       $0.49518$|  $0.14099$|      $0.49446$|  $0.14096$|
+|$\beta_{10}$ |          $0.38579$|   $0.11859$|       $0.38502$|  $0.15353$|      $0.38459$|  $0.15351$|
+|$\beta_{11}$ |          $0.01097$|   $0.00041$|       $0.01094$|  $0.00053$|      $0.01093$|  $0.00053$|
+|$\phi$       |        $440.27839$| $110.02562$|     $261.20610$| $65.25866$|    $261.03777$| $65.21640$|
 
 > sapply(gy, coef, model = "precision")
  (phi)  (phi)  (phi) 
@@ -360,35 +361,38 @@ $\phi$ & $440.27839$\phantom{)} & (110.02562) & $261.20610$\phantom{)} & (65.258
 > sapply(gy2, logLik)
 [1] 84.798 83.797 83.268
 
-> cf <- matrix(paste("$", format(round(sapply(gy2, coef), 
-+     digits = 5), nsmall = 5), "$\\phantom{)}", sep = ""), ncol = 3)
+> cf <- matrix(paste("$", sapply(round(sapply(gy2, coef), 
++     digits = 5), format, nsmall = 5), "$", sep = ""), ncol = 3)
 
-> se <- matrix(gsub(" ", "", paste("(", format(round(sapply(gy2, 
+> se <- matrix(gsub(" ", "", paste("$", format(round(sapply(gy2, 
 +     function(x) sqrt(diag(vcov(x)))), digits = 5), nsmall = 5), 
-+     ")", sep =  .... [TRUNCATED] 
-
-> cfse <- cbind(cf[, 1], se[, 1], cf[, 2], se[, 2], 
-+     cf[, 3], se[, 3])
++     "$", sep =  .... [TRUNCATED] 
 
 > cfse <- cbind(c(paste("$\\beta_{", 1:11, "}$", sep = ""), 
-+     "$\\log\\phi$"), cfse[, 1:5], paste(cfse[, 6], c(rep("\\\\", 
-+     11), "\\\\ \\hl ..." ... [TRUNCATED] 
++     "$\\log\\phi$"), cf[, 1], se[, 1], cf[, 2], se[, 2], cf[, 
++     3], se[, 3])
 
-> writeLines(apply(cfse, 1, paste, collapse = " & "))
-$\beta_{1}$ & $-6.15957$\phantom{)} & (0.18232) & $-6.14837$\phantom{)} & (0.21944) & $-6.14259$\phantom{)} & (0.22998) \\
-$\beta_{2}$ & $ 1.72773$\phantom{)} & (0.10123) & $ 1.72484$\phantom{)} & (0.12189) & $ 1.72347$\phantom{)} & (0.12777) \\
-$\beta_{3}$ & $ 1.32260$\phantom{)} & (0.11790) & $ 1.32009$\phantom{)} & (0.14193) & $ 1.31880$\phantom{)} & (0.14875) \\
-$\beta_{4}$ & $ 1.57231$\phantom{)} & (0.11610) & $ 1.56928$\phantom{)} & (0.13978) & $ 1.56758$\phantom{)} & (0.14651) \\
-$\beta_{5}$ & $ 1.05971$\phantom{)} & (0.10236) & $ 1.05788$\phantom{)} & (0.12323) & $ 1.05691$\phantom{)} & (0.12917) \\
-$\beta_{6}$ & $ 1.13375$\phantom{)} & (0.10352) & $ 1.13165$\phantom{)} & (0.12465) & $ 1.13041$\phantom{)} & (0.13067) \\
-$\beta_{7}$ & $ 1.04016$\phantom{)} & (0.10604) & $ 1.03829$\phantom{)} & (0.12767) & $ 1.03729$\phantom{)} & (0.13383) \\
-$\beta_{8}$ & $ 0.54369$\phantom{)} & (0.10913) & $ 0.54309$\phantom{)} & (0.13133) & $ 0.54248$\phantom{)} & (0.13763) \\
-$\beta_{9}$ & $ 0.49590$\phantom{)} & (0.10893) & $ 0.49518$\phantom{)} & (0.13112) & $ 0.49453$\phantom{)} & (0.13743) \\
-$\beta_{10}$ & $ 0.38579$\phantom{)} & (0.11859) & $ 0.38502$\phantom{)} & (0.14278) & $ 0.38465$\phantom{)} & (0.14966) \\
-$\beta_{11}$ & $ 0.01097$\phantom{)} & (0.00041) & $ 0.01094$\phantom{)} & (0.00050) & $ 0.01093$\phantom{)} & (0.00052) \\
-$\log\phi$ & $ 6.08741$\phantom{)} & (0.24990) & $ 5.71191$\phantom{)} & (0.24986) & $ 5.61608$\phantom{)} & (0.24984) \\ \hline
+> knitr::kable(cfse, align = c("l", rep("r", 6)), col.names = c("", 
++     "Maximum likelihood", "", "Bias correction", "", "Bias reduction", 
++     " ..." ... [TRUNCATED] 
+
+
+|             | Maximum likelihood|          | Bias correction|          | Bias reduction|          |
+|:------------|------------------:|---------:|---------------:|---------:|--------------:|---------:|
+|$\beta_{1}$  |         $-6.15957$| $0.18232$|      $-6.14837$| $0.21944$|     $-6.14259$| $0.22998$|
+|$\beta_{2}$  |          $1.72773$| $0.10123$|       $1.72484$| $0.12189$|      $1.72347$| $0.12777$|
+|$\beta_{3}$  |          $1.32260$| $0.11790$|       $1.32009$| $0.14193$|      $1.31880$| $0.14875$|
+|$\beta_{4}$  |          $1.57231$| $0.11610$|       $1.56928$| $0.13978$|      $1.56758$| $0.14651$|
+|$\beta_{5}$  |          $1.05971$| $0.10236$|       $1.05788$| $0.12323$|      $1.05691$| $0.12917$|
+|$\beta_{6}$  |          $1.13375$| $0.10352$|       $1.13165$| $0.12465$|      $1.13041$| $0.13067$|
+|$\beta_{7}$  |          $1.04016$| $0.10604$|       $1.03829$| $0.12767$|      $1.03729$| $0.13383$|
+|$\beta_{8}$  |          $0.54369$| $0.10913$|       $0.54309$| $0.13133$|      $0.54248$| $0.13763$|
+|$\beta_{9}$  |          $0.49590$| $0.10893$|       $0.49518$| $0.13112$|      $0.49453$| $0.13743$|
+|$\beta_{10}$ |          $0.38579$| $0.11859$|       $0.38502$| $0.14278$|      $0.38465$| $0.14966$|
+|$\beta_{11}$ |          $0.01097$| $0.00041$|       $0.01094$| $0.00050$|      $0.01093$| $0.00052$|
+|$\log\phi$   |          $6.08741$| $0.24990$|       $5.71191$| $0.24986$|      $5.61608$| $0.24984$|
 
  *** Run successfully completed ***
 > proc.time()
    user  system elapsed 
-  5.059   0.083   5.143 
+  6.240   0.115   6.352 

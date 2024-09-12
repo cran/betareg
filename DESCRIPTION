@@ -1,15 +1,11 @@
 Package: betareg
-Version: 3.2-0
-Date: 2024-07-05
+Version: 3.2-1
+Date: 2024-09-12
 Title: Beta Regression
-Authors@R: c(person(given = "Achim", family = "Zeileis", role = c("aut", "cre"), email = "Achim.Zeileis@R-project.org",
-             comment = c(ORCID = "0000-0003-0918-3766")),
-             person(given = "Francisco", family = "Cribari-Neto", role = "aut", email = "cribari@ufpe.br",
-             comment = c(ORCID = "0000-0002-5909-6698")),
-             person(given = "Bettina", family = "Grün", role = "aut", email = "Bettina.Gruen@wu.ac.at",
-             comment = c(ORCID = "0000-0001-7265-4773")),
-             person(given = "Ioannis", family = "Kosmidis", role = "aut", email = "ioannis.kosmidis@warwick.ac.uk",
-             comment = c(ORCID = "0000-0003-1556-0302")),
+Authors@R: c(person(given = "Achim", family = "Zeileis", role = c("aut", "cre"), email = "Achim.Zeileis@R-project.org", comment = c(ORCID = "0000-0003-0918-3766")),
+             person(given = "Francisco", family = "Cribari-Neto", role = "aut", email = "cribari@ufpe.br", comment = c(ORCID = "0000-0002-5909-6698")),
+             person(given = "Bettina", family = "Grün", role = "aut", email = "Bettina.Gruen@wu.ac.at", comment = c(ORCID = "0000-0001-7265-4773")),
+             person(given = "Ioannis", family = "Kosmidis", role = "aut", email = "ioannis.kosmidis@warwick.ac.uk", comment = c(ORCID = "0000-0003-1556-0302")),
              person(given = c("Alexandre", "B."), family = "Simas", role = "ctb", comment = "earlier version by"),
              person(given = c("Andrea", "V."), family = "Rocha", role = "ctb", comment = "earlier version by"))
 Description: Beta regression for modeling beta-distributed dependent variables on the open unit interval (0, 1),
@@ -21,14 +17,15 @@ Description: Beta regression for modeling beta-distributed dependent variables o
 Depends: R (>= 3.6.0)
 Imports: graphics, grDevices, methods, stats, flexmix, Formula, lmtest,
         modeltools, sandwich
-Suggests: car, distributions3 (>= 0.2.1), lattice, numDeriv, partykit,
-        statmod, strucchange
+Suggests: car, distributions3 (>= 0.2.1), knitr, lattice, numDeriv,
+        partykit, quarto, statmod, strucchange
 License: GPL-2 | GPL-3
-URL: https://betareg.R-Forge.R-project.org/
-BugReports: https://betareg.R-Forge.R-project.org/contact.html
+URL: https://topmodels.R-Forge.R-project.org/betareg/
+BugReports: https://topmodels.R-Forge.R-project.org/betareg/contact.html
 Encoding: UTF-8
+VignetteBuilder: quarto
 NeedsCompilation: yes
-Packaged: 2024-07-07 08:53:53 UTC; zeileis
+Packaged: 2024-09-12 07:35:30 UTC; zeileis
 Author: Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>),
   Francisco Cribari-Neto [aut] (<https://orcid.org/0000-0002-5909-6698>),
   Bettina Grün [aut] (<https://orcid.org/0000-0001-7265-4773>),
@@ -37,4 +34,4 @@ Author: Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>),
   Andrea V. Rocha [ctb] (earlier version by)
 Maintainer: Achim Zeileis <Achim.Zeileis@R-project.org>
 Repository: CRAN
-Date/Publication: 2024-07-07 10:20:03 UTC
+Date/Publication: 2024-09-12 17:40:45 UTC

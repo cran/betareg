@@ -1,10 +1,16 @@
-### R code from vignette source 'betareg-ext.Rnw'
-
-###################################################
-### code chunk number 1: preliminaries
-###################################################
-options(width = 70, prompt = "R> ", continue = "+  ", useFancyQuotes = FALSE, digits = 5)
+## ----preliminaries, include = FALSE-------------------------------------------
 library("betareg")
+
+knitr::opts_chunk$set(
+  engine = "R",
+  collapse = TRUE,
+  comment = "##",
+  message = FALSE,
+  warning = FALSE,
+  echo = TRUE
+)
+options(width = 70, prompt = "R> ", continue = "+  ", useFancyQuotes = FALSE, digits = 5)
+
 combine <- function(x, sep, width) {
   cs <- cumsum(nchar(x))
   remaining <- if (any(cs[-1] > width)) combine(x[c(FALSE, cs[-1] > width)], sep, width)
@@ -16,21 +22,29 @@ prettyPrint <- function(x, sep = " ", linebreak = "\n\t", width = getOption("wid
 }
 cache <- FALSE
 enumerate <- function(x) paste(paste(x[-length(x)], collapse = ", "), x[length(x)], sep = " and ")
-betamix_methods <-
-  enumerate(paste("\\\\fct{", gsub("\\.betamix", "", as.character(methods(class = "betamix"))), "}", sep = ""))
+betamix_methods <- enumerate(paste("`", gsub("\\.betamix", "", as.character(methods(class = "betamix"))), "`", sep = ""))
 
 
-###################################################
-### code chunk number 2: betareg-ext.Rnw:794-797
-###################################################
-cat(prettyPrint(prompt(extraComponent, filename = NA)$usage[[2]], sep = ", ",
-  linebreak = paste("\n", paste(rep(" ", 2), collapse = ""), sep= ""),
-  width = 60))
+## ----eval=FALSE---------------------------------------------------------------
+## betareg(formula, data, subset, na.action, weights, offset,
+##   link = "logit", link.phi = NULL, type = c("ML", "BC", "BR"),
+##   control = betareg.control(...), model = TRUE, y = TRUE, x = FALSE, ...)
 
 
-###################################################
-### code chunk number 3: betareg-ext.Rnw:804-811
-###################################################
+## ----eval=FALSE---------------------------------------------------------------
+## betatree(formula, partition, data, subset, na.action, weights, offset,
+##   link = "logit", link.phi = "log", control = betareg.control(), ...)
+
+
+## ----eval=FALSE---------------------------------------------------------------
+## betamix(formula, data, k, fixed, subset, na.action,
+##   link = "logit", link.phi = "log", control = betareg.control(...),
+##   FLXconcomitant = NULL, extra_components,
+##   verbose = FALSE, ID, nstart = 3, FLXcontrol = list(), cluster = NULL,
+##   which = "BIC", ...)
+
+
+## ----include=FALSE------------------------------------------------------------
 data("ReadingSkills", package = "betareg")
 mean_accuracy <-
   format(round(with(ReadingSkills, tapply(accuracy, dyslexia, mean)), digits = 3),
@@ -40,9 +54,13 @@ mean_iq <-
          nsmall = 3)
 
 
-###################################################
-### code chunk number 4: ReadingSkills
-###################################################
+## ----ReadingSkills------------------------------------------------------------
+#| echo: false
+#| fig-width: 6
+#| fig-height: 5.5
+#| out-width: 100%
+#| label: fig-ReadingSkills
+#| fig-cap: "Reading skills data from @betareg:Smithson+Verkuilen:2006. Linearly transformed reading accuracy by IQ score and dyslexia status (control, blue vs. dyslexic, red). Fitted curves correspond to beta regression (solid) and OLS regression with logit-transformed dependent variable (dashed)."
 data("ReadingSkills", package = "betareg")
 rs_ols <- lm(qlogis(accuracy) ~ dyslexia * iq, data = ReadingSkills)
 rs_beta <- betareg(accuracy ~ dyslexia * iq | dyslexia + iq,
@@ -68,9 +86,7 @@ legend("topleft", c("control", "dyslexic", "betareg", "lm"),
   col = c(cl1, NA, NA), bty = "n")
 
 
-###################################################
-### code chunk number 5: ReadingSkills-bias
-###################################################
+## ----ReadingSkills-bias-------------------------------------------------------
 data("ReadingSkills", package = "betareg")
 rs_f <- accuracy ~ dyslexia * iq | dyslexia * iq
 rs_ml <- betareg(rs_f, data = ReadingSkills, type = "ML")
@@ -78,27 +94,27 @@ rs_bc <- betareg(rs_f, data = ReadingSkills, type = "BC")
 rs_br <- betareg(rs_f, data = ReadingSkills, type = "BR")
 
 
-###################################################
-### code chunk number 6: ReadingSkills-bias-table
-###################################################
+## ----ReadingSkills-bias-table, echo=FALSE, results='asis'---------------------
 rs_list <- list(rs_ml, rs_bc, rs_br)
-cf <- paste("$", format(round(sapply(rs_list, coef), digits = 3), nsmall = 3), "$\\phantom{)}", sep = "")
-se <- paste("(", format(round(sapply(rs_list, function(x) sqrt(diag(vcov(x)))), digits = 3), nsmall = 3), ")", sep = "")
-ll <- paste("$", format(round(sapply(rs_list, logLik), digits = 3), nsmall = 3), "$\\phantom{)}", sep = "")
+cf <- paste("$", sapply(round(sapply(rs_list, coef), digits = 3), format, nsmall = 3), "$", sep = "")
+se <- paste("$", format(round(sapply(rs_list, function(x) sqrt(diag(vcov(x)))), digits = 3), nsmall = 3), "$", sep = "")
+ll <- paste("$", format(round(sapply(rs_list, logLik), digits = 3), nsmall = 3), "$", sep = "")
 cfse <- matrix(as.vector(rbind(cf, se)), ncol = 3)
 cfse <- cbind(
   c("Mean", rep("", 7), "Precision", rep("", 7)),
-  rep(as.vector(rbind(c("(Intercept)", "\\code{dyslexia}", "\\code{iq}", "\\code{dyslexia:iq}"), "")), 2),
-  cfse[, 1:2],
-  paste(cfse[,3],
-    c(rep("\\\\", 7), "\\\\ \\hline", rep("\\\\", 7), "\\\\ \\hline")))
-cfse <- rbind(cfse, c("Log-likelihood", "", ll[1:2], paste(ll[3], "\\\\ \\hline")))
-writeLines(apply(cfse, 1, paste, collapse = " & "))
+  rep(as.vector(rbind(c("(Intercept)", "`dyslexia`", "`iq`", "`dyslexia:iq`"), "")), 2),
+  cfse)
+cfse <- rbind(cfse, c("Log-likelihood", "", ll))
+knitr::kable(cfse, align = c("l", "l", "r", "r", "r"), col.names = c("", "", "Maximum likelihood", "Bias correction", "Bias reduction"))
 
 
-###################################################
-### code chunk number 7: ReadingSkills-phi-plot
-###################################################
+## ----ReadingSkills-phi-plot---------------------------------------------------
+#| echo: false
+#| fig-height: 6.5
+#| fig-width: 6.5
+#| out-width: 100%
+#| label: fig-readingskillsbias
+#| fig-cap: "Scatterplots of the logarithm of the estimated precision parameters $\\log(\\phi_i)$ based on the maximum likelihood, bias-corrected and bias-reduced estimates. The dashed black line is the main diagonal, the solid red line is a scatterplot smoother."
 pr_phi <- sapply(list("Maximum likelihood" = rs_ml,
                       "Bias correction" = rs_bc,
                       "Bias reduction" = rs_br), predict, type = "precision")
@@ -108,9 +124,7 @@ pairs(log(pr_phi), panel = function(x, y, ...) {
   })
 
 
-###################################################
-### code chunk number 8: ReadingSkills-noise
-###################################################
+## ----ReadingSkills-noise, echo=TRUE-------------------------------------------
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(1071)
 n <- nrow(ReadingSkills)
@@ -119,118 +133,64 @@ ReadingSkills$x2 <- runif(n)
 ReadingSkills$x3 <- factor(sample(0:1, n, replace = TRUE))
 
 
-###################################################
-### code chunk number 9: ReadingSkills-tree (eval = FALSE)
-###################################################
-## rs_tree <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
-##   data = ReadingSkills, minsize = 10)
-
-
-###################################################
-### code chunk number 10: ReadingSkills-tree0
-###################################################
-if(cache & file.exists("betareg-ext-betatree.rda")) {
-  load("betareg-ext-betatree.rda")
-} else {
+## ----ReadingSkills-tree-------------------------------------------------------
 rs_tree <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
   data = ReadingSkills, minsize = 10)
-if(cache) {
-  save(rs_tree, file = "betareg-ext-betatree.rda")
-} else {
-  if(file.exists("betareg-ext-betatree.rda")) file.remove("betareg-ext-betatree.rda")
-}
-}
 
 
-###################################################
-### code chunk number 11: ReadingSkills-tree2 (eval = FALSE)
-###################################################
+## ----ReadingSkills-tree2, echo=TRUE, eval=FALSE-------------------------------
 ## rs_tree <- betatree(accuracy ~ iq | iq | dyslexia + x1 + x2 + x3,
 ##   data = ReadingSkills, minsize = 10)
 
 
-###################################################
-### code chunk number 12: ReadingSkills-tree3
-###################################################
+## ----ReadingSkills-tree3, eval=FALSE------------------------------------------
+## plot(rs_tree)
+
+
+## ----ReadingSkills-tree-plot--------------------------------------------------
+#| echo: false
+#| fig-height: 7
+#| fig-width: 10
+#| out-width: 100%
+#| label: fig-betatree
+#| fig-cap: "Partitioned beta regression model for the `ReadingSkills` data."
 plot(rs_tree)
 
 
-###################################################
-### code chunk number 13: ReadingSkills-tree-plot
-###################################################
-plot(rs_tree)
-
-
-###################################################
-### code chunk number 14: ReadingSkills-tree-coef
-###################################################
+## ----ReadingSkills-tree-coef--------------------------------------------------
 coef(rs_tree)
 
 
-###################################################
-### code chunk number 15: ReadingSkills-tree3
-###################################################
+## ----ReadingSkills-tree4, echo=TRUE-------------------------------------------
 rs_tree
 
 
-###################################################
-### code chunk number 16: ReadingSkills-tree-sctest
-###################################################
+## ----ReadingSkills-tree-sctest------------------------------------------------
 library("strucchange")
 sctest(rs_tree)
 
 
-###################################################
-### code chunk number 17: ReadingSkills-mix (eval = FALSE)
-###################################################
-## rs_mix <- betamix(accuracy ~ iq, data = ReadingSkills, k = 3,
-##   extra_components = extraComponent(type = "uniform",
-##     coef = 0.99, delta = 0.01), nstart = 10)
-
-
-###################################################
-### code chunk number 18: ReadingSkills-mix2
-###################################################
-if(cache & file.exists("betareg-ext-betamix.rda")) {
- load("betareg-ext-betamix.rda")
-} else {
+## ----ReadingSkills-mix--------------------------------------------------------
 rs_mix <- betamix(accuracy ~ iq, data = ReadingSkills, k = 3,
   extra_components = extraComponent(type = "uniform",
     coef = 0.99, delta = 0.01), nstart = 10)
-if(cache) {
-  save(rs_mix, file = "betareg-ext-betamix.rda")
-} else {
-  if(file.exists("betareg-ext-betamix.rda")) file.remove("betareg-ext-betamix.rda")
-}
-}
 
 
-###################################################
-### code chunk number 19: ReadingSkills-mix3
-###################################################
+## ----ReadingSkills-mix3-------------------------------------------------------
 rs_mix
 
 
-###################################################
-### code chunk number 20: ReadingSkills-mix4
-###################################################
+## ----ReadingSkills-mix4-------------------------------------------------------
 summary(rs_mix)
 
 
-###################################################
-### code chunk number 21: ReadingSkills-betamix-plot1 (eval = FALSE)
-###################################################
-## ix <- as.numeric(ReadingSkills$dyslexia)
-## col1 <- hcl(c(260, 0), 90, 40)[ix]
-## col2 <- hcl(c(260, 0), 10, 95)[ix]
-## plot(accuracy ~ iq, data = ReadingSkills, col = col2, pch = 19,
-##   cex = 1.5, xlim = c(-2, 2), main = "Partitioned model (dyslexia observed)")
-## points(accuracy ~ iq, data = ReadingSkills, cex = 1.5, pch = 1, col = col1)
-
-
-###################################################
-### code chunk number 22: ReadingSkills-betamix-plot3
-###################################################
+## ----ReadingSkills-betamix-plot3----------------------------------------------
+#| echo: false
+#| fig-height: 5.5
+#| fig-width: 10
+#| out-width: 100%
+#| label: fig-betamix
+#| fig-cap: "Fitted regression lines for the mixture model with three components and the observations shaded according to their posterior probabilities (left). Fitted regression lines for the partitioned beta regression model with shading according to the observed `dyslexic` variable where nondyslexic and dyslexic children are in blue and red, respectively (right)."
 par(mfrow = c(1, 2))
 ix <- as.numeric(ReadingSkills$dyslexia)
 prob <- 2 * (posterior(rs_mix)[cbind(seq_along(ix), clusters(rs_mix))] - 0.5)
@@ -243,81 +203,58 @@ points(accuracy ~ iq, data = ReadingSkills, cex = 1.5, pch = 1, col = col1)
 iq <- -30:30/10
 cf <- rbind(coef(rs_mix, model = "mean", component = 1:2), c(qlogis(0.99), 0))
 for(i in 1:3) lines(iq, plogis(cf[i, 1] + cf[i, 2] * iq), lwd = 2, col = col3[i])
+
 ix <- as.numeric(ReadingSkills$dyslexia)
 col1 <- hcl(c(260, 0), 90, 40)[ix]
 col2 <- hcl(c(260, 0), 10, 95)[ix]
 plot(accuracy ~ iq, data = ReadingSkills, col = col2, pch = 19,
   cex = 1.5, xlim = c(-2, 2), main = "Partitioned model (dyslexia observed)")
 points(accuracy ~ iq, data = ReadingSkills, cex = 1.5, pch = 1, col = col1)
+
 cf <- coef(rs_tree, model = "mean")
 col3 <- hcl(c(260, 0), 90, 40)
 for(i in 1:2) lines(iq, plogis(cf[i, 1] + cf[i, 2] * iq), lwd = 2, col = col3[i])
 
 
-###################################################
-### code chunk number 23: ReadingSkills-mix5
-###################################################
+## ----ReadingSkills-mix5-------------------------------------------------------
 table(clusters(rs_mix), ReadingSkills$dyslexia)
 
 
-###################################################
-### code chunk number 24: GasolineYield-bias
-###################################################
+## ----GasolineYield-bias-------------------------------------------------------
 data("GasolineYield", package = "betareg")
 gy <- lapply(c("ML", "BC", "BR"), function(x)
   betareg(yield ~ batch + temp, data = GasolineYield, type = x))
 
 
-###################################################
-### code chunk number 25: ReadingSkills-bias-table
-###################################################
-cf <- matrix(paste("$", format(round(sapply(gy, coef), digits = 5), nsmall = 5), "$\\phantom{)}", sep = ""), ncol = 3)
+## ----GasolineYield-bias-table, echo=FALSE, results='asis'---------------------
+cf <- matrix(paste("$", sapply(round(sapply(gy, coef), digits = 5), format, nsmall = 5), "$", sep = ""), ncol = 3)
 se <- matrix(gsub(" ", "",
-  paste("(", format(round(sapply(gy, function(x) sqrt(diag(vcov(x)))), digits = 5), nsmall = 5), ")", sep = ""),
+  paste("$", format(round(sapply(gy, function(x) sqrt(diag(vcov(x)))), digits = 5), nsmall = 5), "$", sep = ""),
   fixed = TRUE), ncol = 3)
-cfse <- cbind(cf[,1], se[,1], cf[,2], se[,2], cf[,3], se[,3])
-cfse <- cbind(
-  c(paste("$\\beta_{", 1:11, "}$", sep = ""), "$\\phi$"),
-  cfse[, 1:5],
-  paste(cfse[,6],
-    c(rep("\\\\", 11), "\\\\ \\hline")))
-writeLines(apply(cfse, 1, paste, collapse = " & "))
+cfse <- cbind(c(paste("$\\beta_{", 1:11, "}$", sep = ""), "$\\phi$"), cf[,1], se[,1], cf[,2], se[,2], cf[,3], se[,3])
+knitr::kable(cfse, align = c("l", rep("r", 6)), col.names = c("", "Maximum likelihood", "", "Bias correction", "", "Bias reduction", ""))
 
 
-###################################################
-### code chunk number 26: GasolineYield-phi
-###################################################
+## ----GasolineYield-phi--------------------------------------------------------
 sapply(gy, coef, model = "precision")
 
 
-###################################################
-### code chunk number 27: GasolineYield-phi
-###################################################
+## ----GasolineYield-phi-loglik-------------------------------------------------
 sapply(gy, logLik)
 
 
-###################################################
-### code chunk number 28: GasolineYield-bias2
-###################################################
+## ----GasolineYield-bias2------------------------------------------------------
 data("GasolineYield", package = "betareg")
 gy2 <- lapply(c("ML", "BC", "BR"), function(x)
   betareg(yield ~ batch + temp | 1, data = GasolineYield, type = x))
 sapply(gy2, logLik)
 
 
-###################################################
-### code chunk number 29: ReadingSkills-bias-table
-###################################################
-cf <- matrix(paste("$", format(round(sapply(gy2, coef), digits = 5), nsmall = 5), "$\\phantom{)}", sep = ""), ncol = 3)
+## ----GasolineYield-bias-table2, echo=FALSE, results='asis'--------------------
+cf <- matrix(paste("$", sapply(round(sapply(gy2, coef), digits = 5), format, nsmall = 5), "$", sep = ""), ncol = 3)
 se <- matrix(gsub(" ", "",
-  paste("(", format(round(sapply(gy2, function(x) sqrt(diag(vcov(x)))), digits = 5), nsmall = 5), ")", sep = ""),
+  paste("$", format(round(sapply(gy2, function(x) sqrt(diag(vcov(x)))), digits = 5), nsmall = 5), "$", sep = ""),
   fixed = TRUE), ncol = 3)
-cfse <- cbind(cf[,1], se[,1], cf[,2], se[,2], cf[,3], se[,3])
-cfse <- cbind(
-  c(paste("$\\beta_{", 1:11, "}$", sep = ""), "$\\log\\phi$"),
-  cfse[, 1:5],
-  paste(cfse[,6],
-    c(rep("\\\\", 11), "\\\\ \\hline")))
-writeLines(apply(cfse, 1, paste, collapse = " & "))
-
+cfse <- cbind(c(paste("$\\beta_{", 1:11, "}$", sep = ""), "$\\log\\phi$"), cf[,1], se[,1], cf[,2], se[,2], cf[,3], se[,3])
+knitr::kable(cfse, align = c("l", rep("r", 6)), col.names = c("", "Maximum likelihood", "", "Bias correction", "", "Bias reduction", ""))
 
