@@ -60,7 +60,9 @@ vignette: >
   %\VignettePackage{betareg}
 ---
 
-```{r preliminaries, include = FALSE}
+```{r}
+#| label: preliminaries
+#| include: false
 library("betareg")
 
 knitr::opts_chunk$set(
@@ -859,7 +861,7 @@ reading skill increases clearly with the IQ score while the variance
 decreases.  In the dyslexic group, reading skills are generally lower
 and almost unaffected by IQ score.
 
-```{r ReadingSkills}
+```{r}
 #| echo: false
 #| fig-width: 6
 #| fig-height: 5.5
@@ -911,7 +913,8 @@ severe bias in the ML estimator, all three flavors of estimators are
 obtained and compared for the model with interactions (both in the mean and
 precision submodels).
 
-```{r ReadingSkills-bias}
+```{r}
+#| label: ReadingSkills-bias
 data("ReadingSkills", package = "betareg")
 rs_f <- accuracy ~ dyslexia * iq | dyslexia * iq
 rs_ml <- betareg(rs_f, data = ReadingSkills, type = "ML")
@@ -919,7 +922,10 @@ rs_bc <- betareg(rs_f, data = ReadingSkills, type = "BC")
 rs_br <- betareg(rs_f, data = ReadingSkills, type = "BR")
 ```
 
-```{r ReadingSkills-bias-table, echo=FALSE, results='asis'}
+```{r}
+#| label: ReadingSkills-bias-table
+#| echo: false
+#| results: asis
 rs_list <- list(rs_ml, rs_bc, rs_br)
 cf <- paste("$", sapply(round(sapply(rs_list, coef), digits = 3), format, nsmall = 3), "$", sep = "")
 se <- paste("$", format(round(sapply(rs_list, function(x) sqrt(diag(vcov(x)))), digits = 3), nsmall = 3), "$", sep = "")
@@ -936,7 +942,7 @@ knitr::kable(cfse, align = c("l", "l", "r", "r", "r"), col.names = c("", "", "Ma
 : Comparison of coefficients and standard errors in the interaction model for reading skills. The ML estimator from `rs_ml`, the BC estimator from `rs_bc`, and the BR estimator from `rs_br` all give very similar results for the mean submodel. In the precision submodel, main effects are slightly damped and the interaction effect is slightly amplified when using BC/BR. {#tbl-ReadingSkills-bias}
 
 
-```{r ReadingSkills-phi-plot}
+```{r}
 #| echo: false
 #| fig-height: 6.5
 #| fig-width: 6.5
@@ -1003,7 +1009,9 @@ standard normal distribution, one from a uniform distribution and the
 third is a categorical variable which takes two different values with
 equal probability.
 
-```{r ReadingSkills-noise, echo=TRUE}
+```{r}
+#| label: ReadingSkills-noise
+#| echo: true
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(1071)
 n <- nrow(ReadingSkills)
@@ -1022,7 +1030,8 @@ for the recursive partitioning method used in `mob_control()` can
 be specified via the \code{\dots} argument. In this case the minimum
 number of observations in a node is given by `minsize = 10`.
 
-```{r ReadingSkills-tree}
+```{r}
+#| label: ReadingSkills-tree
 rs_tree <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
   data = ReadingSkills, minsize = 10)
 ```
@@ -1031,7 +1040,10 @@ Alternatively the model could be specified using a three-part formula
 where the third part is the symbolic description of the partitioning
 variables.
 
-```{r ReadingSkills-tree2, echo=TRUE, eval=FALSE}
+```{r}
+#| label: ReadingSkills-tree2
+#| echo: true
+#| eval: false
 rs_tree <- betatree(accuracy ~ iq | iq | dyslexia + x1 + x2 + x3,
   data = ReadingSkills, minsize = 10)
 ```
@@ -1042,11 +1054,13 @@ All methods for `"`r class(rs_tree)[2]`"`/`"`r class(rs_tree)[3]`"`
 objects can be reused, e.g., the `print()` method and the `plot()` method (see
 @fig-betatree).
 
-```{r ReadingSkills-tree3, eval=FALSE}
+```{r}
+#| label: ReadingSkills-tree3
+#| eval: false
 plot(rs_tree)
 ```
 
-```{r ReadingSkills-tree-plot}
+```{r}
 #| echo: false
 #| fig-height: 7
 #| fig-width: 10
@@ -1071,7 +1085,8 @@ equivalent to the ML results from @tbl-ReadingSkills-bias
 `coef()` allows to inspect the parameters of the fitted models, by
 default in the terminal nodes (nodes 2 and 3).
 
-```{r ReadingSkills-tree-coef}
+```{r}
+#| label: ReadingSkills-tree-coef
 coef(rs_tree)
 ```
 
@@ -1082,7 +1097,9 @@ observations in the terminal nodes indicated by stars. In the terminal
 nodes also the estimated parameters of the beta regression models are
 provided.
 
-```{r ReadingSkills-tree4, echo=TRUE}
+```{r}
+#| label: ReadingSkills-tree4
+#| echo: true
 rs_tree
 ```
 
@@ -1105,7 +1122,8 @@ reason for performing no further split, i.e., either because all
 parameter instability tests were insignificant (see node 2) or because
 the node size is too small for a further split (see node 3).
 
-```{r ReadingSkills-tree-sctest}
+```{r}
+#| label: ReadingSkills-tree-sctest
 library("strucchange")
 sctest(rs_tree)
 ```
@@ -1148,7 +1166,8 @@ score. Following @betareg:Smithson+Merkle+Verkuilen:2011 this
 additional component is assumed to follow a uniform distribution on
 the interval `coef` $\pm$ `delta`.
 
-```{r ReadingSkills-mix}
+```{r}
+#| label: ReadingSkills-mix
 rs_mix <- betamix(accuracy ~ iq, data = ReadingSkills, k = 3,
   extra_components = extraComponent(type = "uniform",
     coef = 0.99, delta = 0.01), nstart = 10)
@@ -1176,7 +1195,8 @@ convergence, the number of iterations that were performed is shown.
 % if the EM algorithm converged or not and in the case of convergence
 % how many iterations were performed.
 
-```{r ReadingSkills-mix3}
+```{r}
+#| label: ReadingSkills-mix3
 rs_mix
 ```
 
@@ -1185,7 +1205,8 @@ coefficients and their estimated standard errors. For the calculation
 of the latter, function `optim()` is used for the numerical
 approximation of the corresponding Hessian matrix.
 
-```{r ReadingSkills-mix4}
+```{r}
+#| label: ReadingSkills-mix4
 summary(rs_mix)
 ```
 
@@ -1197,7 +1218,7 @@ component the IQ score does not significantly affect the achieved
 accuracy, while there is a positive significant effect of the
 IQ score on accuracy in the second component.
 
-```{r ReadingSkills-betamix-plot3}
+```{r}
 #| echo: false
 #| fig-height: 5.5
 #| fig-width: 10
@@ -1236,7 +1257,8 @@ the first component have a high probability
 (`r round(prop.table(table(clusters(rs_mix),ReadingSkills$dyslexia),1)[1,2]*100)`%)
 of being dyslexic.
 
-```{r ReadingSkills-mix5}
+```{r}
+#| label: ReadingSkills-mix5
 table(clusters(rs_mix), ReadingSkills$dyslexia)
 ```
 
@@ -1328,13 +1350,17 @@ in beta regressions can severely affect inference, results from
 model considered in @betareg:Ferrari+Cribari-Neto:2004 (also replicated
 in \citealp{betareg:Cribari-Neto+Zeileis:2010}):
 
-```{r GasolineYield-bias}
+```{r}
+#| label: GasolineYield-bias
 data("GasolineYield", package = "betareg")
 gy <- lapply(c("ML", "BC", "BR"), function(x)
   betareg(yield ~ batch + temp, data = GasolineYield, type = x))
 ```
 
-```{r GasolineYield-bias-table, echo=FALSE, results='asis'}
+```{r}
+#| label: GasolineYield-bias-table
+#| echo: false
+#| results: asis
 cf <- matrix(paste("$", sapply(round(sapply(gy, coef), digits = 5), format, nsmall = 5), "$", sep = ""), ncol = 3)
 se <- matrix(gsub(" ", "",
   paste("$", format(round(sapply(gy, function(x) sqrt(diag(vcov(x)))), digits = 5), nsmall = 5), "$", sep = ""),
@@ -1350,13 +1376,15 @@ The estimate of the precision parameter shrinks considerably when bias
 correction/reduction is used, indicating a large upward bias for the
 ML estimator of $\phi$.
 
-```{r GasolineYield-phi}
+```{r}
+#| label: GasolineYield-phi
 sapply(gy, coef, model = "precision")
 ```
 
 while the log-likelihood does not change much
 
-```{r GasolineYield-phi-loglik}
+```{r}
+#| label: GasolineYield-phi-loglik
 sapply(gy, logLik)
 ```
 
@@ -1368,14 +1396,18 @@ not change much when a log-link is used in the precision model, see
 below and @tbl-GasolineYield-bias2 replicating
 [@betareg:Kosmidis+Firth:2010, Table 3].
 
-```{r GasolineYield-bias2}
+```{r}
+#| label: GasolineYield-bias2
 data("GasolineYield", package = "betareg")
 gy2 <- lapply(c("ML", "BC", "BR"), function(x)
   betareg(yield ~ batch + temp | 1, data = GasolineYield, type = x))
 sapply(gy2, logLik)
 ```
 
-```{r GasolineYield-bias-table2, echo=FALSE, results='asis'}
+```{r}
+#| label: GasolineYield-bias-table2
+#| echo: false
+#| results: asis
 cf <- matrix(paste("$", sapply(round(sapply(gy2, coef), digits = 5), format, nsmall = 5), "$", sep = ""), ncol = 3)
 se <- matrix(gsub(" ", "",
   paste("$", format(round(sapply(gy2, function(x) sqrt(diag(vcov(x)))), digits = 5), nsmall = 5), "$", sep = ""),

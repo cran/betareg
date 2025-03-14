@@ -1,6 +1,7 @@
-66e6ef0aae6fcb6642640530fcaa1bad *DESCRIPTION
-a7fd8200f033a27a2d0e4ab56175d55f *NAMESPACE
-169ced0295da937e03ae693eafce5818 *NEWS.md
+3b1c05449babf4648abcaadd9a503cce *DESCRIPTION
+20fbafde2b35e14b7c6239a663c90fb7 *NAMESPACE
+50814efa291775b327cf784d71c316d4 *NEWS.md
+436874c2f182be259c102c986b315554 *R/bamlss.R
 49403ba10845e44184304a90f30870ad *R/beta01.R
 17cf59227fe12672d6d8461f104e39ea *R/beta4.R
 0cf82dc63c5d221e16dcdd15558468fd *R/betamix.R
@@ -17,8 +18,8 @@ f74395d0284a4e6e204e2cc6fb414d40 *R/make.d2mu.deta.R
 816d82ffba3fc73d1f39812359a0dc67 *R/xbetax.R
 060d691f17f7c5d1d7c0852cfc1cf658 *R/zzz.R
 79a8e0511fc4b233b4a34f58f3f263d7 *README.md
-aa5e5a2cbfaea3d9b6cdbe378ac48cee *build/partial.rdb
-9c09a61dd4f65532ba167b815d301326 *build/vignette.rds
+4454e632feb75ce4f508807d50b3b12f *build/partial.rdb
+0a9053928f5dc3d39bc76c511f79af56 *build/vignette.rds
 0d7c7becb515e3dbd893b93bb510fb53 *data/CarTask.rda
 a877fda69d78ae583bd1715b96bfa45f *data/FoodExpenditure.rda
 3000511732e92eba3c4ae3286d60787c *data/GasolineYield.rda
@@ -31,12 +32,12 @@ d13debcdf2500624fcdcbe6db6053508 *data/LossAversion.rda
 3a4d1abf53e5eb85d6f0ba82a0bc5cf2 *demo/00Index
 0d82d533e3bba93172205445f4e66045 *demo/SmithsonVerkuilen2006.R
 96027e162c7f7be7a25b3b0dc19ec7d7 *inst/CITATION
-c89ffc8453a7c501bf14c395d316dc94 *inst/doc/betareg-ext.R
+3b0cbe30669b688c8ac30b16fba485b1 *inst/doc/betareg-ext.R
 106d1fc0cedd2aca7017d4041753778e *inst/doc/betareg-ext.html
-edace13ebc54bda16529e9b5b9155198 *inst/doc/betareg-ext.qmd
-0ced9b891b862910c42d60ddf4649363 *inst/doc/betareg.R
+6c4cd3b8392a38418ac0094a2f9be235 *inst/doc/betareg-ext.qmd
+bd8a3f6b30eaecb678a00f39da3065c4 *inst/doc/betareg.R
 b2d9e507b6243bb33bf1bef0a22aba9b *inst/doc/betareg.html
-fbc8e493436a39d6a2631c6608c08a7c *inst/doc/betareg.qmd
+b216cdb4267a3eca34e40c8344c29427 *inst/doc/betareg.qmd
 5a39f08fede18883f654338616a289c8 *man/Beta01.Rd
 33a840b546db5507593d1d50efadcb5a *man/Beta4.Rd
 3cf442a22fc8090850660cf7b9b02632 *man/BetaR.Rd
@@ -52,6 +53,7 @@ f824c4a4b1e59106b28e6df82cf774b7 *man/ReadingSkills.Rd
 73e6ce83b1103dc2926ab4d41f55d7eb *man/XBeta.Rd
 3c0c4ebc65fb1f4e4cf13c55f37bd1d7 *man/XBetaX.Rd
 f99ffb7c0cf59e7f387bfd6e4f088249 *man/betamix.Rd
+f0f6035bdf6c7cffa6b4e454aa72182e *man/betar_family.Rd
 1432e94ee4836b3524eaa19f36922e13 *man/betareg.Rd
 ee878790290cd6a64bc5ef520d7010a4 *man/betareg.control.Rd
 d1c414459f9ab85828ad394ebaa433bf *man/betatree.Rd
@@ -68,7 +70,7 @@ d82c750ea02099802106de3ce75007dd *man/residuals.betareg.Rd
 58be956d715424d167df5640fb485637 *man/summary.betareg.Rd
 1e05e0c30de7805a91293f304e2d962d *src/betareg_init.c
 86b11b19d08218a8eebe98598e7888c3 *src/h3F2.c
-77f4141cf554c9937823707f05137d79 *tests/Examples/betareg-Ex.Rout.save
+2114870bb25f3f31f37d6f07fce40584 *tests/Examples/betareg-Ex.Rout.save
 8ff1811a295efbcf70610a4175ade424 *tests/betamix.R
 7bbe7c4221c9dfab65d80601835a70cb *tests/betamix.Rout.save
 1e933462e09ada6c68be3201660a910b *tests/betatree.R
@@ -76,7 +78,7 @@ d82c750ea02099802106de3ce75007dd *man/residuals.betareg.Rd
 a2ac28fbb1263f8be8a938dd58f7cc83 *tests/bias.R
 d069c549b0d780d385799bf3c3deeb0c *tests/bias.Rout.save
 3aa77f2bfb7002406069f13c56c89d70 *vignettes/betareg-ext.Rout.save
-edace13ebc54bda16529e9b5b9155198 *vignettes/betareg-ext.qmd
+6c4cd3b8392a38418ac0094a2f9be235 *vignettes/betareg-ext.qmd
 9cb47dcb7f247fd5ebacaf66a4f14569 *vignettes/betareg.Rout.save
 951bca326d66679af3fc19ce8bb1ef6a *vignettes/betareg.bib
-fbc8e493436a39d6a2631c6608c08a7c *vignettes/betareg.qmd
+b216cdb4267a3eca34e40c8344c29427 *vignettes/betareg.qmd

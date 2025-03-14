@@ -1,3 +1,17 @@
+# betareg 3.2-2
+
+* Added family functions for generalized additive models for location, scale,
+  and shape (GAMLSS) with package [bamlss](http://www.bamlss.org/) or
+  [gamlss2](https://gamlss-dev.github.io/gamlss2/) using frequentist and
+  Bayesian estimation, respectively. Standard beta regression using the 
+  parameterization with `mu` and `phi` is provided by `betar_family()` and
+  `xbetax_family()` provides the new extended-support beta mixture (XBX)
+  regression.
+
+* Improved vignette source to consistently use pipe comments and avoid
+  duplicated figure labels.
+
+
 # betareg 3.2-1
 
 * New working paper "Extended-Support Beta Regression for [0, 1] Responses"

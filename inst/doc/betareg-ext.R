@@ -1,4 +1,6 @@
-## ----preliminaries, include = FALSE-------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: preliminaries
+#| include: false
 library("betareg")
 
 knitr::opts_chunk$set(
@@ -54,7 +56,7 @@ mean_iq <-
          nsmall = 3)
 
 
-## ----ReadingSkills------------------------------------------------------------
+## -----------------------------------------------------------------------------
 #| echo: false
 #| fig-width: 6
 #| fig-height: 5.5
@@ -86,7 +88,8 @@ legend("topleft", c("control", "dyslexic", "betareg", "lm"),
   col = c(cl1, NA, NA), bty = "n")
 
 
-## ----ReadingSkills-bias-------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-bias
 data("ReadingSkills", package = "betareg")
 rs_f <- accuracy ~ dyslexia * iq | dyslexia * iq
 rs_ml <- betareg(rs_f, data = ReadingSkills, type = "ML")
@@ -94,7 +97,10 @@ rs_bc <- betareg(rs_f, data = ReadingSkills, type = "BC")
 rs_br <- betareg(rs_f, data = ReadingSkills, type = "BR")
 
 
-## ----ReadingSkills-bias-table, echo=FALSE, results='asis'---------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-bias-table
+#| echo: false
+#| results: asis
 rs_list <- list(rs_ml, rs_bc, rs_br)
 cf <- paste("$", sapply(round(sapply(rs_list, coef), digits = 3), format, nsmall = 3), "$", sep = "")
 se <- paste("$", format(round(sapply(rs_list, function(x) sqrt(diag(vcov(x)))), digits = 3), nsmall = 3), "$", sep = "")
@@ -108,7 +114,7 @@ cfse <- rbind(cfse, c("Log-likelihood", "", ll))
 knitr::kable(cfse, align = c("l", "l", "r", "r", "r"), col.names = c("", "", "Maximum likelihood", "Bias correction", "Bias reduction"))
 
 
-## ----ReadingSkills-phi-plot---------------------------------------------------
+## -----------------------------------------------------------------------------
 #| echo: false
 #| fig-height: 6.5
 #| fig-width: 6.5
@@ -124,7 +130,9 @@ pairs(log(pr_phi), panel = function(x, y, ...) {
   })
 
 
-## ----ReadingSkills-noise, echo=TRUE-------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-noise
+#| echo: true
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(1071)
 n <- nrow(ReadingSkills)
@@ -133,21 +141,27 @@ ReadingSkills$x2 <- runif(n)
 ReadingSkills$x3 <- factor(sample(0:1, n, replace = TRUE))
 
 
-## ----ReadingSkills-tree-------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-tree
 rs_tree <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
   data = ReadingSkills, minsize = 10)
 
 
-## ----ReadingSkills-tree2, echo=TRUE, eval=FALSE-------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-tree2
+#| echo: true
+#| eval: false
 ## rs_tree <- betatree(accuracy ~ iq | iq | dyslexia + x1 + x2 + x3,
 ##   data = ReadingSkills, minsize = 10)
 
 
-## ----ReadingSkills-tree3, eval=FALSE------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-tree3
+#| eval: false
 ## plot(rs_tree)
 
 
-## ----ReadingSkills-tree-plot--------------------------------------------------
+## -----------------------------------------------------------------------------
 #| echo: false
 #| fig-height: 7
 #| fig-width: 10
@@ -157,34 +171,41 @@ rs_tree <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
 plot(rs_tree)
 
 
-## ----ReadingSkills-tree-coef--------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-tree-coef
 coef(rs_tree)
 
 
-## ----ReadingSkills-tree4, echo=TRUE-------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-tree4
+#| echo: true
 rs_tree
 
 
-## ----ReadingSkills-tree-sctest------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-tree-sctest
 library("strucchange")
 sctest(rs_tree)
 
 
-## ----ReadingSkills-mix--------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-mix
 rs_mix <- betamix(accuracy ~ iq, data = ReadingSkills, k = 3,
   extra_components = extraComponent(type = "uniform",
     coef = 0.99, delta = 0.01), nstart = 10)
 
 
-## ----ReadingSkills-mix3-------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-mix3
 rs_mix
 
 
-## ----ReadingSkills-mix4-------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-mix4
 summary(rs_mix)
 
 
-## ----ReadingSkills-betamix-plot3----------------------------------------------
+## -----------------------------------------------------------------------------
 #| echo: false
 #| fig-height: 5.5
 #| fig-width: 10
@@ -216,17 +237,22 @@ col3 <- hcl(c(260, 0), 90, 40)
 for(i in 1:2) lines(iq, plogis(cf[i, 1] + cf[i, 2] * iq), lwd = 2, col = col3[i])
 
 
-## ----ReadingSkills-mix5-------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-mix5
 table(clusters(rs_mix), ReadingSkills$dyslexia)
 
 
-## ----GasolineYield-bias-------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-bias
 data("GasolineYield", package = "betareg")
 gy <- lapply(c("ML", "BC", "BR"), function(x)
   betareg(yield ~ batch + temp, data = GasolineYield, type = x))
 
 
-## ----GasolineYield-bias-table, echo=FALSE, results='asis'---------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-bias-table
+#| echo: false
+#| results: asis
 cf <- matrix(paste("$", sapply(round(sapply(gy, coef), digits = 5), format, nsmall = 5), "$", sep = ""), ncol = 3)
 se <- matrix(gsub(" ", "",
   paste("$", format(round(sapply(gy, function(x) sqrt(diag(vcov(x)))), digits = 5), nsmall = 5), "$", sep = ""),
@@ -235,22 +261,28 @@ cfse <- cbind(c(paste("$\\beta_{", 1:11, "}$", sep = ""), "$\\phi$"), cf[,1], se
 knitr::kable(cfse, align = c("l", rep("r", 6)), col.names = c("", "Maximum likelihood", "", "Bias correction", "", "Bias reduction", ""))
 
 
-## ----GasolineYield-phi--------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-phi
 sapply(gy, coef, model = "precision")
 
 
-## ----GasolineYield-phi-loglik-------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-phi-loglik
 sapply(gy, logLik)
 
 
-## ----GasolineYield-bias2------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-bias2
 data("GasolineYield", package = "betareg")
 gy2 <- lapply(c("ML", "BC", "BR"), function(x)
   betareg(yield ~ batch + temp | 1, data = GasolineYield, type = x))
 sapply(gy2, logLik)
 
 
-## ----GasolineYield-bias-table2, echo=FALSE, results='asis'--------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-bias-table2
+#| echo: false
+#| results: asis
 cf <- matrix(paste("$", sapply(round(sapply(gy2, coef), digits = 5), format, nsmall = 5), "$", sep = ""), ncol = 3)
 se <- matrix(gsub(" ", "",
   paste("$", format(round(sapply(gy2, function(x) sqrt(diag(vcov(x)))), digits = 5), nsmall = 5), "$", sep = ""),

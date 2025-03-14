@@ -1,4 +1,6 @@
-## ----preliminaries, include = FALSE-------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: preliminaries
+#| include: false
 library("betareg")
 data("GasolineYield", package = "betareg")
 data("FoodExpenditure", package = "betareg")
@@ -18,7 +20,7 @@ knitr::opts_chunk$set(
 options(width = 70, prompt = "R> ", continue = "+  ", useFancyQuotes = FALSE, digits = 5)
 
 
-## ----beta-distributions-------------------------------------------------------
+## -----------------------------------------------------------------------------
 #| echo: false
 #| fig-width: 8.5
 #| fig-height: 4.5
@@ -67,13 +69,14 @@ text(0.50,  8.6, "0.50")
 ##   model = TRUE, y = TRUE, x = FALSE, ...)
 
 
-## ----GasolineYield-betareg----------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-betareg
 data("GasolineYield", package = "betareg")
 gy_logit <- betareg(yield ~ batch + temp, data = GasolineYield)
 summary(gy_logit)
 
 
-## ----GasolineYield-visualization----------------------------------------------
+## -----------------------------------------------------------------------------
 #| echo: false
 #| fig-width: 6
 #| fig-height: 5.5
@@ -101,7 +104,7 @@ legend("bottomright", c("log-log", "logit"),
   col = redblue, lty = 1:2, lwd = 2, bty = "n")
 
 
-## ----GasolineYield-plot-------------------------------------------------------
+## -----------------------------------------------------------------------------
 #| fig-width: 8.5
 #| fig-height: 10
 #| out-width: 100%
@@ -115,29 +118,33 @@ plot(gy_logit, which = 5, type = "deviance", sub.caption = "")
 plot(gy_logit, which = 1, type = "deviance", sub.caption = "")
 
 
-## ----GasolineYield-update-----------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-update
 gy_logit4 <- update(gy_logit, subset = -4)
 coef(gy_logit, model = "precision")
 coef(gy_logit4, model = "precision")
 
 
-## ----FoodExpenditure-lm-------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: FoodExpenditure-lm
 data("FoodExpenditure", package = "betareg")
 fe_lm <- lm(I(food/income) ~ income + persons, data = FoodExpenditure)
 
 
-## ----FoodExpenditure-bptest---------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: FoodExpenditure-bptest
 library("lmtest")
 bptest(fe_lm)
 
 
-## ----FoodExpenditure-betareg--------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: FoodExpenditure-betareg
 fe_beta <- betareg(I(food/income) ~ income + persons,
   data = FoodExpenditure)
 summary(fe_beta)
 
 
-## ----FoodExpenditure-visualization--------------------------------------------
+## -----------------------------------------------------------------------------
 #| echo: false
 #| fig-width: 6
 #| fig-height: 5.5
@@ -168,48 +175,58 @@ legend("topright", c("logit, var. disp.", "logit, fix. disp.", "lm"),
   col = redblueblack, lty = c(1, 5, 2), lwd = 2, bty = "n")
 
 
-## ----GasolineYield-phireg-----------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-phireg
 gy_logit2 <- betareg(yield ~ batch + temp | temp, data = GasolineYield)
 
 
-## ----GasolineYield-phireg-coef, echo=FALSE------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-phireg-coef
+#| echo: false
 printCoefmat(summary(gy_logit2)$coefficients$precision)
 
 
-## ----GasolineYield-lrtest-----------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-lrtest
 lrtest(gy_logit, gy_logit2)
 
 
-## ----FoodExpenditure-betareg2-------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: FoodExpenditure-betareg2
 fe_beta2 <- betareg(I(food/income) ~ income + persons | persons,
   data = FoodExpenditure)
 
 
-## ----FoodExpenditure-comparison-----------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: FoodExpenditure-comparison
 lrtest(fe_beta, fe_beta2)
 AIC(fe_beta, fe_beta2, k = log(nrow(FoodExpenditure)))
 
 
-## ----GasolineYield-loglog-----------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-loglog
 gy_loglog <- betareg(yield ~ batch + temp, data = GasolineYield,
   link = "loglog")
 
 
-## ----GasolineYield-Rsquared---------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-Rsquared
 summary(gy_logit)$pseudo.r.squared
 summary(gy_loglog)$pseudo.r.squared
 
 
-## ----GasolineYield-AIC--------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-AIC
 AIC(gy_logit, gy_logit2, gy_loglog)
 
 
-## ----GasolineYield-reset------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-reset
 lrtest(gy_logit, . ~ . + I(predict(gy_logit, type = "link")^2))
 lrtest(gy_loglog, . ~ . + I(predict(gy_loglog, type = "link")^2))
 
 
-## ----GasolineYield-diagnostics------------------------------------------------
+## -----------------------------------------------------------------------------
 #| echo: false
 #| fig-width: 6
 #| fig-height: 5.5
@@ -221,34 +238,41 @@ plot(abs(residuals(gy_loglog, type = "response")),
 abline(0, 1, lty = 2)
 
 
-## ----GasolineYield-loglog2----------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: GasolineYield-loglog2
 gy_loglog2 <- update(gy_loglog, link.phi = "log")
 summary(gy_loglog2)$iterations
 
 
-## ----FoodExpenditure-links----------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: FoodExpenditure-links
 sapply(c("logit", "probit", "cloglog", "cauchit", "loglog"),
   function(x) logLik(update(fe_beta2, link = x)))
 
 
-## ----ReadingSkills-eda, echo=FALSE, results='hide'----------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-eda
+#| echo: false
+#| results: hide
 data("ReadingSkills", package = "betareg")
 rs_accuracy <- format(round(with(ReadingSkills, tapply(accuracy, dyslexia, mean)), digits = 3))
 
 
-## ----ReadingSkills-ols--------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-ols
 data("ReadingSkills", package = "betareg")
 rs_ols <- lm(qlogis(accuracy) ~ dyslexia * iq, data = ReadingSkills)
 coeftest(rs_ols)
 
 
-## ----ReadingSkills-beta-------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: ReadingSkills-beta
 rs_beta <- betareg(accuracy ~ dyslexia * iq | dyslexia + iq,
   data = ReadingSkills, hessian = TRUE)
 coeftest(rs_beta)
 
 
-## ----ReadingSkills-visualization----------------------------------------------
+## -----------------------------------------------------------------------------
 #| echo: false
 #| fig-width: 6
 #| fig.height: 5.5
@@ -276,20 +300,22 @@ legend("topleft", c("control", "dyslexic", "betareg", "lm"),
   col = c(cl1, NA, NA), bty = "n")
 
 
-## ----strucchange-data---------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: strucchange-data
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
 y1 <- c(rbeta(150, 0.3 * 4, 0.7 * 4), rbeta(50, 0.5 * 4, 0.5 * 4))
 y2 <- c(rbeta(100, 0.3 * 4, 0.7 * 4), rbeta(100, 0.3 * 8, 0.7 * 8))
 
 
-## ----strucchange-gefp---------------------------------------------------------
+## -----------------------------------------------------------------------------
+#| label: strucchange-gefp
 library("strucchange")
 y1_gefp <- gefp(y1 ~ 1, fit = betareg)
 y2_gefp <- gefp(y2 ~ 1, fit = betareg)
 
 
-## ----strucchange-plot1--------------------------------------------------------
+## -----------------------------------------------------------------------------
 #| fig-width: 6.5
 #| fig-height: 6
 #| label: fig-strucchange1
@@ -297,7 +323,7 @@ y2_gefp <- gefp(y2 ~ 1, fit = betareg)
 plot(y1_gefp, aggregate = FALSE)
 
 
-## ----strucchange-plot2--------------------------------------------------------
+## -----------------------------------------------------------------------------
 #| fig-width: 6.5
 #| fig-height: 6
 #| label: fig-strucchange2

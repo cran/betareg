@@ -51,7 +51,9 @@ vignette: >
   %\VignettePackage{betareg}
 ---
 
-```{r preliminaries, include = FALSE}
+```{r}
+#| label: preliminaries
+#| include: false
 library("betareg")
 data("GasolineYield", package = "betareg")
 data("FoodExpenditure", package = "betareg")
@@ -113,7 +115,7 @@ parameterized in terms of the mean $\mu$ and the precision parameter $\phi$;
 all details are explained in the next section. The evident flexiblity makes
 the beta distribution an attractive candidate for data-driven statistical modeling.
 
-```{r beta-distributions}
+```{r}
 #| echo: false
 #| fig-width: 8.5
 #| fig-height: 4.5
@@ -502,7 +504,8 @@ in @fig-GasolineYield.
 `yield` depends on `batch` and `temp`, employing the standard
 logit link. In **betareg**, this can be fitted via
 
-```{r GasolineYield-betareg}
+```{r}
+#| label: GasolineYield-betareg
 data("GasolineYield", package = "betareg")
 gy_logit <- betareg(yield ~ batch + temp, data = GasolineYield)
 summary(gy_logit)
@@ -513,7 +516,7 @@ different types of diagnostic displays shown in their Figure 2. This
 graphic can be reproduced (in a slightly different order) using the
 `plot()` method for `"betareg"` objects, see @fig-GasolineYield-plot.
 
-```{r GasolineYield-visualization}
+```{r}
 #| echo: false
 #| fig-width: 6
 #| fig-height: 5.5
@@ -542,7 +545,7 @@ legend("bottomright", c("log-log", "logit"),
 ```
 
 
-```{r GasolineYield-plot}
+```{r}
 #| fig-width: 8.5
 #| fig-height: 10
 #| out-width: 100%
@@ -562,7 +565,8 @@ the model excluding this observation. While this does not change the
 coefficients in the mean model very much, the precision parameter
 $\phi$ increases clearly.
 
-```{r GasolineYield-update}
+```{r}
+#| label: GasolineYield-update
 gy_logit4 <- update(gy_logit, subset = -4)
 coef(gy_logit, model = "precision")
 coef(gy_logit4, model = "precision")
@@ -583,7 +587,8 @@ living in the household. All three variables are visualized in @fig-FoodExpendit
 To start their analysis, @betareg:Ferrari+Cribari-Neto:2004 consider
 a simple linear regression model fitted by ordinary least squares (OLS):
 
-```{r FoodExpenditure-lm}
+```{r}
+#| label: FoodExpenditure-lm
 data("FoodExpenditure", package = "betareg")
 fe_lm <- lm(I(food/income) ~ income + persons, data = FoodExpenditure)
 ```
@@ -593,7 +598,8 @@ the studentized @betareg:Breusch+Pagan:1979 test of @betareg:Koenker:1981
 which is available in R in the **lmtest** package
 [@betareg:Zeileis+Hothorn:2002].
 
-```{r FoodExpenditure-bptest}
+```{r}
+#| label: FoodExpenditure-bptest
 library("lmtest")
 bptest(fe_lm)
 ```
@@ -604,7 +610,8 @@ asymmetric. However, both issues -- heteroskedasticity and skewness --
 can be alleviated when a beta regression model with a logit link for
 the mean is used.
 
-```{r FoodExpenditure-betareg}
+```{r}
+#| label: FoodExpenditure-betareg
 fe_beta <- betareg(I(food/income) ~ income + persons,
   data = FoodExpenditure)
 summary(fe_beta)
@@ -619,7 +626,7 @@ household (see also @fig-FoodExpenditure).
 Below, further extended models will be considered for these data sets and
 hence all model comparisons are deferred.
 
-```{r FoodExpenditure-visualization}
+```{r}
 #| echo: false
 #| fig-width: 6
 #| fig-height: 5.5
@@ -665,7 +672,8 @@ This investigates Prater's gasoline yield data based on the same
 mean equation as above, but now with temperature `temp` as an 
 additional regressor for the precision parameter $\phi_i$:
 
-```{r GasolineYield-phireg}
+```{r}
+#| label: GasolineYield-phireg
 gy_logit2 <- betareg(yield ~ batch + temp | temp, data = GasolineYield)
 ```
 
@@ -673,7 +681,9 @@ for which `summary(gy_logit2)` yields the MLE column in Table 19
 of @betareg:Simas+Barreto-Souza+Rocha:2010. To save space, only
 the parameters pertaining to $\phi_i$ are reported here
 
-```{r GasolineYield-phireg-coef, echo=FALSE}
+```{r}
+#| label: GasolineYield-phireg-coef
+#| echo: false
 printCoefmat(summary(gy_logit2)$coefficients$precision)
 ```
 
@@ -681,7 +691,8 @@ which signal a significant improvement by including the `temp` regressor.
 Instead of using this Wald test, the models can also be compared by means
 of a likelihood-ratio test (see their Table 18) that confirms the results:
 
-```{r GasolineYield-lrtest}
+```{r}
+#| label: GasolineYield-lrtest
 lrtest(gy_logit, gy_logit2)
 ```
 
@@ -700,7 +711,8 @@ this variable in @fig-FoodExpenditure. Hence, it seems natural
 to consider the model employed above with `persons` as an additional
 regressor in the precision equation.
 
-```{r FoodExpenditure-betareg2}
+```{r}
+#| label: FoodExpenditure-betareg2
 fe_beta2 <- betareg(I(food/income) ~ income + persons | persons,
   data = FoodExpenditure)
 ```
@@ -709,7 +721,8 @@ This leads to significant improvements in terms of the likelihood and
 the associated BIC.^[In R, the BIC can be computed by means of
 `AIC()` when $\log(n)$ is supplied as the penalty term `k`.]
 
-```{r FoodExpenditure-comparison}
+```{r}
+#| label: FoodExpenditure-comparison
 lrtest(fe_beta, fe_beta2)
 AIC(fe_beta, fe_beta2, k = log(nrow(FoodExpenditure)))
 ```
@@ -732,14 +745,16 @@ we replicate parts of the analysis in Section 5 of @betareg:Cribari-Neto+Lima:20
 This reconsiders Prater's gasoline yield data but employs a log-log
 link instead of the previously used (default) logit link
 
-```{r GasolineYield-loglog}
+```{r}
+#| label: GasolineYield-loglog
 gy_loglog <- betareg(yield ~ batch + temp, data = GasolineYield,
   link = "loglog")
 ```
 
 which clearly improves the pseudo $R^2$ of the model:
 
-```{r GasolineYield-Rsquared}
+```{r}
+#| label: GasolineYield-Rsquared
 summary(gy_logit)$pseudo.r.squared
 summary(gy_loglog)$pseudo.r.squared
 ```
@@ -750,7 +765,8 @@ superior to the logit model with fixed dispersion `gy_logit`
 but also to the logit model with variable dispersion `gy_logit2` considered
 in the previous section.
 
-```{r GasolineYield-AIC}
+```{r}
+#| label: GasolineYield-AIC
 AIC(gy_logit, gy_logit2, gy_loglog)
 ```
 Moreover, if `temp` were included as a regressor in the precision
@@ -770,7 +786,8 @@ functions result in significant results indicating misspecification. Below,
 this is exemplified for a likelihood-ratio test of squared linear predictors.
 Analogous results can be obtained for `type = "response"` or higher powers.
 
-```{r GasolineYield-reset}
+```{r}
+#| label: GasolineYield-reset
 lrtest(gy_logit, . ~ . + I(predict(gy_logit, type = "link")^2))
 lrtest(gy_loglog, . ~ . + I(predict(gy_loglog, type = "link")^2))
 ```
@@ -779,7 +796,7 @@ The improvement of the model fit can also be brought out graphically by comparin
 absolute raw residuals (i.e., $y_i - \hat \mu_i$) from both models as in
 @fig-GasolineYield-diagnostics.
 
-```{r GasolineYield-diagnostics}
+```{r}
 #| echo: false
 #| fig-width: 6
 #| fig-height: 5.5
@@ -811,7 +828,8 @@ of the likelihood and less iterations in the optimization. For example,
 refitting `gy_loglog` with $g_2(\cdot) = \log(\cdot)$ converges
 more quickly:
 
-```{r GasolineYield-loglog2}
+```{r}
+#| label: GasolineYield-loglog2
 gy_loglog2 <- update(gy_loglog, link.phi = "log")
 summary(gy_loglog2)$iterations
 ```
@@ -832,7 +850,8 @@ extracted from fitted models using the `logLik()` function, e.g.,
 obtain this for updated versions of `fe_beta2` with all available link
 functions.
 
-```{r FoodExpenditure-links}
+```{r}
+#| label: FoodExpenditure-links
 sapply(c("logit", "probit", "cloglog", "cauchit", "loglog"),
   function(x) logLik(update(fe_beta2, link = x)))
 ```
@@ -852,7 +871,10 @@ articles below.
 
 ### Dyslexia and IQ predicting reading accuracy
 
-```{r ReadingSkills-eda, echo=FALSE, results='hide'}
+```{r}
+#| label: ReadingSkills-eda
+#| echo: false
+#| results: hide
 data("ReadingSkills", package = "betareg")
 rs_accuracy <- format(round(with(ReadingSkills, tapply(accuracy, dyslexia, mean)), digits = 3))
 ```
@@ -876,7 +898,8 @@ for the two groups fitted by the interaction of both regressors. To show that OL
 regression is no suitable tool in this situation, they first fit a linear regression
 of the logit-transformed response:
 
-```{r ReadingSkills-ols}
+```{r}
+#| label: ReadingSkills-ols
 data("ReadingSkills", package = "betareg")
 rs_ols <- lm(qlogis(accuracy) ~ dyslexia * iq, data = ReadingSkills)
 coeftest(rs_ols)
@@ -889,7 +912,8 @@ group). Hence, @betareg:Smithson+Verkuilen:2006 fit a beta regression model,
 again with separate means for both groups, but they also allow the dispersion to depend on the
 main effects of both variables.
 
-```{r ReadingSkills-beta}
+```{r}
+#| label: ReadingSkills-beta
 rs_beta <- betareg(accuracy ~ dyslexia * iq | dyslexia + iq,
   data = ReadingSkills, hessian = TRUE)
 coeftest(rs_beta)
@@ -915,7 +939,7 @@ regressions the data for which are also provided in the **betareg** package: see
 and `?StressAnxiety`. Furthermore, `demo("SmithsonVerkuilen2006", package = "betareg")`
 is a complete replication script with comments.
 
-```{r ReadingSkills-visualization}
+```{r}
 #| echo: false
 #| fig-width: 6
 #| fig.height: 5.5
@@ -986,7 +1010,8 @@ and for the first series $\mu$ changes to $0.5$ after 75% of the observations
 while $\phi$ remains constant whereas for the second series $\phi$ changes to $8$
 after 50% of the observations and $\mu$ remains constant.
 
-```{r strucchange-data}
+```{r}
+#| label: strucchange-data
 suppressWarnings(RNGversion("3.5.0"))
 set.seed(123)
 y1 <- c(rbeta(150, 0.3 * 4, 0.7 * 4), rbeta(50, 0.5 * 4, 0.5 * 4))
@@ -997,7 +1022,8 @@ To capture instabilities in the parameters over "time" (i.e., the ordering of
 the observations), the generalized empirical fluctuation processes can be derived
 via
 
-```{r strucchange-gefp}
+```{r}
+#| label: strucchange-gefp
 library("strucchange")
 y1_gefp <- gefp(y1 ~ 1, fit = betareg)
 y2_gefp <- gefp(y2 ~ 1, fit = betareg)
@@ -1005,7 +1031,7 @@ y2_gefp <- gefp(y2 ~ 1, fit = betareg)
 
 and visualized by
 
-```{r strucchange-plot1}
+```{r}
 #| fig-width: 6.5
 #| fig-height: 6
 #| label: fig-strucchange1
@@ -1013,7 +1039,7 @@ and visualized by
 plot(y1_gefp, aggregate = FALSE)
 ```
 
-```{r strucchange-plot2}
+```{r}
 #| fig-width: 6.5
 #| fig-height: 6
 #| label: fig-strucchange2

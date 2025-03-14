@@ -81,6 +81,7 @@ export(
   "qbetar",
   "rbetar",
   "BetaR",
+  "betar_family",
 
   ## zero- and/or one-inflated beta distribution in regression parameterization
   "dbeta01",
@@ -108,7 +109,8 @@ export(
   "pxbetax",
   "qxbetax",
   "rxbetax",
-  "XBetaX"
+  "XBetaX",
+  "xbetax_family"
 )
 
 ## methods for class betareg
