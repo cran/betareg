@@ -1,6 +1,6 @@
 Package: betareg
-Version: 3.2-2
-Date: 2025-03-14
+Version: 3.2-3
+Date: 2025-05-11
 Title: Beta Regression
 Authors@R: c(person(given = "Achim", family = "Zeileis", role = c("aut", "cre"), email = "Achim.Zeileis@R-project.org", comment = c(ORCID = "0000-0003-0918-3766")),
              person(given = "Francisco", family = "Cribari-Neto", role = "aut", email = "cribari@ufpe.br", comment = c(ORCID = "0000-0002-5909-6698")),
@@ -11,8 +11,9 @@ Authors@R: c(person(given = "Achim", family = "Zeileis", role = c("aut", "cre"),
 Description: Beta regression for modeling beta-distributed dependent variables on the open unit interval (0, 1),
   e.g., rates and proportions, see Cribari-Neto and Zeileis (2010) <doi:10.18637/jss.v034.i02>.
   Moreover, extended-support beta regression models can accommodate dependent variables with
-  boundary observations at 0 and/or 1. For the classical beta regression model, alternative specifications are
-  provided: Bias-corrected and bias-reduced estimation, finite mixture models, and recursive partitioning for
+  boundary observations at 0 and/or 1, see Kosmidis and Zeileis (2024) <doi:10.48550/arXiv.2409.07233>.
+  For the classical beta regression model, alternative specifications are provided:
+  Bias-corrected and bias-reduced estimation, finite mixture models, and recursive partitioning for
   beta regression, see Grün, Kosmidis, and Zeileis (2012) <doi:10.18637/jss.v048.i11>.
 Depends: R (>= 3.6.0)
 Imports: graphics, grDevices, methods, stats, flexmix, Formula, lmtest,
@@ -25,13 +26,15 @@ BugReports: https://topmodels.R-Forge.R-project.org/betareg/contact.html
 Encoding: UTF-8
 VignetteBuilder: quarto
 NeedsCompilation: yes
-Packaged: 2025-03-14 18:11:44 UTC; zeileis
-Author: Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>),
-  Francisco Cribari-Neto [aut] (<https://orcid.org/0000-0002-5909-6698>),
-  Bettina Grün [aut] (<https://orcid.org/0000-0001-7265-4773>),
-  Ioannis Kosmidis [aut] (<https://orcid.org/0000-0003-1556-0302>),
+Packaged: 2025-05-10 18:39:54 UTC; zeileis
+Author: Achim Zeileis [aut, cre] (ORCID:
+    <https://orcid.org/0000-0003-0918-3766>),
+  Francisco Cribari-Neto [aut] (ORCID:
+    <https://orcid.org/0000-0002-5909-6698>),
+  Bettina Grün [aut] (ORCID: <https://orcid.org/0000-0001-7265-4773>),
+  Ioannis Kosmidis [aut] (ORCID: <https://orcid.org/0000-0003-1556-0302>),
   Alexandre B. Simas [ctb] (earlier version by),
   Andrea V. Rocha [ctb] (earlier version by)
 Maintainer: Achim Zeileis <Achim.Zeileis@R-project.org>
 Repository: CRAN
-Date/Publication: 2025-03-14 20:20:01 UTC
+Date/Publication: 2025-05-10 19:50:03 UTC

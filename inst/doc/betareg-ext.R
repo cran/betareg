@@ -28,22 +28,22 @@ betamix_methods <- enumerate(paste("`", gsub("\\.betamix", "", as.character(meth
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## betareg(formula, data, subset, na.action, weights, offset,
-##   link = "logit", link.phi = NULL, type = c("ML", "BC", "BR"),
-##   control = betareg.control(...), model = TRUE, y = TRUE, x = FALSE, ...)
+# betareg(formula, data, subset, na.action, weights, offset,
+#   link = "logit", link.phi = NULL, type = c("ML", "BC", "BR"),
+#   control = betareg.control(...), model = TRUE, y = TRUE, x = FALSE, ...)
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## betatree(formula, partition, data, subset, na.action, weights, offset,
-##   link = "logit", link.phi = "log", control = betareg.control(), ...)
+# betatree(formula, partition, data, subset, na.action, weights, offset,
+#   link = "logit", link.phi = "log", control = betareg.control(), ...)
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## betamix(formula, data, k, fixed, subset, na.action,
-##   link = "logit", link.phi = "log", control = betareg.control(...),
-##   FLXconcomitant = NULL, extra_components,
-##   verbose = FALSE, ID, nstart = 3, FLXcontrol = list(), cluster = NULL,
-##   which = "BIC", ...)
+# betamix(formula, data, k, fixed, subset, na.action,
+#   link = "logit", link.phi = "log", control = betareg.control(...),
+#   FLXconcomitant = NULL, extra_components,
+#   verbose = FALSE, ID, nstart = 3, FLXcontrol = list(), cluster = NULL,
+#   which = "BIC", ...)
 
 
 ## ----include=FALSE------------------------------------------------------------
@@ -151,14 +151,14 @@ rs_tree <- betatree(accuracy ~ iq | iq, ~ dyslexia + x1 + x2 + x3,
 #| label: ReadingSkills-tree2
 #| echo: true
 #| eval: false
-## rs_tree <- betatree(accuracy ~ iq | iq | dyslexia + x1 + x2 + x3,
-##   data = ReadingSkills, minsize = 10)
+# rs_tree <- betatree(accuracy ~ iq | iq | dyslexia + x1 + x2 + x3,
+#   data = ReadingSkills, minsize = 10)
 
 
 ## -----------------------------------------------------------------------------
 #| label: ReadingSkills-tree3
 #| eval: false
-## plot(rs_tree)
+# plot(rs_tree)
 
 
 ## -----------------------------------------------------------------------------

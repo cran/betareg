@@ -1,3 +1,4 @@
+
 # betareg 3.2-2
 
 * Added family functions for generalized additive models for location, scale,

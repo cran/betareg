@@ -1,6 +1,6 @@
 
-R version 4.4.1 (2024-06-14) -- "Race for Your Life"
-Copyright (C) 2024 The R Foundation for Statistical Computing
+R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
+Copyright (C) 2025 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1042,6 +1042,7 @@ detaching ‘package:flexmix’, ‘package:lattice’
 > 
 > ### ** Examples
 > 
+> ## IGNORE_RDIFF_BEGIN
 > ## Don't show: 
 >  if(!requireNamespace("bamlss")) {
 +   if(interactive() || is.na(Sys.getenv("_R_CHECK_PACKAGE_NAME_", NA))) {
@@ -1068,7 +1069,7 @@ The following object is masked from ‘package:grDevices’:
 
 Loading required package: mgcv
 Loading required package: nlme
-This is mgcv 1.9-1. For overview type 'help("mgcv-package")'.
+This is mgcv 1.9-3. For overview type 'help("mgcv-package")'.
 -
 For citation info, use citation("bamlss") and see http://www.bamlss.org/.
 
@@ -1083,7 +1084,6 @@ The following object is masked from ‘package:mgcv’:
 > ## classical beta regression via ML
 > rs1 <- betareg(accuracy ~ dyslexia * iq | dyslexia + iq, data = ReadingSkills)
 > 
-> ## IGNORE_RDIFF_BEGIN
 > ## Bayesian additive model (with low number of iterations to speed up the example)
 > set.seed(0)
 > rs2 <- bamlss(accuracy ~ s(iq, by = dyslexia) | dyslexia + iq, data = ReadingSkills,
@@ -1128,30 +1128,30 @@ AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  
 AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  38
 AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  39
 AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  39
-elapsed time:  2.24sec
+elapsed time:  1.40sec
 Starting the sampler...
 
-|                    |   0%  2.14sec
-|*                   |   5%  2.07sec  0.11sec
-|**                  |  10%  2.06sec  0.23sec
-|***                 |  15%  1.92sec  0.34sec
-|****                |  20%  1.79sec  0.45sec
-|*****               |  25%  1.70sec  0.57sec
-|******              |  30%  1.60sec  0.68sec
-|*******             |  35%  1.49sec  0.80sec
-|********            |  40%  1.39sec  0.93sec
-|*********           |  45%  1.28sec  1.05sec
-|**********          |  50%  1.16sec  1.16sec
-|***********         |  55%  1.05sec  1.29sec
-|************        |  60%  0.94sec  1.40sec
-|*************       |  65%  0.82sec  1.52sec
-|**************      |  70%  0.72sec  1.68sec
-|***************     |  75%  0.60sec  1.80sec
-|****************    |  80%  0.48sec  1.91sec
-|*****************   |  85%  0.36sec  2.04sec
-|******************  |  90%  0.24sec  2.15sec
-|******************* |  95%  0.12sec  2.27sec
-|********************| 100%  0.00sec  2.39sec
+|                    |   0%  1.37sec
+|*                   |   5%  1.31sec  0.07sec
+|**                  |  10%  1.33sec  0.15sec
+|***                 |  15%  1.24sec  0.22sec
+|****                |  20%  1.15sec  0.29sec
+|*****               |  25%  1.07sec  0.36sec
+|******              |  30%  1.09sec  0.47sec
+|*******             |  35%  1.01sec  0.54sec
+|********            |  40%  0.93sec  0.62sec
+|*********           |  45%  0.86sec  0.70sec
+|**********          |  50%  0.78sec  0.78sec
+|***********         |  55%  0.70sec  0.85sec
+|************        |  60%  0.62sec  0.92sec
+|*************       |  65%  0.54sec  1.01sec
+|**************      |  70%  0.46sec  1.08sec
+|***************     |  75%  0.39sec  1.16sec
+|****************    |  80%  0.31sec  1.24sec
+|*****************   |  85%  0.23sec  1.32sec
+|******************  |  90%  0.15sec  1.39sec
+|******************* |  95%  0.08sec  1.46sec
+|********************| 100%  0.00sec  1.55sec
 > 
 > ## Bayesian model shrinks the effects compared to ML
 > plot(accuracy ~ iq, data = ReadingSkills, pch = 19, col = dyslexia)
@@ -2033,7 +2033,7 @@ Number of iterations: 33 (BFGS) + 28 (Fisher scoring)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  22.352 0.156 22.516 0 0 
+Time elapsed:  15.072 0.179 15.304 0 0 
 > grDevices::dev.off()
 null device 
           1 

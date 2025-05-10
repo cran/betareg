@@ -74,6 +74,7 @@ Umlauf N, Stasinopoulos M, Rigby R, Stauffer R (2024).
 }
 
 \examples{
+## IGNORE_RDIFF_BEGIN
 \dontshow{ if(!requireNamespace("bamlss")) {
   if(interactive() || is.na(Sys.getenv("_R_CHECK_PACKAGE_NAME_", NA))) {
     stop("not all packages required for the example are installed")
@@ -87,7 +88,6 @@ data("ReadingSkills", package = "betareg")
 ## classical beta regression via ML
 rs1 <- betareg(accuracy ~ dyslexia * iq | dyslexia + iq, data = ReadingSkills)
 
-## IGNORE_RDIFF_BEGIN
 ## Bayesian additive model (with low number of iterations to speed up the example)
 set.seed(0)
 rs2 <- bamlss(accuracy ~ s(iq, by = dyslexia) | dyslexia + iq, data = ReadingSkills,

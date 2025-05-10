@@ -64,9 +64,9 @@ text(0.50,  8.6, "0.50")
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-## betareg(formula, data, subset, na.action, weights, offset,
-##   link = "logit", link.phi = NULL, control = betareg.control(...),
-##   model = TRUE, y = TRUE, x = FALSE, ...)
+# betareg(formula, data, subset, na.action, weights, offset,
+#   link = "logit", link.phi = NULL, control = betareg.control(...),
+#   model = TRUE, y = TRUE, x = FALSE, ...)
 
 
 ## -----------------------------------------------------------------------------
