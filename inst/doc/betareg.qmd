@@ -173,7 +173,7 @@ inequality indices (e.g., Gini).
 In this paper, we describe the **betareg** package which can
 be used to perform inference in both fixed and variable dispersion beta
 regressions. The package is implemented in the R system
-for statistical computing [@betareg:R:2009] and available
+for statistical computing [@betareg:R] and available
 from the Comprehensive R Archive Network (CRAN) at
 <https://CRAN.R-project.org/package=betareg>. The initial version of the
 package was written by @betareg:Simas+Rocha:2006 up to version 1.2
@@ -367,7 +367,7 @@ additional Fisher scoring iteration after the `optim()` optimization in order to
 improve the ML result (or apply a bias correction or reduction).
 
 The model-fitting function `betareg()` and its associated class are designed to
-be as similar as possible to the standard `glm()` function [@betareg:R:2009]
+be as similar as possible to the standard `glm()` function [@betareg:R]
 for fitting GLMs. An important difference is that there are potentially two equations
 for mean and precision (@eq-meanprecision), and consequently two regressor matrices,
 two linear predictors, two sets of coefficients, etc. In this respect, the design

@@ -65,10 +65,10 @@ Pereira GHA (2017). On Quantile Residuals in Beta Regression.
   \emph{Communications in Statistics -- Simulation and Computation}, \bold{48}(1), 302--316.
   \doi{10.1080/03610918.2017.1381740}
 
-Kosmidis I, Zeileis A (2024).
+Kosmidis I, Zeileis A (2025).
   Extended-Support Beta Regression for [0, 1] Responses.
-  2409.07233, \emph{arXiv.org E-Print Archive}.
-  \doi{10.48550/arXiv.2409.07233}
+  \emph{Journal of the Royal Statistical Society C}, forthcoming.
+  \doi{10.1093/jrsssc/qlaf039}
 }
 
 \seealso{\code{\link{betareg}}}

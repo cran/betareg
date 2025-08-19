@@ -660,7 +660,7 @@ Log-likelihood: 65.9 on 7 Df
 Pseudo R-squared: 0.576
 Number of iterations in BFGS optimization: 25 
 > 
-> ## Extended-support beta mixture regression (Kosmidis & Zeileis 2024)
+> ## Extended-support beta mixture regression (Kosmidis & Zeileis 2025)
 > rs_xbx <- betareg(accuracy1 ~ dyslexia * iq | dyslexia + iq, data = ReadingSkills)
 Loading required namespace: numDeriv
 > summary(rs_xbx)
@@ -1128,30 +1128,30 @@ AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  
 AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  38
 AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  39
 AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  39
-elapsed time:  1.40sec
+elapsed time:  4.13sec
 Starting the sampler...
 
-|                    |   0%  1.37sec
-|*                   |   5%  1.31sec  0.07sec
-|**                  |  10%  1.33sec  0.15sec
-|***                 |  15%  1.24sec  0.22sec
-|****                |  20%  1.15sec  0.29sec
-|*****               |  25%  1.07sec  0.36sec
-|******              |  30%  1.09sec  0.47sec
-|*******             |  35%  1.01sec  0.54sec
-|********            |  40%  0.93sec  0.62sec
-|*********           |  45%  0.86sec  0.70sec
-|**********          |  50%  0.78sec  0.78sec
-|***********         |  55%  0.70sec  0.85sec
-|************        |  60%  0.62sec  0.92sec
-|*************       |  65%  0.54sec  1.01sec
-|**************      |  70%  0.46sec  1.08sec
-|***************     |  75%  0.39sec  1.16sec
-|****************    |  80%  0.31sec  1.24sec
-|*****************   |  85%  0.23sec  1.32sec
-|******************  |  90%  0.15sec  1.39sec
-|******************* |  95%  0.08sec  1.46sec
-|********************| 100%  0.00sec  1.55sec
+|                    |   0%  3.98sec
+|*                   |   5%  3.74sec  0.20sec
+|**                  |  10%  3.57sec  0.40sec
+|***                 |  15%  3.30sec  0.58sec
+|****                |  20%  3.05sec  0.76sec
+|*****               |  25%  2.83sec  0.94sec
+|******              |  30%  2.80sec  1.20sec
+|*******             |  35%  2.57sec  1.38sec
+|********            |  40%  2.37sec  1.58sec
+|*********           |  45%  2.19sec  1.79sec
+|**********          |  50%  1.98sec  1.98sec
+|***********         |  55%  1.76sec  2.15sec
+|************        |  60%  1.55sec  2.33sec
+|*************       |  65%  1.36sec  2.52sec
+|**************      |  70%  1.16sec  2.70sec
+|***************     |  75%  0.96sec  2.87sec
+|****************    |  80%  0.76sec  3.06sec
+|*****************   |  85%  0.57sec  3.24sec
+|******************  |  90%  0.38sec  3.41sec
+|******************* |  95%  0.19sec  3.58sec
+|********************| 100%  0.00sec  3.77sec
 > 
 > ## Bayesian model shrinks the effects compared to ML
 > plot(accuracy ~ iq, data = ReadingSkills, pch = 19, col = dyslexia)
@@ -2033,7 +2033,7 @@ Number of iterations: 33 (BFGS) + 28 (Fisher scoring)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  15.072 0.179 15.304 0 0 
+Time elapsed:  34.676 0.276 34.989 0 0 
 > grDevices::dev.off()
 null device 
           1 

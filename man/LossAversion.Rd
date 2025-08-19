@@ -61,7 +61,7 @@ A data frame containing 570 observations on 7 variables.
   similar results. The full data along with replication materials are available
   in the Harvard Dataverse.
   
-  Kosmidis and Zeileis (2024) revisit the data using extended-support beta
+  Kosmidis and Zeileis (2025) revisit the data using extended-support beta
   mixture (XBX) regression, which can simultaneously capture both the probability
   of rational behavior and the mean amount of loss aversion.
 }
@@ -79,10 +79,10 @@ Glätzle-Rützler D, Sutter M, Zeileis A (2015).
   \emph{Journal of Economic Behavior & Organization}, \bold{111}, 169--176.
   \doi{10.1016/j.jebo.2014.12.021}
 
-Kosmidis I, Zeileis A (2024).
+Kosmidis I, Zeileis A (2025).
   Extended-Support Beta Regression for [0, 1] Responses.
-  2409.07233, \emph{arXiv.org E-Print Archive}.
-  \doi{10.48550/arXiv.2409.07233}
+  \emph{Journal of the Royal Statistical Society C}, forthcoming.
+  \doi{10.1093/jrsssc/qlaf039}
 }
 
 \seealso{\code{\link{betareg}}}

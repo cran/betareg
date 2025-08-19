@@ -11,21 +11,21 @@
 The R package
 [betareg](https://topmodels.R-Forge.R-project.org/betareg/) provides:
 
--   Beta regression for modeling beta-distributed dependent variables on
-    the open unit interval (0, 1), e.g., rates and proportions, see
-    Cribari-Neto and Zeileis (2010,
-    [doi:10.18637/jss.v034.i02](https://doi.org/10.18637/jss.v034.i02)).
+- Beta regression for modeling beta-distributed dependent variables on
+  the open unit interval (0, 1), e.g., rates and proportions, see
+  Cribari-Neto and Zeileis (2010,
+  [doi:10.18637/jss.v034.i02](https://doi.org/10.18637/jss.v034.i02)).
 
--   Extended-support beta regression models for variables on the closed
-    unit interval \[0, 1\] with boundary observations at 0 and/or 1, see
-    Kosmidis and Zeileis (2024,
-    [doi:10.48550/arXiv.2409.07233](https://doi.org/10.48550/arXiv.2409.07233)).
+- Extended-support beta regression models for variables on the closed
+  unit interval \[0, 1\] with boundary observations at 0 and/or 1, see
+  Kosmidis and Zeileis (2025,
+  [doi:10.1093/jrsssc/qlaf039](https://doi.org/10.1093/jrsssc/qlaf039)).
 
--   Alternative specifications of the classical beta regression model:
-    Bias-corrected and bias-reduced estimation, finite mixture models,
-    and recursive partitioning for (0, 1) beta regression, see Grün,
-    Kosmidis, and Zeileis (2012,
-    [doi:10.18637/jss.v048.i11](https://doi.org/10.18637/jss.v048.i11)).
+- Alternative specifications of the classical beta regression model:
+  Bias-corrected and bias-reduced estimation, finite mixture models, and
+  recursive partitioning for (0, 1) beta regression, see Grün, Kosmidis,
+  and Zeileis (2012,
+  [doi:10.18637/jss.v048.i11](https://doi.org/10.18637/jss.v048.i11)).
 
 ## Installation
 
@@ -135,7 +135,7 @@ significant but the qualitative interpretations still remain similar.
 betareg(accuracy1 ~ dyslexia * iq | dyslexia + iq, data = ReadingSkills)
 ```
 
-See Kosmidis and Zeileis (2024) and the documentation of `betareg()` for
+See Kosmidis and Zeileis (2025) and the documentation of `betareg()` for
 more details.
 
 ### Bias reduction

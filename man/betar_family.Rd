@@ -37,11 +37,11 @@ xbetax_family(link = "logit", link.phi = "log", link.nu = "log",
 
 \details{
 Family objects for \pkg{bamlss} (Umlauf et al. 2019, 2021) and \pkg{gamlss2}
-(Umlauf et al. 2024) are essentially lists of functions providing a standardized
+(Umlauf et al. 2025) are essentially lists of functions providing a standardized
 interface to the d/p/q/r functions of distributions. Hence, \code{betar_family}
 interfaces the classical beta distribution in regression specification, see
 \code{\link{dbetar}}. Analogously, \code{xbetax_family} interfaces the
-extended-support beta mixture specification (Kosmidis and Zeileis 2024),
+extended-support beta mixture specification (Kosmidis and Zeileis 2025),
 see \code{\link{dxbetax}}.
 }
 
@@ -52,10 +52,10 @@ A list of class \code{\link[bamlss]{family.bamlss}}.
 \seealso{\code{\link{dbetar}}, \code{\link{dxbetax}}, \code{\link[bamlss]{family.bamlss}}}
 
 \references{
-Kosmidis I, Zeileis A (2024).
+Kosmidis I, Zeileis A (2025).
   Extended-Support Beta Regression for [0, 1] Responses.
-  2409.07233, \emph{arXiv.org E-Print Archive}.
-  \doi{10.48550/arXiv.2409.07233}
+  \emph{Journal of the Royal Statistical Society C}, forthcoming.
+  \doi{10.1093/jrsssc/qlaf039}
 
 Umlauf N, Klein N, Zeileis A (2019).
   BAMLSS: Bayesian Additive Models for Location, Scale and Shape (and Beyond).
@@ -67,7 +67,7 @@ Umlauf N, Klein N, Simon T, Zeileis A (2021).
   \emph{Journal of Statistical Software}, \bold{100}(4), 1--53.
   \doi{10.18637/jss.v100.i04}
   
-Umlauf N, Stasinopoulos M, Rigby R, Stauffer R (2024).
+Umlauf N, Stasinopoulos M, Rigby R, Stauffer R (2025).
   gamlss2: Infrastructure for Flexible Distributional Regression.
   R package version 0.1-0.
   \url{https://gamlss-dev.github.io/gamlss2/}

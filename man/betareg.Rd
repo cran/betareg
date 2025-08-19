@@ -104,7 +104,7 @@ betareg.fit(x, y, z = NULL, weights = NULL, offset = NULL,
   \code{y ~ x1 + x2}), the \code{"identity"} link is used by default for backward
   compatibility.
   
-  Kosmidis and Zeileis (2024) introduce a generalization of the classic beta regression
+  Kosmidis and Zeileis (2025) introduce a generalization of the classic beta regression
   model with extended support [0, 1].
   Specifically, the extended-support beta distribution (\code{"xbeta"}) leverages an underlying
   symmetric four-parameter beta distribution with exceedence parameter nu
@@ -220,10 +220,10 @@ Kosmidis I, Firth D (2010).
   A Generic Algorithm for Reducing Bias in Parametric Estimation.
   \emph{Electronic Journal of Statistics}, \bold{4}, 1097--1112.
 
-Kosmidis I, Zeileis A (2024).
+Kosmidis I, Zeileis A (2025).
   Extended-Support Beta Regression for [0, 1] Responses.
-  2409.07233, \emph{arXiv.org E-Print Archive}.
-  \doi{10.48550/arXiv.2409.07233}
+  \emph{Journal of the Royal Statistical Society C}, forthcoming.
+  \doi{10.1093/jrsssc/qlaf039}
 
 Simas AB, Barreto-Souza W, Rocha AV (2010).
   Improved Estimators for a General Class of Beta Regression Models.

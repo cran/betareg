@@ -1,3 +1,19 @@
+# betareg 3.2-4
+
+* The paper "Extended-Support Beta Regression for [0, 1] Responses" is now forthcoming
+  in _Journal of the Royal Statistical Society Series C: Applied Statistics_
+  with [doi:10.1093/jrsssc/qlaf039](https://doi.org/10.1093/jrsssc/qlaf039).
+
+* Fix `predict()` method for extended beta regression models with `newdata`
+  and `type = "response"` or `type = "link"`.
+
+* Avoid partial matches of argument names.
+
+
+# betareg 3.2-3
+
+* Minor update of example output in the CRAN checks.
+
 
 # betareg 3.2-2
 

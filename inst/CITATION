@@ -27,16 +27,14 @@ bibentry("Article",
          header      = "If you use betatree(), betamix(), or bias correction/reduction in betareg(), please cite:"
 )
 
-bibentry("TechReport",
+bibentry("Article",
          title       = "Extended-Support Beta Regression for [0, 1] Responses",
          author      = c(person(given = "Ioannis", family = "Kosmidis", email = "ioannis.kosmidis@warwick.ac.uk", comment = c(ORCID = "0000-0003-1556-0302")),
 	                 person(given = "Achim", family = "Zeileis", email = "Achim.Zeileis@R-project.org", comment = c(ORCID = "0000-0003-0918-3766"))),
-         year        = "2024",
-         institution = "arXiv.org E-Print Archive",
-         type        = "arXiv",
-         number      = "2409.07233",
-         month       = "Sepember",
-         doi         = "10.48550/arXiv.2409.07233",
+         journal     = "Journal of the Royal Statistical Society C",
+         year        = "2025",
+         note        = "Forthcoming",
+         doi         = "10.1093/jrsssc/qlaf039",
 	 
          header      = "If you use betareg() for response variables with boundary observations at 0 and/or 1, please cite:"
 )
