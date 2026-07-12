@@ -35,7 +35,7 @@ A data frame containing 44 observations on 3 variables.
   (\code{a} and \code{b} are not provided). Subsequently, \code{accuracy} was obtained
   from \code{accuracy1} by replacing all observations with a value of 1 with 0.99.
   
-  Kosmidis and Zeileis (2025) propose to investigate the original unrestricted
+  Kosmidis and Zeileis (2026) propose to investigate the original unrestricted
   \code{accuracy1} variable using their extended-support beta mixture regression.
 }
 
@@ -53,9 +53,9 @@ Grün B, Kosmidis I, Zeileis A (2012).
   \emph{Journal of Statistical Software}, \bold{48}(11), 1--25.
   \doi{10.18637/jss.v048.i11}
 
-Kosmidis I, Zeileis A (2025).
+Kosmidis I, Zeileis A (2026).
   Extended-Support Beta Regression for [0, 1] Responses.
-  \emph{Journal of the Royal Statistical Society C}, forthcoming.
+  \emph{Journal of the Royal Statistical Society C}, \bold{75}(1), 139--157.
   \doi{10.1093/jrsssc/qlaf039}
 
 Pammer K, Kevan A (2004).
@@ -86,7 +86,7 @@ rs_beta <- betareg(accuracy ~ dyslexia * iq | dyslexia + iq,
   data = ReadingSkills, hessian = TRUE)
 summary(rs_beta)
 
-## Extended-support beta mixture regression (Kosmidis & Zeileis 2025)
+## Extended-support beta mixture regression (Kosmidis & Zeileis 2026)
 rs_xbx <- betareg(accuracy1 ~ dyslexia * iq | dyslexia + iq, data = ReadingSkills)
 summary(rs_xbx)
 

@@ -660,7 +660,7 @@ Log-likelihood: 65.9 on 7 Df
 Pseudo R-squared: 0.576
 Number of iterations in BFGS optimization: 25 
 > 
-> ## Extended-support beta mixture regression (Kosmidis & Zeileis 2025)
+> ## Extended-support beta mixture regression (Kosmidis & Zeileis 2026)
 > rs_xbx <- betareg(accuracy1 ~ dyslexia * iq | dyslexia + iq, data = ReadingSkills)
 Loading required namespace: numDeriv
 > summary(rs_xbx)

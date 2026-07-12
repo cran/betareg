@@ -1,8 +1,9 @@
 options(digits = 4)
 suppressWarnings(RNGversion("3.5.0"))
 
-## package and data
+## packages and data
 library("betareg")
+stopifnot(requireNamespace("partykit", quietly = TRUE))
 data("ReadingSkills", package = "betareg")
 
 ## augment with random noise

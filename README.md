@@ -2,7 +2,7 @@
 
 <!-- README.md is generated from README.qmd via: quarto render README.qmd --to gfm -->
 
-<img src="https://topmodels.R-Forge.R-project.org/betareg/betareg.png" align="right" alt="countreg logo" width="100" />
+<img src="https://topmodels.R-Forge.R-project.org/betareg/betareg.png" align="right" alt="betareg logo" width="100" />
 
 # Beta Regression
 
@@ -18,7 +18,7 @@ The R package
 
 - Extended-support beta regression models for variables on the closed
   unit interval \[0, 1\] with boundary observations at 0 and/or 1, see
-  Kosmidis and Zeileis (2025,
+  Kosmidis and Zeileis (2026,
   [doi:10.1093/jrsssc/qlaf039](https://doi.org/10.1093/jrsssc/qlaf039)).
 
 - Alternative specifications of the classical beta regression model:
@@ -135,7 +135,7 @@ significant but the qualitative interpretations still remain similar.
 betareg(accuracy1 ~ dyslexia * iq | dyslexia + iq, data = ReadingSkills)
 ```
 
-See Kosmidis and Zeileis (2025) and the documentation of `betareg()` for
+See Kosmidis and Zeileis (2026) and the documentation of `betareg()` for
 more details.
 
 ### Bias reduction

@@ -745,7 +745,7 @@ betareg.fit <- function(x, y, z = NULL, weights = NULL, offset = NULL,
     rval <- list(
         coefficients = list(mu = beta, phi = gamma),
         residuals = y - marg_e,
-        fitted.values = structure(marg_e, .Names = names(y)),
+        fitted.values = structure(marg_e, names = names(y)),
         type = type,
         dist = dist,
         optim = opt,
@@ -893,7 +893,7 @@ print.summary.betareg <- function(x, digits = max(3, getOption("digits") - 3), .
         if(!is.null(x$dist) && (x$dist != "beta")) Types[1L] <- "Randomized quantile residuals"
         cat(sprintf("%s:\n", Types[types == match.arg(x$residuals.type, types)]))
         print(structure(round(as.vector(quantile(x$residuals)), digits = digits),
-                        .Names = c("Min", "1Q", "Median", "3Q", "Max")))
+                        names = c("Min", "1Q", "Median", "3Q", "Max")))
 
         if(NROW(x$coefficients$mu)) {
             cat(sprintf("\nCoefficients (%s model with %s link):\n", mp[1L], x$link$mu$name))

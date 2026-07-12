@@ -20,7 +20,7 @@ gleverage.betareg <- function(model, ...)
   y <- if(is.null(model$y)) model.response(model.frame(model)) else model$y
   x <- if(is.null(model$x)) model.matrix(model, model = "mu") else model$x$mu
   z <- if(is.null(model$x)) model.matrix(model, model = "phi") else model$x$phi
-  if(NCOL(x) < 1L) return(structure(rep.int(0, NROW(x)), .Names = rownames(x)))
+  if(NCOL(x) < 1L) return(structure(rep.int(0, NROW(x)), names = rownames(x)))
 
   if(is.null(model$offset$mu)) model$offset$mu <- rep(0, NROW(x))
   if(is.null(model$offset$phi)) model$offset$phi <- rep(0, NROW(z))
@@ -98,7 +98,7 @@ hatvalues.betareg <- function(model, ...)
   y <- if(is.null(model$y)) model.response(model.frame(model)) else model$y
   x <- if(is.null(model$x)) model.matrix(model, model = "mu") else model$x$mu
   z <- if(is.null(model$x)) model.matrix(model, model = "phi") else model$x$phi
-  if(NCOL(x) < 1L) return(structure(rep.int(0, NROW(x)), .Names = rownames(x)))
+  if(NCOL(x) < 1L) return(structure(rep.int(0, NROW(x)), names = rownames(x)))
   
   if(is.null(model$offset$mu)) model$offset$mu <- rep(0, NROW(x))
   if(is.null(model$offset$phi)) model$offset$phi <- rep(0, NROW(z))

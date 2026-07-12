@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.23">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,6 +12,7 @@
 
 <title>Extended Beta Regression in R: Shaken, Stirred, Mixed, and Partitioned</title>
 <style>
+
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -61,7 +62,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
 clear: both;
-margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
 margin-left:2em;
@@ -205,7 +205,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -221,7 +221,146 @@ window.Quarto = {
 };
 </script>
 
-<style type="text/css">body {background-color: #fff;margin: 1em auto;max-width: 700px;overflow: visible;padding-left: 2em;padding-right: 2em;font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;font-size: 14px;line-height: 1.35;}table {margin: 1em auto;border-width: 1px;border-color: #DDDDDD;border-style: outset;border-collapse: collapse;}table th {border-width: 2px;padding: 5px;border-style: inset;}table td {border-width: 1px;border-style: inset;line-height: 18px;padding: 5px 5px;}table, table th, table td {border-left-style: none;border-right-style: none;}table thead, table tr.even {background-color: #f7f7f7;}p {margin: 0.5em 0;}blockquote {background-color: #f6f6f6;padding: 0.25em 0.75em;}hr {border-style: solid;border: none;border-top: 1px solid #777;margin: 28px 0;}dl {margin-left: 0;}dl dd {margin-bottom: 13px;margin-left: 13px;}dl dt {font-weight: bold;}ul {margin-top: 0;}ul li {list-style: circle outside;}ul ul {margin-bottom: 0;}pre, code {background-color: #f7f7f7;border-radius: 3px;color: #333;white-space: pre-wrap; }pre {border-radius: 3px;margin: 5px 0px 10px 0px;padding: 10px;}pre:not([class]) {background-color: #f7f7f7;}code {font-family: Consolas, Monaco, 'Courier New', monospace;font-size: 85%;}p > code, li > code {padding: 2px 0px;}div.figure {text-align: center;}img {background-color: #FFFFFF;padding: 2px;border: 1px solid #DDDDDD;border-radius: 3px;border: 1px solid #CCCCCC;margin: 0 5px;}h1 {margin-top: 0;font-size: 35px;line-height: 40px;}h2 {border-bottom: 4px solid #f7f7f7;padding-top: 10px;padding-bottom: 2px;font-size: 145%;}h3 {border-bottom: 2px solid #f7f7f7;padding-top: 10px;font-size: 120%;}h4 {border-bottom: 1px solid #f7f7f7;margin-left: 8px;font-size: 105%;}h5, h6 {border-bottom: 1px solid #ccc;font-size: 105%;}a {color: #0033dd;text-decoration: none;}a:hover {color: #6666ff; }a:visited {color: #800080; }a:visited:hover {color: #BB00BB; }a[href^="http:"] {text-decoration: underline; }a[href^="https:"] {text-decoration: underline; }</style>
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+</style>
 </head>
 
 <body>
@@ -235,7 +374,7 @@ window.Quarto = {
 
 <div class="abstract">
 <div class="abstract-title">Abstract</div>
-<p>This introduction to the extended features of the R package <strong>betareg</strong> is a (slightly) modified version of <span class="citation" data-cites="betareg:Gruen+Kosmidis+Zeileis:2012">Grün, Kosmidis, and Zeileis (2012)</span>, published in the <em>Journal of Statistical Software</em>.<br>
+<p>This introduction to the extended features of the R package <strong>betareg</strong> is a (slightly) modified version of <span class="citation" data-cites="betareg:Gruen+Kosmidis+Zeileis:2012">Grün et al. (2012)</span>, published in the <em>Journal of Statistical Software</em>.<br>
 Beta regression – an increasingly popular approach for modeling rates and proportions – is extended in various directions: (a) bias correction/reduction of the maximum likelihood estimator, (b) beta regression tree models by means of recursive partitioning, (c) latent class beta regression by means of finite mixture models. All three extensions may be of importance for enhancing the beta regression toolbox in practice to provide more reliable inference and capture both observed and unobserved/latent heterogeneity in the data. Using the analogy of <span class="citation" data-cites="betareg:Smithson+Verkuilen:2006">Smithson and Verkuilen (2006)</span>, these extensions make beta regression not only “a better lemon squeezer” (compared to classical least squares regression) but a full-fledged modern juicer offering lemon-based drinks: shaken and stirred (bias correction and reduction), mixed (finite mixture model), or partitioned (tree model). All three extensions are provided in the R package <strong>betareg</strong> (at least 2.4-0), building on generic algorithms and implementations for bias correction/reduction, model-based recursive partioning, and finite mixture models, respectively. Specifically, the new functions <code>betatree()</code> and <code>betamix()</code> reuse the object-oriented flexible implementation from the R packages <strong>partykit</strong> and <strong>flexmix</strong>, respectively.</p>
 </div>
 </header>
@@ -273,7 +412,7 @@ Beta regression – an increasingly popular approach for modeling rates and prop
 </nav>
 <h2 data-number="1" id="sec-intro"><span class="header-section-number">1</span> Introduction</h2>
 <h3 data-number="1.1" id="a-brief-review-of-beta-regression"><span class="header-section-number">1.1</span> A brief review of beta regression</h3>
-<p>Beta regression is a model for continuous response variables <span class="math inline">\(y\)</span> which assume values in the open unit interval <span class="math inline">\((0, 1)\)</span>. Such response variables may stem from rates, proportions, concentrations, etc. A regression model where the mean as well as the precision is modeled through covariates was introduced by <span class="citation" data-cites="betareg:Ferrari+Cribari-Neto:2004">Ferrari and Cribari-Neto (2004)</span> along with the extensions by <span class="citation" data-cites="betareg:Smithson+Verkuilen:2006">Smithson and Verkuilen (2006)</span> and <span class="citation" data-cites="betareg:Simas+Barreto-Souza+Rocha:2010">Simas, Barreto-Souza, and Rocha (2010)</span>. This model is also referred to as “double index regression model” because it contains two regression parts: one for the mean and one for the precision. <span class="citation" data-cites="betareg:Ferrari+Cribari-Neto:2004">Ferrari and Cribari-Neto (2004)</span> employed an alternative parameterization of the beta distribution characterizing more easily the mean and the variance. In this parameterization the beta distribution has the density</p>
+<p>Beta regression is a model for continuous response variables <span class="math inline">\(y\)</span> which assume values in the open unit interval <span class="math inline">\((0, 1)\)</span>. Such response variables may stem from rates, proportions, concentrations, etc. A regression model where the mean as well as the precision is modeled through covariates was introduced by <span class="citation" data-cites="betareg:Ferrari+Cribari-Neto:2004">Ferrari and Cribari-Neto (2004)</span> along with the extensions by <span class="citation" data-cites="betareg:Smithson+Verkuilen:2006">Smithson and Verkuilen (2006)</span> and <span class="citation" data-cites="betareg:Simas+Barreto-Souza+Rocha:2010">Simas et al. (2010)</span>. This model is also referred to as “double index regression model” because it contains two regression parts: one for the mean and one for the precision. <span class="citation" data-cites="betareg:Ferrari+Cribari-Neto:2004">Ferrari and Cribari-Neto (2004)</span> employed an alternative parameterization of the beta distribution characterizing more easily the mean and the variance. In this parameterization the beta distribution has the density</p>
 <p><span id="eq-density"><span class="math display">\[
 f(y;\mu,\phi) =
 \frac{\Gamma(\phi)}{\Gamma(\mu\phi)\Gamma((1-\mu)\phi)}y^{\mu\phi-1}(1-y)^{(1-\mu)\phi-1}\,
@@ -292,14 +431,14 @@ f(y;\mu,\phi) =
 \infty)\)</span>, respectively, to the real line. Suitable candidates for <span class="math inline">\(g_1(\cdot)\)</span> are the logit, probit and generally any inverse of a cumulative distribution function, and for <span class="math inline">\(g_2(\cdot)\)</span> the log function. Another common choice for <span class="math inline">\(g_2(\cdot)\)</span> is the identity function which, however, can lead to invalid results when some <span class="math inline">\(\zeta_i &lt; 0\)</span>.</p>
 <p>Typically, the coefficients <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> are estimated by maximum likelihood (ML) and inference is based on the usual central limit theorem with its associated asymptotic tests, e.g., likelihood ratio, Wald, score/Lagrange multiplier (LM).</p>
 <h3 data-number="1.2" id="implementation-in-r"><span class="header-section-number">1.2</span> Implementation in R</h3>
-<p>The R package <strong>betareg</strong> <span class="citation" data-cites="betareg:Cribari-Neto+Zeileis:2010">(Cribari-Neto and Zeileis 2010)</span> provides ML estimation of beta regressions in its main model fitting function <code>betareg()</code>. The interface as well as the fitted model objects are designed to be similar to those from <code>glm()</code>. The model specification is via a <code>formula</code> plus <code>data</code>. Because two types of covariates need to be distinguished a two-part formula is allowed based on functionality provided by the <strong>Formula</strong> package <span class="citation" data-cites="betareg:Zeileis+Croissant:2010">(Zeileis and Croissant 2010)</span>. For example, would assign the covariates <code>x1</code>, <code>x2</code>, and <code>x3</code> to the mean submodel and <code>z1</code> and <code>z2</code> to the precision submodel in <a href="#eq-link" class="quarto-xref">Equation 2</a>. Function <code>betareg()</code> internally uses function <code>optim()</code> as a general purpose optimizer to maximize the log-likelihood. The fitted model has methods for several extractor functions, e.g., <code>coef()</code>, <code>vcov()</code>, <code>residuals()</code>, <code>logLik()</code>. Base methods for the returned fitted model are <code>summary()</code>, <code>AIC()</code>, <code>confint()</code>. Further methods are available for functions from <strong>lmtest</strong> <span class="citation" data-cites="betareg:Zeileis+Hothorn:2002">(Zeileis and Hothorn 2002)</span> and <strong>car</strong> <span class="citation" data-cites="betareg:Fox+Weisberg:2019">(Fox and Weisberg 2019)</span>, e.g., <code>lrtest()</code>, <code>waldtest()</code>, <code>coeftest()</code>, and <code>linearHypothesis()</code>. Multiple testing is possible via package <strong>multcomp</strong> <span class="citation" data-cites="betareg:Hothorn+Bretz+Westfall:2008">(Hothorn, Bretz, and Westfall 2008)</span> and structural change tests can be performed using package <strong>strucchange</strong> <span class="citation" data-cites="betareg:Zeileis+Leisch+Hornik:2002">(Zeileis et al. 2002)</span>.</p>
+<p>The R package <strong>betareg</strong> <span class="citation" data-cites="betareg:Cribari-Neto+Zeileis:2010">(Cribari-Neto and Zeileis 2010)</span> provides ML estimation of beta regressions in its main model fitting function <code>betareg()</code>. The interface as well as the fitted model objects are designed to be similar to those from <code>glm()</code>. The model specification is via a <code>formula</code> plus <code>data</code>. Because two types of covariates need to be distinguished a two-part formula is allowed based on functionality provided by the <strong>Formula</strong> package <span class="citation" data-cites="betareg:Zeileis+Croissant:2010">(Zeileis and Croissant 2010)</span>. For example, would assign the covariates <code>x1</code>, <code>x2</code>, and <code>x3</code> to the mean submodel and <code>z1</code> and <code>z2</code> to the precision submodel in <a href="#eq-link" class="quarto-xref">Equation 2</a>. Function <code>betareg()</code> internally uses function <code>optim()</code> as a general purpose optimizer to maximize the log-likelihood. The fitted model has methods for several extractor functions, e.g., <code>coef()</code>, <code>vcov()</code>, <code>residuals()</code>, <code>logLik()</code>. Base methods for the returned fitted model are <code>summary()</code>, <code>AIC()</code>, <code>confint()</code>. Further methods are available for functions from <strong>lmtest</strong> <span class="citation" data-cites="betareg:Zeileis+Hothorn:2002">(Zeileis and Hothorn 2002)</span> and <strong>car</strong> <span class="citation" data-cites="betareg:Fox+Weisberg:2019">(Fox and Weisberg 2019)</span>, e.g., <code>lrtest()</code>, <code>waldtest()</code>, <code>coeftest()</code>, and <code>linearHypothesis()</code>. Multiple testing is possible via package <strong>multcomp</strong> <span class="citation" data-cites="betareg:Hothorn+Bretz+Westfall:2008">(Hothorn et al. 2008)</span> and structural change tests can be performed using package <strong>strucchange</strong> <span class="citation" data-cites="betareg:Zeileis+Leisch+Hornik:2002">(Zeileis et al. 2002)</span>.</p>
 <h3 data-number="1.3" id="extensions"><span class="header-section-number">1.3</span> Extensions</h3>
 <p>Although the <strong>betareg</strong> package as published by <span class="citation" data-cites="betareg:Cribari-Neto+Zeileis:2010">Cribari-Neto and Zeileis (2010)</span> provides a rather complete beta regression toolbox based on classical ML inference, further techniques may be required in practice. First, it has been shown that ML inference may be severely biased in the context of beta regression <span class="citation" data-cites="betareg:Kosmidis+Firth:2010">(Kosmidis and Firth 2010)</span>, possibly leading to overly optimistic inferences in the sense of underestimating the standard errors of the estimators. Second, it is not always easy to capture all heterogeneity in the data through the two linear predictors, especially when there are latent unobserved groups/clusters of observations.</p>
 <p>To address the first issue of potentially biased inference, the results of <span class="citation" data-cites="betareg:Kosmidis+Firth:2010">Kosmidis and Firth (2010)</span> are extended to the case with mean and precision covariates and the corresponding methods are implemented in the <code>betareg()</code> function starting from version 2.4-0 of <strong>betareg</strong>. The software optionally allows for bias-corrected or bias-reduced estimation by adopting the unifying iteration developed in <span class="citation" data-cites="betareg:Kosmidis+Firth:2010">Kosmidis and Firth (2010)</span>.</p>
-<p>To address the second issue of heterogeneity between groups/clusters of observations, two generic strategies, model-based recursive partitioning <span class="citation" data-cites="betareg:Zeileis+Hothorn+Hornik:2008">(Zeileis, Hothorn, and Hornik 2008)</span> and finite mixture models , are applied to beta regressions. The idea for both techniques is to capture situations in which the regression relationships vary across groups in the population. If one can identify variables which are related to such groups, one may be able to include them directly in the regression relationships. However, (a) this may lead to rather complex and hard to interpret models, and (b) unnecessary complexity is introduced if the differences are only present in a subset of the combined groups induced by several variables. Model-based recursive partitioning avoids such drawbacks. Furthermore, if groups cannot be directly related to observed variables, the heterogeneity can be accounted for by using finite mixture models. Therefore, extensions of the <strong>betareg</strong> package are introduced where model heterogeneity is taken into account when covariates that characterize the groups are available, and when the heterogeneity is due to latent variables. The new function <code>betatree()</code> provides model-based recursive partitioning of beta regressions leveraging tools from the <strong>partykit</strong> package <span class="citation" data-cites="betareg:Hothorn+Zeileis:2015">(Hothorn and Zeileis 2015)</span>, and the function <code>betamix()</code> provides beta regression mixture models (or latent class beta regression) reusing the generic functionality from the <strong>flexmix</strong> package <span class="citation" data-cites="betareg:Leisch+Gruen:2012">(Leisch and Grün 2023)</span>.</p>
+<p>To address the second issue of heterogeneity between groups/clusters of observations, two generic strategies, model-based recursive partitioning <span class="citation" data-cites="betareg:Zeileis+Hothorn+Hornik:2008">(Zeileis et al. 2008)</span> and finite mixture models , are applied to beta regressions. The idea for both techniques is to capture situations in which the regression relationships vary across groups in the population. If one can identify variables which are related to such groups, one may be able to include them directly in the regression relationships. However, (a) this may lead to rather complex and hard to interpret models, and (b) unnecessary complexity is introduced if the differences are only present in a subset of the combined groups induced by several variables. Model-based recursive partitioning avoids such drawbacks. Furthermore, if groups cannot be directly related to observed variables, the heterogeneity can be accounted for by using finite mixture models. Therefore, extensions of the <strong>betareg</strong> package are introduced where model heterogeneity is taken into account when covariates that characterize the groups are available, and when the heterogeneity is due to latent variables. The new function <code>betatree()</code> provides model-based recursive partitioning of beta regressions leveraging tools from the <strong>partykit</strong> package <span class="citation" data-cites="betareg:Hothorn+Zeileis:2015">(Hothorn and Zeileis 2015)</span>, and the function <code>betamix()</code> provides beta regression mixture models (or latent class beta regression) reusing the generic functionality from the <strong>flexmix</strong> package <span class="citation" data-cites="betareg:Leisch+Gruen:2012">(Leisch and Grün 2023)</span>.</p>
 <h2 data-number="2" id="sec-bias"><span class="header-section-number">2</span> Bias correction and reduction in beta regressions</h2>
 <h3 data-number="2.1" id="preamble"><span class="header-section-number">2.1</span> Preamble</h3>
-<p><span class="citation" data-cites="betareg:Kosmidis+Firth:2010">Kosmidis and Firth (2010)</span> show that bias correction (BC) or bias reduction (BR) of the ML estimator in parametric models may be achieved via a unifying <em>quasi</em> Fisher scoring algorithm. They illustrate the applicability of their algorithm in a beta regression setting with a common precision parameter <span class="math inline">\(\phi\)</span> for all subjects, also revealing some errors in previous literature for the reduction of bias in beta regression models – specifically mistakes in <span class="citation" data-cites="betareg:Ospina+Cribari-Neto+Vasconcellos:2006">Ospina, Cribari-Neto, and Vasconcellos (2006)</span> and <span class="citation" data-cites="betareg:Simas+Barreto-Souza+Rocha:2010">Simas, Barreto-Souza, and Rocha (2010)</span> — that led to misleading negative conclusions about the effect of BC/BR on inferences for beta regression models. In <span class="citation" data-cites="betareg:Kosmidis+Firth:2010">Kosmidis and Firth (2010)</span>, it is shown that BC/BR for beta regression models can be desirable because the ML estimator of <span class="math inline">\(\phi\)</span> may demonstrate substantial upward bias, which in turn may lead to underestimation of asymptotic standard errors and hence over-optimistic Wald-type inferences (e.g., confidence intervals with coverage far below the nominal levels).</p>
+<p><span class="citation" data-cites="betareg:Kosmidis+Firth:2010">Kosmidis and Firth (2010)</span> show that bias correction (BC) or bias reduction (BR) of the ML estimator in parametric models may be achieved via a unifying <em>quasi</em> Fisher scoring algorithm. They illustrate the applicability of their algorithm in a beta regression setting with a common precision parameter <span class="math inline">\(\phi\)</span> for all subjects, also revealing some errors in previous literature for the reduction of bias in beta regression models – specifically mistakes in <span class="citation" data-cites="betareg:Ospina+Cribari-Neto+Vasconcellos:2006">Ospina et al. (2006)</span> and <span class="citation" data-cites="betareg:Simas+Barreto-Souza+Rocha:2010">Simas et al. (2010)</span> — that led to misleading negative conclusions about the effect of BC/BR on inferences for beta regression models. In <span class="citation" data-cites="betareg:Kosmidis+Firth:2010">Kosmidis and Firth (2010)</span>, it is shown that BC/BR for beta regression models can be desirable because the ML estimator of <span class="math inline">\(\phi\)</span> may demonstrate substantial upward bias, which in turn may lead to underestimation of asymptotic standard errors and hence over-optimistic Wald-type inferences (e.g., confidence intervals with coverage far below the nominal levels).</p>
 <p>The results in <span class="citation" data-cites="betareg:Kosmidis+Firth:2010">Kosmidis and Firth (2010)</span> are extended here to cover not only the case of constant <span class="math inline">\(\phi\)</span> but also a regression part for the precision parameters as shown in <a href="#eq-link" class="quarto-xref">Equation 2</a>.</p>
 <h3 data-number="2.2" id="sec-iteration"><span class="header-section-number">2.2</span> Generic framework</h3>
 <p>Denote by <span class="math inline">\(0_{k}\)</span> a vector of <span class="math inline">\(k\)</span> zeros and by <span class="math inline">\(S(\theta)\)</span> the vector of the log-likelihood derivatives for a parametric model with parameter <span class="math inline">\(\theta\)</span>. <span class="citation" data-cites="betareg:Firth:1993">Firth (1993)</span> showed that the solution <span class="math inline">\(\tilde\theta\)</span> of the equation</p>
@@ -469,7 +608,7 @@ F(\theta) = \left[
 <li>If there is significant parameter instability with respect to at least one of the partitioning variables <span class="math inline">\(c_{ij}\)</span>, split the sample along the variable <span class="math inline">\(j*\)</span> with the strongest association: Choose the breakpoint with highest improvement in the fitted log-likelihood.</li>
 <li>Repeat steps 1–3 recursively in the resulting subsamples until there is no significant instability any more or the sample size is too small.</li>
 </ul>
-<p>he MOB framework of <span class="citation" data-cites="betareg:Zeileis+Hothorn+Hornik:2008">Zeileis, Hothorn, and Hornik (2008)</span> is generic in that it requires only the specification of a model with additive objective function for which a central limit theorem holds. Under the usual regularity conditions, the latter requirement is valid for beta regressions. The main building blocks that the MOB algorithm requires are the contributions to the additive objective function (in steps 1 and 3) and to the associated score function (in step 2). For beta regressions, the objective is the log-likelihood <span class="math inline">\(\ell(\theta)\)</span> and its contributions <span class="math inline">\(\ell_i(\theta)\)</span> are given in <a href="#eq-loglik" class="quarto-xref">Equation 6</a>. By <a href="#eq-scores" class="quarto-xref">Equation 7</a> and using the notation in <a href="#sec-bias" class="quarto-xref">Section 2</a>, the corresponding score (or gradient) contributions have the form</p>
+<p>he MOB framework of <span class="citation" data-cites="betareg:Zeileis+Hothorn+Hornik:2008">Zeileis et al. (2008)</span> is generic in that it requires only the specification of a model with additive objective function for which a central limit theorem holds. Under the usual regularity conditions, the latter requirement is valid for beta regressions. The main building blocks that the MOB algorithm requires are the contributions to the additive objective function (in steps 1 and 3) and to the associated score function (in step 2). For beta regressions, the objective is the log-likelihood <span class="math inline">\(\ell(\theta)\)</span> and its contributions <span class="math inline">\(\ell_i(\theta)\)</span> are given in <a href="#eq-loglik" class="quarto-xref">Equation 6</a>. By <a href="#eq-scores" class="quarto-xref">Equation 7</a> and using the notation in <a href="#sec-bias" class="quarto-xref">Section 2</a>, the corresponding score (or gradient) contributions have the form</p>
 <p><span class="math display">\[
   S_{i}(\theta) = \left[
     \begin{array}{c}
@@ -486,7 +625,7 @@ d_{2,i}\left\{ \mu_i\left(\bar{T}_i -
     \end{array}
     \right]\quad (i = 1, \ldots, n) \, .
 \]</span></p>
-<p>The above contributions are employed for testing whether there are significant departures from zero across the partitioning variables. More specifically, MOB uses generalized M-fluctuation tests for parameter instability <span class="citation" data-cites="betareg:Zeileis:2006">(Zeileis 2006, betareg:Zeileis+Hornik:2007)</span>: fluctuations in numeric variables are assessed with a <span class="math inline">\(\sup\)</span>LM type test <span class="citation" data-cites="betareg:Andrews:1993">(Andrews 1993)</span> and fluctuations in categorical variables are assessed with a <span class="math inline">\(\chi^2\)</span>-type test <span class="citation" data-cites="betareg:Hjort+Koning:2002">(Hjort and Koning 2002)</span>. For further details and references, see <span class="citation" data-cites="betareg:Zeileis+Hothorn+Hornik:2008">Zeileis, Hothorn, and Hornik (2008)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The above contributions are employed for testing whether there are significant departures from zero across the partitioning variables. More specifically, MOB uses generalized M-fluctuation tests for parameter instability <span class="citation" data-cites="betareg:Zeileis:2006">(Zeileis 2006, betareg:Zeileis+Hornik:2007)</span>: fluctuations in numeric variables are assessed with a <span class="math inline">\(\sup\)</span>LM type test <span class="citation" data-cites="betareg:Andrews:1993">(Andrews 1993)</span> and fluctuations in categorical variables are assessed with a <span class="math inline">\(\chi^2\)</span>-type test <span class="citation" data-cites="betareg:Hjort+Koning:2002">(Hjort and Koning 2002)</span>. For further details and references, see <span class="citation" data-cites="betareg:Zeileis+Hothorn+Hornik:2008">Zeileis et al. (2008)</span>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>Beta regression trees are implemented in the <strong>betareg</strong> package in function <code>betatree()</code> taking the following arguments:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">betatree</span>(formula, partition, data, subset, na.action, weights, offset,</span>
@@ -511,7 +650,7 @@ d_{2,i}\left\{ \mu_i\left(\bar{T}_i -
 \end{align}
 \]</span></p>
 <p>with <span class="math inline">\(\alpha_1 \equiv 0\)</span>. Without covariates and just a constant (<span class="math inline">\(c = 1\)</span>), this reduces to prior probabilities that are fixed across all observations.</p>
-<p><span class="citation" data-cites="betareg:Smithson+Segale:2009">Smithson and Segale (2009)</span> and <span class="citation" data-cites="betareg:Smithson+Merkle+Verkuilen:2011">Smithson, Merkle, and Verkuilen (2011)</span> consider finite mixtures of beta regression models to analyze priming effects in judgments of imprecise probabilities. <span class="citation" data-cites="betareg:Smithson+Segale:2009">Smithson and Segale (2009)</span> fit mixture models where they investigate if priming has an effect on the size of the latent groups, i.e., they include the information on priming as a predictor variable <span class="math inline">\(c\)</span>. <span class="citation" data-cites="betareg:Smithson+Merkle+Verkuilen:2011">Smithson, Merkle, and Verkuilen (2011)</span> assume that for at least one component distribution the location parameter is a-priori known due to so-called “anchors”. For example, for partition priming, an anchor would be assumed at location <span class="math inline">\(1/K\)</span> if the respondents are primed to believe that there are <span class="math inline">\(K\)</span> possible events. The component distribution for this anchor can be either assumed to follow a beta distribution with known parameters for the mean and the precision or a uniform distribution with known support.</p>
+<p><span class="citation" data-cites="betareg:Smithson+Segale:2009">Smithson and Segale (2009)</span> and <span class="citation" data-cites="betareg:Smithson+Merkle+Verkuilen:2011">Smithson et al. (2011)</span> consider finite mixtures of beta regression models to analyze priming effects in judgments of imprecise probabilities. <span class="citation" data-cites="betareg:Smithson+Segale:2009">Smithson and Segale (2009)</span> fit mixture models where they investigate if priming has an effect on the size of the latent groups, i.e., they include the information on priming as a predictor variable <span class="math inline">\(c\)</span>. <span class="citation" data-cites="betareg:Smithson+Merkle+Verkuilen:2011">Smithson et al. (2011)</span> assume that for at least one component distribution the location parameter is a-priori known due to so-called “anchors”. For example, for partition priming, an anchor would be assumed at location <span class="math inline">\(1/K\)</span> if the respondents are primed to believe that there are <span class="math inline">\(K\)</span> possible events. The component distribution for this anchor can be either assumed to follow a beta distribution with known parameters for the mean and the precision or a uniform distribution with known support.</p>
 <p>Package <strong>flexmix</strong> <span class="citation" data-cites="betareg:Leisch:2004 betareg:Gruen+Leisch:2008">(Leisch 2004; Grün and Leisch 2008)</span> implements a general framework for estimating finite mixture models using the EM algorithm. The EM algorithm is an iterative method for ML estimation in a missing data setting. The missing data for mixture models is the information to which component an observation belongs. The EM algorithm exploits the fact that the complete-data log-likelihood for the data and the missing information is easier to maximize. In general for mixture models the posterior probabilities of an observation to be from each component given the current parameter estimates are determined in the E-step. The M-step then consists of maximizing the complete-data log-likelihood where the missing component memberships are replaced by the current posterior probabilities. This implies that different mixture models only require the implementation of a suitable M-step driver. Function <code>betareg.fit()</code> provides functionality for weighted ML estimation of beta regression models and hence allows the easy implementation of the M-step.</p>
 <p>The function <code>betamix()</code> allows to fit finite mixtures of beta regression models using the package <strong>betareg</strong>. It has the following arguments:</p>
 <div class="cell">
@@ -819,7 +958,7 @@ Figure 3: Partitioned beta regression model for the <code>ReadingSkills</code> 
 <p>In node 1 only dyslexia shows significant instability while the noise variables are all insignificant. In node 2, dyslexia cannot be used for splitting anymore and all other variables are still insignificant and thus the partitioning stops. With only 19 observations, node 3 is considered too small to warrant further splitting given that <code>minsize = 10</code> requires that each node contains at least 10 observations and hence no tests are carried out.</p>
 <h3 data-number="5.3" id="latent-class-beta-regression"><span class="header-section-number">5.3</span> Latent class beta regression</h3>
 <p>For illustrating the use of finite mixture models we assume the following situation: A researcher wants to assess whether the relationship between reading <code>accuracy</code> and nonverbal <code>iq</code> score is different for some subgroups in the data without having further covariates potentially describing the groups available. In particular, we assume that the information whether the children are dyslexic or not is not available. Modeling the relationship between reading accuracy and IQ score is now complicated by the fact that latent groups exist in the data where this relationship is different.</p>
-<p>The group of nondyslexic children is challenging as some of them essentially have a perfect reading accuracy while for others accuracy is strongly increasing with the IQ score. In a model with observed <code>dyslexia</code>, this can be captured by different variances in the two groups. However, issues arise when <code>dyslexia</code> is unobserved and a mixture model is employed to infer the groups. Specifically, the subgroup with perfect reading score will typically be selected as one component of the mixture whose variance converges to zero leading to an unbounded likelihood. To address this issue we fit a finite mixture model with three components, where one component is used to capture those children who have a perfect reading accuracy test score. Following <span class="citation" data-cites="betareg:Smithson+Merkle+Verkuilen:2011">Smithson, Merkle, and Verkuilen (2011)</span> this additional component is assumed to follow a uniform distribution on the interval <code>coef</code> <span class="math inline">\(\pm\)</span> <code>delta</code>.</p>
+<p>The group of nondyslexic children is challenging as some of them essentially have a perfect reading accuracy while for others accuracy is strongly increasing with the IQ score. In a model with observed <code>dyslexia</code>, this can be captured by different variances in the two groups. However, issues arise when <code>dyslexia</code> is unobserved and a mixture model is employed to infer the groups. Specifically, the subgroup with perfect reading score will typically be selected as one component of the mixture whose variance converges to zero leading to an unbounded likelihood. To address this issue we fit a finite mixture model with three components, where one component is used to capture those children who have a perfect reading accuracy test score. Following <span class="citation" data-cites="betareg:Smithson+Merkle+Verkuilen:2011">Smithson et al. (2011)</span> this additional component is assumed to follow a uniform distribution on the interval <code>coef</code> <span class="math inline">\(\pm\)</span> <code>delta</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rs_mix <span class="ot">&lt;-</span> <span class="fu">betamix</span>(accuracy <span class="sc">~</span> iq, <span class="at">data =</span> ReadingSkills, <span class="at">k =</span> <span class="dv">3</span>,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">extra_components =</span> <span class="fu">extraComponent</span>(<span class="at">type =</span> <span class="st">&quot;uniform&quot;</span>,</span>
@@ -1217,7 +1356,7 @@ Table 3: ML, BC and BR estimates and corresponding estimated standard errors fo
 </figure>
 </div>
 <h2 class="unnumbered" id="references">References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-betareg:Andrews:1993" class="csl-entry" role="listitem">
 Andrews, Donald W. K. 1993. <span>“Tests for Parameter Instability and Structural Change with Unknown Change Point.”</span> <em>Econometrica</em> 61: 821–56. <a href="https://doi.org/10.2307/2951764">https://doi.org/10.2307/2951764</a>.
 </div>
@@ -1225,7 +1364,7 @@ Andrews, Donald W. K. 1993. <span>“Tests for Parameter Instability and Structu
 Cribari-Neto, Francisco, and Achim Zeileis. 2010. <span>“Beta Regression in <span>R</span>.”</span> <em>Journal of Statistical Software</em> 34 (2): 1–24. <a href="https://doi.org/10.18637/jss.v034.i02">https://doi.org/10.18637/jss.v034.i02</a>.
 </div>
 <div id="ref-betareg:Efron:1975" class="csl-entry" role="listitem">
-Efron, Bradley. 1975. <span>“Defining the Curvature of a Statistical Problem (with Applications to Second Order Efficiency).”</span> <em>The Annals of Statistics</em> 3 (6): 1189–1217. <a href="https://doi.org/10.1214/aos/1176343282">https://doi.org/10.1214/aos/1176343282</a>.
+Efron, Bradley. 1975. <span>“Defining the Curvature of a Statistical Problem (with Applications to Second Order Efficiency).”</span> <em>The Annals of Statistics</em> 3 (6): 1189–217. <a href="https://doi.org/10.1214/aos/1176343282">https://doi.org/10.1214/aos/1176343282</a>.
 </div>
 <div id="ref-betareg:Ferrari+Cribari-Neto:2004" class="csl-entry" role="listitem">
 Ferrari, Silvia L. P., and Francisco Cribari-Neto. 2004. <span>“Beta Regression for Modelling Rates and Proportions.”</span> <em>Journal of Applied Statistics</em> 31 (7): 799–815. <a href="https://doi.org/10.1080/0266476042000214501">https://doi.org/10.1080/0266476042000214501</a>.
@@ -1234,7 +1373,7 @@ Ferrari, Silvia L. P., and Francisco Cribari-Neto. 2004. <span>“Beta Regressio
 Firth, David. 1993. <span>“Bias Reduction of Maximum Likelihood Estimates.”</span> <em>Biometrika</em> 80 (1): 27–38. <a href="https://doi.org/10.1093/biomet/80.1.27">https://doi.org/10.1093/biomet/80.1.27</a>.
 </div>
 <div id="ref-betareg:Fox+Weisberg:2019" class="csl-entry" role="listitem">
-Fox, John, and Sanford Weisberg. 2019. <em>An <span>R</span> Companion to Applied Regression</em>. 3rd ed. Thousand Oaks, CA: Sage Publications.
+Fox, John, and Sanford Weisberg. 2019. <em>An <span>R</span> Companion to Applied Regression</em>. 3rd ed. Sage Publications.
 </div>
 <div id="ref-betareg:Gruen+Kosmidis+Zeileis:2012" class="csl-entry" role="listitem">
 Grün, Bettina, Ioannis Kosmidis, and Achim Zeileis. 2012. <span>“Extended Beta Regression in <span>R</span>: Shaken, Stirred, Mixed, and Partitioned.”</span> <em>Journal of Statistical Software</em> 48 (11): 1–25. <a href="https://doi.org/10.18637/jss.v048.i11">https://doi.org/10.18637/jss.v048.i11</a>.
@@ -1252,7 +1391,7 @@ Hothorn, Torsten, Frank Bretz, and Peter Westfall. 2008. <span>“Simultaneous I
 Hothorn, Torsten, and Achim Zeileis. 2015. <span>“<span class="nocase">partykit</span>: A Modular Toolkit for Recursive Partytioning in <span>R</span>.”</span> <em>Journal of Machine Learning Research</em> 16: 3905–9. <a href="https://doi.org/10.32614/CRAN.package.partykit">https://doi.org/10.32614/CRAN.package.partykit</a>.
 </div>
 <div id="ref-betareg:Kosmidis+Firth:2010" class="csl-entry" role="listitem">
-Kosmidis, Ioannis, and David Firth. 2010. <span>“A Generic Algorithm for Reducing Bias in Parametric Estimation.”</span> <em>Electronic Journal of Statistics</em> 4: 1097–1112. <a href="https://doi.org/10.1214/10-ejs579">https://doi.org/10.1214/10-ejs579</a>.
+Kosmidis, Ioannis, and David Firth. 2010. <span>“A Generic Algorithm for Reducing Bias in Parametric Estimation.”</span> <em>Electronic Journal of Statistics</em> 4: 1097–112. <a href="https://doi.org/10.1214/10-ejs579">https://doi.org/10.1214/10-ejs579</a>.
 </div>
 <div id="ref-betareg:Leisch:2004" class="csl-entry" role="listitem">
 Leisch, Friedrich. 2004. <span>“<span>FlexMix</span>: A General Framework for Finite Mixture Models and Latent Class Regression in <span>R</span>.”</span> <em>Journal of Statistical Software</em> 11 (8): 1–18. <a href="https://doi.org/10.18637/jss.v011.i08">https://doi.org/10.18637/jss.v011.i08</a>.

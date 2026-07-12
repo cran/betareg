@@ -1,6 +1,6 @@
 Package: betareg
-Version: 3.2-4
-Date: 2025-08-19
+Version: 3.2-5
+Date: 2026-07-12
 Title: Beta Regression
 Authors@R: c(person(given = "Achim", family = "Zeileis", role = c("aut", "cre"), email = "Achim.Zeileis@R-project.org", comment = c(ORCID = "0000-0003-0918-3766")),
              person(given = "Francisco", family = "Cribari-Neto", role = "aut", email = "cribari@ufpe.br", comment = c(ORCID = "0000-0002-5909-6698")),
@@ -26,7 +26,7 @@ BugReports: https://topmodels.R-Forge.R-project.org/betareg/contact.html
 Encoding: UTF-8
 VignetteBuilder: quarto
 NeedsCompilation: yes
-Packaged: 2025-08-19 06:31:20 UTC; zeileis
+Packaged: 2026-07-12 10:11:46 UTC; zeileis
 Author: Achim Zeileis [aut, cre] (ORCID:
     <https://orcid.org/0000-0003-0918-3766>),
   Francisco Cribari-Neto [aut] (ORCID:
@@ -37,4 +37,4 @@ Author: Achim Zeileis [aut, cre] (ORCID:
   Andrea V. Rocha [ctb] (earlier version by)
 Maintainer: Achim Zeileis <Achim.Zeileis@R-project.org>
 Repository: CRAN
-Date/Publication: 2025-08-19 08:40:23 UTC
+Date/Publication: 2026-07-12 12:50:02 UTC

@@ -1,3 +1,12 @@
+# betareg 3.2-5
+
+* Full citation of the "Extended-Support Beta Regression for [0, 1] Responses"
+  paper is now _Journal of the Royal Statistical Society Series C: Applied Statistics_,
+  **75**(1), 139-157. [doi:10.1093/jrsssc/qlaf039](https://doi.org/10.1093/jrsssc/qlaf039).
+
+* Updated `structure()` calls to use `names = ...` instead of `.Names = ...` etc.
+
+
 # betareg 3.2-4
 
 * The paper "Extended-Support Beta Regression for [0, 1] Responses" is now forthcoming

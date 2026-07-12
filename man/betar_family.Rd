@@ -41,7 +41,7 @@ Family objects for \pkg{bamlss} (Umlauf et al. 2019, 2021) and \pkg{gamlss2}
 interface to the d/p/q/r functions of distributions. Hence, \code{betar_family}
 interfaces the classical beta distribution in regression specification, see
 \code{\link{dbetar}}. Analogously, \code{xbetax_family} interfaces the
-extended-support beta mixture specification (Kosmidis and Zeileis 2025),
+extended-support beta mixture specification (Kosmidis and Zeileis 2026),
 see \code{\link{dxbetax}}.
 }
 
@@ -52,9 +52,9 @@ A list of class \code{\link[bamlss]{family.bamlss}}.
 \seealso{\code{\link{dbetar}}, \code{\link{dxbetax}}, \code{\link[bamlss]{family.bamlss}}}
 
 \references{
-Kosmidis I, Zeileis A (2025).
+Kosmidis I, Zeileis A (2026).
   Extended-Support Beta Regression for [0, 1] Responses.
-  \emph{Journal of the Royal Statistical Society C}, forthcoming.
+  \emph{Journal of the Royal Statistical Society C}, \bold{75}(1), 139--157.
   \doi{10.1093/jrsssc/qlaf039}
 
 Umlauf N, Klein N, Zeileis A (2019).
