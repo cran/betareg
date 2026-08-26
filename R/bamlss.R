@@ -22,12 +22,12 @@ betar_family <- function(link = "logit", link.phi = "log", ...)
     "mean" = function(par) par$mu,
     "variance" = function(par) (par$mu * (1 - par$mu))/(1 + par$phi),
     "score" = list(
-      "mu"  = function(y, par, ...) sbetar(y, mu = par$mu, phi = par$phi, parameter = "mu",  drop = TRUE),
-      "phi" = function(y, par, ...) sbetar(y, mu = par$mu, phi = par$phi, parameter = "phi", drop = TRUE)
+      "mu"  = function(y, par, ...) sbetar(y, mu = par$mu, phi = par$phi, which = "mu",  drop = TRUE),
+      "phi" = function(y, par, ...) sbetar(y, mu = par$mu, phi = par$phi, which = "phi", drop = TRUE)
     ),
     "hess" = list(
-      "mu"  = function(y, par, ...) hbetar(y, mu = par$mu, phi = par$phi, parameter = "mu",  drop = TRUE),
-      "phi" = function(y, par, ...) hbetar(y, mu = par$mu, phi = par$phi, parameter = "phi", drop = TRUE)
+      "mu"  = function(y, par, ...) hbetar(y, mu = par$mu, phi = par$phi, which = "mu",  drop = TRUE),
+      "phi" = function(y, par, ...) hbetar(y, mu = par$mu, phi = par$phi, which = "phi", drop = TRUE)
     )
   )
   class(rval) <- "family.bamlss"

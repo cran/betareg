@@ -1,3 +1,22 @@
+# betareg 3.2-6
+
+* Code repository changed from R-Forge to Codeberg at:
+  <https://codeberg.org/zeileis/betareg/>
+
+* Added basic altdoc page with overview and documentation at:
+  <https://zeileis.codeberg.page/betareg/>
+
+* All `distributions3` class constructors (like `BetaR()`, `Beta01()`,
+  `XBetaX()`, etc.) now have `numeric()` as the default parameter
+  so that distribution vectors of length 0 are created by default.
+  
+* For the `BetaR` distribution (beta distribution in regression parameterization)
+  there are now also `score()` and `hessian()` methods providing analytical
+  first and second derivatives of the log-likelihood with respect to the parameter
+  vector. For the other `distribution` classes the fallback methods  for `score()`
+  and `hessian()` from `distributions3` provide numeric approximations.
+
+
 # betareg 3.2-5
 
 * Full citation of the "Extended-Support Beta Regression for [0, 1] Responses"
@@ -44,8 +63,7 @@
   by Ioannis Kosmidis and Achim Zeileis in the _arXiv.org E-Print Archive_,
   [doi:10.48550/arXiv.2409.07233](https://doi.org/10.48550/arXiv.2409.07233).
 
-* New package web page (via `altdoc`/`quarto`) at
-  <https://topmodels.R-Forge.R-project.org/betareg/>
+* New package web page (via `altdoc`/`quarto`).
 
 * Extended functionality of `predict()` method for `betareg` objects and
   enhanced the corresponding documentation, see `?predict.betareg`.

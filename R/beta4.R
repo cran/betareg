@@ -54,7 +54,9 @@ rbeta4 <- function(n, mu, phi, theta1 = 0, theta2 = 1 - theta1) {
 ## distributions3 interface for regression specification
 ## (mean = mu, precision = phi, support = (theta1, theta2), ...)
 
-Beta4 <- function(mu, phi, theta1 = 0, theta2 = 1 - theta1) {
+Beta4 <- function(mu = numeric(), phi = numeric(), theta1 = NULL, theta2 = NULL) {
+  if (is.null(theta1)) theta1 <- rep.int(0, length(mu))
+  if (is.null(theta2)) theta2 <- 1 - theta1
   n <- c(length(mu), length(phi), length(theta1), length(theta2))
   stopifnot("parameter lengths do not match (only scalars are allowed to be recycled)" = all(n %in% c(1L, max(n))))
 

@@ -21,7 +21,7 @@ using the workflow from the \pkg{distributions3} package.
 }
 
 \usage{
-XBetaX(mu, phi, nu = 0)
+XBetaX(mu = numeric(), phi = numeric(), nu = NULL)
 }
 
 \arguments{
@@ -29,7 +29,8 @@ XBetaX(mu, phi, nu = 0)
   \item{phi}{numeric. The precision parameter of the underlying beta
     distribution on [-nu, 1 + nu].}
   \item{nu}{numeric. Mean of the exponentially-distributed exceedence parameter
-    for the underlying beta distribution on [-nu, 1 + nu] that is censored to [0, 1].}
+    for the underlying beta distribution on [-nu, 1 + nu] that is censored
+    to [0, 1]. By default \code{nu = 0} is used.}
 }
 
 \details{

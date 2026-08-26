@@ -37,25 +37,45 @@ rbetar <- function(n, mu, phi) {
   rbeta(n, shape1 = mu * phi, shape2 = (1 - mu) * phi)
 }
 
-sbetar <- function(x, mu, phi, parameter = c("mu", "phi"), drop = TRUE) {
+sbetar <- function(x, mu, phi, which = NULL, drop = TRUE) {
   stopifnot(
     "parameter 'mu' must always be in [0, 1]" = all(mu >= 0 & mu <= 1),
     "parameter 'phi' must always be non-negative" = all(phi >= 0)
   )
-  parameter <- sapply(parameter, function(x) match.arg(x, c("mu", "phi")))
+  p <- c("mu", "phi")
+  if (is.null(which)) which <- p
+  which <- match.arg(which, p, several.ok = TRUE)
   xstar <- qlogis(x)
   mustar <- digamma(mu * phi) - digamma((1 - mu) * phi)
-  s <- cbind(
-    if("mu" %in% parameter) phi * (xstar - mustar),
-    if("phi" %in% parameter) (mu * (xstar - mustar) + log(1 - x) - digamma((1 - mu) * phi) + digamma(phi))
-  )
-  colnames(s) <- c("mu", "phi")[c("mu", "phi") %in% parameter]
-  if(drop) drop(s) else s
+
+  ## compute scores
+  scr <- function(par) switch(par,
+    "mu"  = phi * (xstar - mustar),
+    "phi" = mu * (xstar - mustar) + log(1 - x) - digamma((1 - mu) * phi) + digamma(phi))
+
+  ## if possible return single vector, otherwise collect in matrix
+  if (drop && length(which) == 1L) {
+    s <- scr(which)
+  } else {
+    s <- lapply(which, scr)
+    s <- do.call("cbind", s)
+    colnames(s) <- which
+  }
+  return(s)
 }
 
-hbetar <- function(x, mu, phi, parameter = c("mu", "phi"), drop = TRUE) {
-  parameter <- sapply(parameter, function(x) match.arg(x, c("mu", "phi")))
-  if(all(c("mu", "phi") %in% parameter)) parameter <- c(parameter, "mu:phi")
+hbetar <- function(x, mu, phi, which = NULL, drop = TRUE, expected = TRUE) {
+  if (!expected) NextMethod()
+
+  ## available and selected parameters/combinations and mappings for symmetries
+  p <- c("mu" = "mu", "phi:mu" = "mu:phi", "mu:phi" = "mu:phi", "phi" = "phi")
+  if (is.null(which)) which <- names(p)
+  
+  ## which combinations need to be computed?
+  which <- match.arg(which, names(p), several.ok = TRUE)
+  w <- unique(p[which])
+
+  ## sanity checks
   stopifnot(
     "parameter 'mu' must always be in [0, 1]" = all(mu >= 0 & mu <= 1),
     "parameter 'phi' must always be non-negative" = all(phi >= 0)
@@ -65,21 +85,30 @@ hbetar <- function(x, mu, phi, parameter = c("mu", "phi"), drop = TRUE) {
   phi <- rep_len(phi, n)
   psi1 <- trigamma(mu * phi)
   psi2 <- trigamma((1 - mu) * phi)
-  a <- psi1 + psi2
-  b <- psi1 * mu^2 + psi2 * (1 - mu)^2 - trigamma(phi)
-  h <- cbind(
-    if("mu" %in% parameter) phi^2 * (psi1 + psi2),
-    if("phi" %in% parameter) psi1 * mu^2 + psi2 * (1 - mu)^2 - trigamma(phi),
-    if("mu:phi" %in% parameter) phi * (mu * psi1 - (1 - mu) * psi2)
-  )
-  colnames(h) <- c("mu", "phi", "mu:phi")[c("mu", "phi", "mu:phi") %in% parameter]
-  if(drop) drop(h) else h
+
+  ## function for computing Hessian elements (expected only)
+  hess <- function(par) switch(par,
+    "mu"    = -phi^2 * (psi1 + psi2),
+    "phi" = -(psi1 * mu^2 + psi2 * (1 - mu)^2 - trigamma(phi)),
+    -phi * (mu * psi1 - (1 - mu) * psi2))
+  
+  ## if possible return single vector, otherwise collect in matrix
+  if (drop && length(which) == 1L) {
+    h <- hess(w)
+  } else {
+    h <- lapply(w, hess)
+    h <- do.call("cbind", h)
+    colnames(h) <- w
+    if (!identical(w, which)) h <- h[, p[which], drop = FALSE]
+    colnames(h) <- which
+  }
+  return(h)
 }
 
 
 ## distributions3 interface
 
-BetaR <- function(mu, phi) {
+BetaR <- function(mu = numeric(), phi = numeric()) {
   n <- c(length(mu), length(phi))
   stopifnot("parameter lengths do not match (only scalars are allowed to be recycled)" = all(n %in% c(1L, max(n))))
   stopifnot(
@@ -157,4 +186,32 @@ is_discrete.BetaR <- function(d, ...) {
 
 is_continuous.BetaR <- function(d, ...) {
   setNames(rep.int(TRUE, length(d)), names(d))
+}
+
+score.BetaR <- function(d, x, which = NULL, drop = TRUE, ...) {
+  s <- sbetar(x, mu = d$mu, phi = d$phi, which = which, drop = drop)
+  if (!is.null(nam <- names(d))) {
+    if (is.null(dim(s))) {
+      names(s) <- nam
+    } else {
+      rownames(s) <- nam
+    }
+  }
+  return(s)
+}
+
+hessian.BetaR <- function(d, x, which = NULL, drop = TRUE, expected = TRUE, ...) {
+  if (!expected) {
+    h <- NextMethod()
+  } else {
+    h <- hbetar(x, mu = d$mu, phi = d$phi, which = which, drop = drop, expected = expected)
+    if (!is.null(nam <- names(d))) {
+      if (is.null(dim(h))) {
+        names(h) <- nam
+      } else {
+        rownames(h) <- nam
+      }
+    }
+  }
+  return(h)
 }

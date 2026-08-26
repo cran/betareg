@@ -84,6 +84,77 @@ rxbeta <- function(n, mu, phi, nu = 0) {
   return(r)
 }
 
+sxbeta <- function(x, mu, phi, nu = 0, which = NULL, drop = TRUE) {
+  ## sanity checks for parameter ranges
+  stopifnot(
+    "parameter 'mu' must always be in [0, 1]" = all(mu >= 0 & mu <= 1),
+    "parameter 'phi' must always be non-negative" = all(phi >= 0),
+    "parameter 'nu' must always be non-negative" = all(nu >= 0)
+  )
+  
+  ## which score(s) to compute
+  p <- c("mu", "phi", "nu")
+  if (is.null(which)) which <- p
+  which <- match.arg(which, p, several.ok = TRUE)
+
+  ## assure that all arguments are expanded to equal length
+  n <- max(length(x), length(mu), length(phi), length(nu))
+  x <- rep_len(x, n)
+  mu <- rep_len(mu, n)
+  phi <- rep_len(phi, n)
+  nu <- rep_len(nu, n)
+  
+  ## boundary vs. non-boundary observations
+  idx01 <- as.numeric((x > 0) & (x < 1))
+  idx0  <- as.numeric((x <= 0))
+  idx1  <- as.numeric((x >= 1))
+
+  ## derived parameters
+  shape1 <- mu * phi
+  shape2 <- (1 - mu) * phi
+  d1 <- digamma(shape1)
+  d2 <- digamma(shape2)
+  mustar <- d1 - d2
+  xnu <- (x + nu)/(1 + 2 * nu)
+  xstarnu <- qlogis(xnu)
+  nu_low <- nu/(1 + 2 * nu)
+  nu_upp <- (1 + nu)/(1 + 2 * nu)
+  plow <- pbeta(nu_low, shape1, shape2)
+  pupp <- pbeta(nu_upp, shape1, shape2)
+  Fs1 <- h3f2(shape1, shape2, nu_low, n, maxiter = 10000, eps = 0)
+  Fs2 <- h3f2(shape1, shape2, nu_upp, n, maxiter = 10000, eps = 0)
+  Fs3 <- h3f2(shape2, shape1, nu_low, n, maxiter = 10000, eps = 0)
+  Fs4 <- h3f2(shape2, shape1, nu_upp, n, maxiter = 10000, eps = 0)
+  delta1low <- plow * (d12 - d1 + log(nu_low)) - nu_low^shape1 * Fs1 / (shape1^2 * b12)
+  delta2low <- (1 - plow) * (d2 - d12 - log(nu_upp)) + nu_upp^shape2 * Fs4 / (shape2^2 * b12)
+  delta1upp <- pupp * (d12 - d1 + log(nu_upp)) - nu_upp^shape1 * Fs2 / (shape1^2 * b12)
+  delta2upp <- (1 - pupp) * (d2 - d12 - log(nu_low)) + nu_low^shape2 * Fs3 / (shape2^2 * b12)
+  b12 <- beta(shape1, shape2)
+  d12 <- digamma(phi)
+            
+  ## compute scores
+  scr <- function(par) switch(par,
+    "mu"  = idx01 * (phi * (xstarnu - mustar)) + 
+            idx0  * (delta1low - delta2low) / plow +
+            idx1  * (delta2upp - delta1upp) / (1 - pupp),
+    "phi" = idx01 * (mu * (xstarnu - mustar) + log(1 - xnu) - d2 + digamma(phi)) +
+            idx0  * ((delta1low * mu + delta2low * (1 - mu)) / plow) +
+            idx1  * (-1 * (delta1upp * mu + delta2upp * (1 - mu)) / (1 - pupp)),
+    "nu"  = idx01 * ((shape1 - 1)/(x + nu) + (shape2 - 1)/(1 - x + nu) - 2 * (phi - 1)/(1 + 2 * nu)) +
+            idx0  * (dbeta(nu_low, shape1, shape2)/(plow * (1 + 2 * nu)^2)) +
+            idx1  * (dbeta(nu_upp, shape1, shape2)/((1 - pupp) * (1 + 2 * nu)^2)))
+
+  ## if possible return single vector, otherwise collect in matrix
+  if (drop && length(which) == 1L) {
+    s <- scr(which)
+  } else {
+    s <- lapply(which, scr)
+    s <- do.call("cbind", s)
+    colnames(s) <- which
+  }
+  return(s)
+}
+
 mean_xbeta <- function(mu, phi, nu, ...) {
     a <- mu * phi
     b <- (1 - mu) * phi
@@ -117,7 +188,8 @@ var_xbeta <- function(mu, phi, nu, quad = 20, ...) {
 
 ## distributions3 interface
 
-XBeta <- function(mu, phi, nu = 0) {
+XBeta <- function(mu = numeric(), phi = numeric(), nu = NULL) {
+  if (is.null(nu)) nu <- rep.int(0, length(mu))
   n <- c(length(mu), length(phi), length(nu))
   stopifnot("parameter lengths do not match (only scalars are allowed to be recycled)" = all(n %in% c(1L, max(n))))
   stopifnot(
@@ -191,4 +263,16 @@ is_discrete.XBeta <- function(d, ...) {
 
 is_continuous.XBeta <- function(d, ...) {
   setNames(d$nu <= 0, names(d))
+}
+
+score.XBeta <- function(d, x, which = NULL, drop = TRUE, ...) {
+  s <- sxbeta(x, mu = d$mu, phi = d$phi, nu = d$nu, which = which, drop = drop)
+  if (!is.null(nam <- names(d))) {
+    if (is.null(dim(s))) {
+      names(s) <- nam
+    } else {
+      rownames(s) <- nam    
+    }
+  }
+  return(s)
 }

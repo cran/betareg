@@ -21,16 +21,16 @@ using the workflow from the \pkg{distributions3} package.
 }
 
 \usage{
-Beta01(mu, phi, p0 = 0, p1 = 0)
+Beta01(mu = numeric(), phi = numeric(), p0 = NULL, p1 = NULL)
 }
 
 \arguments{
   \item{mu}{numeric. The mean of the beta distribution (on the open unit interval).}
   \item{phi}{numeric. The precision parameter of the beta distribution.}
   \item{p0}{numeric. The probability for an observation of zero (often referred
-    to as zero inflation).}
+    to as zero inflation), by default set to \code{0}.}
   \item{p1}{numeric. The probability for an observation of one (often referred
-    to as one inflation).}
+    to as one inflation), by default set to \code{0}.}
 }
 
 \details{

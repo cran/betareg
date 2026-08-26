@@ -12,6 +12,8 @@
 \alias{support.BetaR}
 \alias{is_discrete.BetaR}
 \alias{is_continuous.BetaR}
+\alias{score.BetaR}
+\alias{hessian.BetaR}
 
 \title{Create a Beta Regression Distribution}
 
@@ -21,7 +23,7 @@ using the workflow from the \pkg{distributions3} package.
 }
 
 \usage{
-BetaR(mu, phi)
+BetaR(mu = numeric(), phi = numeric())
 }
 
 \arguments{

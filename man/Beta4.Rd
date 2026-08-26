@@ -21,7 +21,7 @@ using the workflow from the \pkg{distributions3} package.
 }
 
 \usage{
-Beta4(mu, phi, theta1 = 0, theta2 = 1 - theta1)
+Beta4(mu = numeric(), phi = numeric(), theta1 = NULL, theta2 = NULL)
 }
 
 \arguments{
@@ -31,8 +31,8 @@ Beta4(mu, phi, theta1 = 0, theta2 = 1 - theta1)
     extended to support [theta1, theta2].}
   \item{theta1, theta2}{numeric. The minimum and maximum, respectively,
     of the 4-parameter beta distribution. By default a symmetric support is
-    chosen by \code{theta2 = 1 - theta1} which reduces to the classic
-    beta distribution because of the default \code{theta1 = 0}.}
+    chosen with \code{theta1} set to \code{0} and \code{theta2 = 1 - theta1}
+    which thus corresponds to the classic beta distribution.}
 }
 
 \details{

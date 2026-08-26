@@ -21,7 +21,7 @@ using the workflow from the \pkg{distributions3} package.
 }
 
 \usage{
-XBeta(mu, phi, nu = 0)
+XBeta(mu = numeric(), phi = numeric(), nu = NULL)
 }
 
 \arguments{
@@ -29,7 +29,8 @@ XBeta(mu, phi, nu = 0)
   \item{phi}{numeric. The precision parameter of the underlying beta
     distribution on [-nu, 1 + nu].}
   \item{nu}{numeric. Exceedence parameter for the support of the underlying
-    beta distribution on [-nu, 1 + nu] that is censored to [0, 1].}
+    beta distribution on [-nu, 1 + nu] that is censored to [0, 1].
+    By default \code{nu = 0} is used.}
 }
 
 \details{

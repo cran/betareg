@@ -2,14 +2,14 @@
 
 <!-- README.md is generated from README.qmd via: quarto render README.qmd --to gfm -->
 
-<img src="https://topmodels.R-Forge.R-project.org/betareg/betareg.png" align="right" alt="betareg logo" width="100" />
+<img src="https://zeileis.codeberg.page/betareg/betareg.png" align="right" alt="betareg logo" width="100" />
 
 # Beta Regression
 
 ## Overview
 
-The R package
-[betareg](https://topmodels.R-Forge.R-project.org/betareg/) provides:
+The R package [betareg](https://zeileis.codeberg.page/betareg/)
+provides:
 
 - Beta regression for modeling beta-distributed dependent variables on
   the open unit interval (0, 1), e.g., rates and proportions, see

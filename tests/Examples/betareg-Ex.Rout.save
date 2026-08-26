@@ -1,6 +1,6 @@
 
-R version 4.5.0 (2025-04-11) -- "How About a Twenty-Six"
-Copyright (C) 2025 The R Foundation for Statistical Computing
+R version 4.6.1 (2026-06-24) -- "Happy Hop"
+Copyright (C) 2026 The R Foundation for Statistical Computing
 Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -131,7 +131,8 @@ detaching ‘package:distributions3’
 > ### Title: Create a Beta Regression Distribution
 > ### Aliases: BetaR mean.BetaR variance.BetaR skewness.BetaR kurtosis.BetaR
 > ###   pdf.BetaR log_pdf.BetaR cdf.BetaR quantile.BetaR random.BetaR
-> ###   support.BetaR is_discrete.BetaR is_continuous.BetaR
+> ###   support.BetaR is_discrete.BetaR is_continuous.BetaR score.BetaR
+> ###   hessian.BetaR
 > 
 > ### ** Examples
 > 
@@ -182,7 +183,6 @@ detaching ‘package:distributions3’
 > 
 > data("CarTask", package = "betareg")
 > library("flexmix")
-Loading required package: lattice
 > car_betamix <- betamix(probability ~ 1, data = CarTask, k = 3,
 +   extra_components = list(extraComponent(type = "uniform", coef = 1/2,
 +   delta = 0.01), extraComponent(type = "uniform", coef = 1/4, delta = 0.01)),
@@ -192,7 +192,7 @@ Loading required package: lattice
 > 
 > cleanEx()
 
-detaching ‘package:flexmix’, ‘package:lattice’
+detaching ‘package:flexmix’
 
 > nameEx("FoodExpenditure")
 > ### * FoodExpenditure
@@ -421,7 +421,6 @@ Number of iterations: 51 (BFGS) + 4 (Fisher scoring)
 > 
 > data("ImpreciseTask", package = "betareg")
 > library("flexmix")
-Loading required package: lattice
 > wt_betamix <- betamix(location ~ difference * task, data = ImpreciseTask, k = 2,
 +   extra_components = extraComponent(type = "betareg", coef =
 +     list(mean = 0, precision = 8)),
@@ -431,7 +430,7 @@ Loading required package: lattice
 > 
 > cleanEx()
 
-detaching ‘package:flexmix’, ‘package:lattice’
+detaching ‘package:flexmix’
 
 > nameEx("LossAversion")
 > ### * LossAversion
@@ -831,7 +830,6 @@ sa_stress  4 -595.9
 > 
 > data("WeatherTask", package = "betareg")
 > library("flexmix")
-Loading required package: lattice
 > wt_betamix <- betamix(agreement ~ 1, data = WeatherTask, k = 2,
 +   extra_components = extraComponent(type = "betareg", coef =
 +     list(mean = 0, precision = 2)),
@@ -841,7 +839,7 @@ Loading required package: lattice
 > 
 > cleanEx()
 
-detaching ‘package:flexmix’, ‘package:lattice’
+detaching ‘package:flexmix’
 
 > nameEx("XBeta")
 > ### * XBeta
@@ -1001,7 +999,6 @@ detaching ‘package:distributions3’
 > ## The posteriors from the previously fitted model are used
 > ## for initialization.
 > library("flexmix")
-Loading required package: lattice
 > rs_mix2 <- betamix(accuracy ~ iq, data = ReadingSkills,
 +   extra_components = extraComponent(type = "uniform",
 +   coef = 0.99, delta = 0.01), cluster = posterior(rs_mix),
@@ -1029,7 +1026,7 @@ w             -0.346      0.452   -0.77     0.44
 > 
 > cleanEx()
 
-detaching ‘package:flexmix’, ‘package:lattice’
+detaching ‘package:flexmix’
 
 > nameEx("betar_family")
 > ### * betar_family
@@ -1069,7 +1066,7 @@ The following object is masked from ‘package:grDevices’:
 
 Loading required package: mgcv
 Loading required package: nlme
-This is mgcv 1.9-3. For overview type 'help("mgcv-package")'.
+This is mgcv 1.9-4. For overview type '?mgcv'.
 -
 For citation info, use citation("bamlss") and see http://www.bamlss.org/.
 
@@ -1128,30 +1125,30 @@ AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  
 AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  38
 AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  39
 AICc -83.5293 logPost -13815.0 logLik  51.6384 edf 7.8809 eps 0.0000 iteration  39
-elapsed time:  4.13sec
+elapsed time:  1.42sec
 Starting the sampler...
 
-|                    |   0%  3.98sec
-|*                   |   5%  3.74sec  0.20sec
-|**                  |  10%  3.57sec  0.40sec
-|***                 |  15%  3.30sec  0.58sec
-|****                |  20%  3.05sec  0.76sec
-|*****               |  25%  2.83sec  0.94sec
-|******              |  30%  2.80sec  1.20sec
-|*******             |  35%  2.57sec  1.38sec
-|********            |  40%  2.37sec  1.58sec
-|*********           |  45%  2.19sec  1.79sec
-|**********          |  50%  1.98sec  1.98sec
-|***********         |  55%  1.76sec  2.15sec
-|************        |  60%  1.55sec  2.33sec
-|*************       |  65%  1.36sec  2.52sec
-|**************      |  70%  1.16sec  2.70sec
-|***************     |  75%  0.96sec  2.87sec
-|****************    |  80%  0.76sec  3.06sec
-|*****************   |  85%  0.57sec  3.24sec
-|******************  |  90%  0.38sec  3.41sec
-|******************* |  95%  0.19sec  3.58sec
-|********************| 100%  0.00sec  3.77sec
+|                    |   0%  1.13sec
+|*                   |   5%  1.10sec  0.06sec
+|**                  |  10%  1.04sec  0.12sec
+|***                 |  15%  0.98sec  0.17sec
+|****                |  20%  0.92sec  0.23sec
+|*****               |  25%  0.91sec  0.30sec
+|******              |  30%  0.85sec  0.37sec
+|*******             |  35%  0.80sec  0.43sec
+|********            |  40%  0.74sec  0.49sec
+|*********           |  45%  0.68sec  0.56sec
+|**********          |  50%  0.63sec  0.63sec
+|***********         |  55%  0.57sec  0.70sec
+|************        |  60%  0.51sec  0.76sec
+|*************       |  65%  0.44sec  0.82sec
+|**************      |  70%  0.38sec  0.89sec
+|***************     |  75%  0.32sec  0.95sec
+|****************    |  80%  0.26sec  1.03sec
+|*****************   |  85%  0.19sec  1.09sec
+|******************  |  90%  0.13sec  1.16sec
+|******************* |  95%  0.06sec  1.22sec
+|********************| 100%  0.00sec  1.28sec
 > 
 > ## Bayesian model shrinks the effects compared to ML
 > plot(accuracy ~ iq, data = ReadingSkills, pch = 19, col = dyslexia)
@@ -2033,7 +2030,7 @@ Number of iterations: 33 (BFGS) + 28 (Fisher scoring)
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  34.676 0.276 34.989 0 0 
+Time elapsed:  15.133 0.157 15.311 0 0 
 > grDevices::dev.off()
 null device 
           1 

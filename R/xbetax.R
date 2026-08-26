@@ -189,7 +189,8 @@ var_xbetax <- function(mu, phi, nu, quad = 20, ...) {
 
 ## distributions3 interface
 
-XBetaX <- function(mu, phi, nu = 0) {
+XBetaX <- function(mu = numeric(), phi = numeric(), nu = NULL) {
+  if (is.null(nu)) nu <- rep.int(0, length(mu))
   n <- c(length(mu), length(phi), length(nu))
   stopifnot("parameter lengths do not match (only scalars are allowed to be recycled)" = all(n %in% c(1L, max(n))))
   stopifnot(

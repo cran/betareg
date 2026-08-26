@@ -107,7 +107,9 @@ rbeta01 <- function(n, mu, phi, p0 = 0, p1 = 0) {
 
 ## distributions3 interface
 
-Beta01 <- function(mu, phi, p0 = 0, p1 = 0) {
+Beta01 <- function(mu = numeric(), phi = numeric(), p0 = NULL, p1 = NULL) {
+  if (is.null(p0)) p0 <- rep.int(0, length(mu))
+  if (is.null(p1)) p1 <- rep.int(0, length(mu))
   n <- c(length(mu), length(phi), length(p0), length(p1))
   stopifnot("parameter lengths do not match (only scalars are allowed to be recycled)" = all(n %in% c(1L, max(n))))
 

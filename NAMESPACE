@@ -165,6 +165,8 @@ S3method(distributions3::cdf, "BetaR")
 S3method(distributions3::support, "BetaR")
 S3method(distributions3::is_discrete, "BetaR")
 S3method(distributions3::is_continuous, "BetaR")
+S3method(distributions3::score, "BetaR")
+S3method(distributions3::hessian, "BetaR")
 
 ## methods for Beta01
 S3method("mean", "Beta01")
